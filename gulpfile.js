@@ -22,7 +22,16 @@ let gulp = require ('gulp'),
      .pipe(sass({outputStyle:'compressed'})) //конвертируем scss в css и импортируем все импорты
      .pipe(rename({suffix: '.min'})) //переименовываем файл, чтобы было понятно, что он минифицирован
      .pipe(prefixer({ //добавляем вендорные префиксы
-       overrideBrowserslist: ['last 8 versions'] //последние 8 версий, но можно донастроить на большее или меньшее значение
+       overrideBrowserslist: ['last 8 versions'], //последние 8 версий, но можно донастроить на большее или меньшее значение
+       browsers: [ //список поддерживаемых браузеров и их версия - ВНИМАНИЕ! данная опция влияет только на расстановку префиксов и не гарантирут 100% работы сайта в этих браузерах.
+        "Android >= 4",
+        "Chrome >= 20",
+        "Firefox >= 24",
+        "Explorer >= 11",
+        "iOS >= 6",
+        "Opera >= 12",
+        "Safari >= 6"
+    ] 
       }))
      .pipe(sourcemaps.write()) //записываем карту в итоговый файл
      .pipe(gulp.dest('build/css')) //кладём итоговый файл в директорию build/css
@@ -34,8 +43,6 @@ let gulp = require ('gulp'),
     gulp.task('style', function(){ //создаём единую библиотеку из css-стилей всех плагинов
       return gulp.src([ //указываем, где брать исходники
         'node_modules/normalize.css/normalize.css',
-        'node_modules/slick-carousel/slick/slick.css',
-        'node_modules/magnific-popup/dist/magnific-popup.css',
       ])
       .pipe(sourcemaps.init())
       .pipe(concat('libs.min.css')) //склеиваем их в один файл с указанным именем
@@ -47,9 +54,6 @@ let gulp = require ('gulp'),
     gulp.task('script', function(){ //аналогично поступаем с js-файлами
       return gulp.src([ //тут подключаем разные js в общую библиотеку. Отключите то, что вам не нужно.
         'node_modules/jquery/dist/jquery.js',
-        'node_modules/slick-carousel/slick/slick.js',
-        'node_modules/mixitup/dist/mixitup.js',
-        'node_modules/magnific-popup/dist/jquery.magnific-popup.js',
       ])
       .pipe(sourcemaps.init())
       .pipe(concat('libs.min.js'))
