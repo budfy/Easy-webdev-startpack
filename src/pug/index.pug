@@ -1,9 +1,16 @@
 <!DOCTYPE html>
 html(lang="en")
-  head
-    meta(charset="UTF-8")
-    meta(name="viewport", content="width=device-width, initial-scale=1.0")
-    meta(http-equiv="X-UA-Compatible", content="ie=edge")
-    title Document
+  include pug_components/head.pug
+  
   body
+  include pug_components/header.pug
   h1 hello world!
+  ul
+    li
+      a(href='#') Item A
+    li
+      a(href='#') Item B
+    li
+      a(href='#') Item C
+  include pug_components/footer.pug
+  include pug_components/scripts.pug
