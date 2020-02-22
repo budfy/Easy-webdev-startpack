@@ -1,0 +1,235 @@
+.aside__wrapper{
+  position: sticky;
+  top: 0;
+}
+
+.aside__logo {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding: 15px 15px 24px 15px;
+  border-bottom: 1px solid $lightGrey;
+
+  & svg {
+    margin-bottom: 10px;
+  }
+}
+
+.aside__button {
+  padding: 23px 15px;
+  border-bottom: 1px solid $lightGrey;
+
+  &-link {
+    display: block;
+    text-align: center;
+    background: linear-gradient(193.26deg, #FFE985 11.79%, #F7D330 89.12%);
+    border-radius: 5px;
+    padding: 10px;
+  }
+
+  & span {
+    font-size: 14px;
+    line-height: 16px;
+    color: $darkGreen;
+    position: relative;
+
+    &::before {
+      content: "";
+      position: absolute;
+      height: 14px;
+      width: 14px;
+      background-image: url(../img/icons/user.svg);
+      top: 50%;
+      transform: translateY(-50%);
+      left: -30px;
+    }
+  }
+}
+
+.aside__calculator {
+  padding: 32px 15px;
+  box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.05);
+}
+
+.calculator__title,
+.range-subtitle {
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 16px;
+  color: $darkGrey;
+}
+
+.calculator__title {
+  text-align: center;
+  width: 100%;
+}
+
+.summ-block,
+.term-block {
+  // display: flex;
+  // flex-wrap: wrap;
+  // justify-content: space-between;
+  margin: 32px 0;
+}
+
+.aside__calculator-input {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.range-subtitle {
+  max-width: 90px;
+  text-align: left;
+}
+
+.range-indicator {
+  padding: 12px;
+  background: #FAFAFA;
+  box-shadow: inset 2px 2px 2px rgba(0, 0, 0, 0.1);
+  border-radius: 3px;
+  width: 135px;
+  font-weight: 700;
+  font-size: 11px;
+  line-height: 13px;
+  text-align: center;
+  color: $green;
+  text-transform: uppercase;
+  border: none;
+}
+
+
+.range__wrapper {
+
+  .irs-min,
+  .irs-max,
+  .irs-single {
+    display: none;
+  }
+
+  .irs--flat .irs-line {
+    top: 25px;
+    height: 5px;
+    background: #FAFAFA;
+    box-shadow: inset 2px 2px 2px rgba(0, 0, 0, 0.1);
+    border-radius: 3px;
+  }
+
+  .irs--flat .irs-bar {
+    top: 25px;
+    height: 5px;
+    background: $green;
+    border-radius: 3px;
+  }
+
+  .irs--flat .irs-handle {
+    top: 13px;
+    width: 30px;
+    height: 30px;
+    background: #F4D64C;
+    border: 5px solid $green;
+    box-sizing: border-box;
+    box-shadow: -2px 2px 2px rgba(0, 0, 0, 0.05);
+    border-radius: 50%;
+
+    & i:first-child {
+      height: 20px;
+      width: 20px;
+      border-radius: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      margin-left: 0;
+      background-color: transparent;
+      border: 1px solid #F9EAA5;
+      box-shadow: -2px 2px 2px rgba(0, 0, 0, 0.05);
+    }
+
+    & i:first-child::before,
+    & i:first-child::after {
+      content: "";
+      position: absolute;
+      background: #FFFFFF;
+      opacity: 0.5;
+      box-shadow: -1px 0px 0px rgba(0, 0, 0, 0.1);
+      height: 8px;
+      width: 1px;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+    & i:first-child::before {
+      left: 7px;
+    }
+
+    & i:first-child::after {
+      right: 7px;
+    }
+  }
+
+  &:hover .irs-single {
+    display: block;
+    background-color: $green;
+  }
+
+  &:hover .irs-single::before {
+    border-top-color: $green;
+  }
+}
+
+.aside__calculator-result {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  padding: 20px 10px 15px 10px;
+  box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.05);
+  border-radius: 5px;
+  margin-bottom: 68px;
+
+  .result__subtitle,
+  .result__text {
+    font-size: 11px;
+    line-height: 13px;
+    width: 50%;
+    margin-bottom: 19px;
+  }
+
+  .result__subtitle {
+    max-width: 125px;
+  }
+
+  .result__text {
+    max-width: 85px;
+    color: $darkGrey;
+    text-align: right;
+  }
+}
+
+.calculator__button {
+  width: 100%;
+  border: none;
+  background: #208648;
+  border-radius: 5px;
+  position: relative;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 16px;
+  letter-spacing: 0.16px;
+  text-transform: uppercase;
+  font-feature-settings: 'pnum'on, 'lnum'on;
+  color: #FFFFFF;
+  padding: 18px;
+  box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.2), 0px 3px 4px rgba(0, 0, 0, 0.12), 0px 2px 4px rgba(0, 0, 0, 0.14);
+  &::after {
+    content: "";
+    position: absolute;
+    height: 14px;
+    width: 8px;
+    right: 17px;
+    top: 50%;
+    transform: translateY(-50%);
+    background-image: url(../img/icons/arrow.svg);
+  }
+}

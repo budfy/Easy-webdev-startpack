@@ -10,3 +10,49 @@ html, body{
   height: 100%;
   position: relative;
 }
+
+body {
+  font-family: Ubuntu;
+  font-size: 12px;
+  color: $text;
+  background-color: $bgColor;
+}
+
+ul, ol, li, h1, h2, h3, h4, h5, h6, img, a, p, span {
+  margin: 0;
+  padding: 0;
+}
+
+a {
+  text-decoration: none;
+}
+
+.container {
+  width: 100%;
+  display: flex;
+  //max-width: 1125px;
+  margin: 0 auto;
+  padding: 0 165px;
+  min-height: 100vh;
+}
+
+@media screen and (max-width: 1460px) {
+  .container {
+    padding: 0;
+  }
+}
+
+.left__vidgets{
+  flex-grow: 1;
+  flex-basis: 255px;
+  flex-shrink: 0;
+  background-color: white;
+  min-height: 100%;
+  position: relative;
+}
+
+.content__wrapper {
+  flex-grow: 3;
+  flex-basis: 870px;
+  flex-shrink: 0;
+}

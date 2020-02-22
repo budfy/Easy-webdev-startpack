@@ -1,32 +1,15 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
-    <link rel="stylesheet" href="css/libs.min.css"/>
-    <link rel="stylesheet" href="css/style.min.css"/>
-    <title>My first pug project</title>
-  </head>
-  <body></body>
-  <header class="header">
-    <nav class="main-nav">
-      <ul class="main-nav__list">
-        <li><a href="#">Home</a></li>
-        <li><a href="#">About</a></li>
-        <li><a href="#">Product</a></li>
-        <li><a href="#">Price</a></li>
-        <li><a href="#">Contacts</a></li>
-      </ul>
-    </nav>
-  </header>
-  <h1>hello world!</h1>
-  <ul>
-    <li><a href="#">Item A</a></li>
-    <li><a href="#">Item B</a></li>
-    <li><a href="#">Item C</a></li>
-  </ul>
-  <footer></footer>
-  <script src="js/libs.min.js"></script>
-  <script src="js/main.min.js"></script>
+<html lang="ru">
+@@include('./components/_head.html')
+
+<body>
+  <div class="container">
+    @@include('./components/_aside.html')
+    <div class="content__wrapper">
+      @@include('./components/_header.html')
+      @@include('./components/_footer.html')
+    </div>
+  </div>
+</body>
+@@include('./components/_scripts.html')
 </html>

@@ -6,7 +6,7 @@ let gulp = require('gulp'),
   cssmin = require('gulp-cssmin'), //минификатор CSS
   cleancss = require('gulp-clean-css'),
   prefixer = require('gulp-autoprefixer'), //автоматическая расстановка вендорных префиксов
-  pug = require('gulp-pug'), //html-препроцессор
+  //pug = require('gulp-pug'), //html-препроцессор
   babel = require('gulp-babel'), //переводит js-файлы в формат, понятный даже тупому ослику(IE)ю Если точнее, конвертирует javascript стандарта ES6 в ES5
   include = require('gulp-file-include'), //импорт одних файлов в другие (работает с HTML, SCSS/CSS и JS, но нужен он нам в основном для импорта HTML)
   browserSync = require('browser-sync'), //сервер для отображения в браузере в режиме реального времени
@@ -73,6 +73,8 @@ gulp.task('scss', function () { //делаем из своего scss-кода c
 gulp.task('style', function () { //создаём единую библиотеку из css-стилей всех плагинов
   return gulp.src([ //указываем, где брать исходники
       'node_modules/normalize.css/normalize.css',
+      'node_modules/ion-rangeslider/css/ion.rangeSlider.min.css',
+      'node_modules/slick-carousel/slick/slick-theme.css'
     ])
     .pipe(sourcemaps.init())
     .pipe(concat('libs.min.css')) //склеиваем их в один файл с указанным именем
@@ -85,6 +87,8 @@ gulp.task('style', function () { //создаём единую библиоте�
 gulp.task('script', function () { //аналогично поступаем с js-файлами
   return gulp.src([ //тут подключаем разные js в общую библиотеку. Отключите то, что вам не нужно.
       'node_modules/jquery/dist/jquery.js',
+      'node_modules/ion-rangeslider/js/ion.rangeSlider.min.js',
+      'node_modules/slick-carousel/slick/slick.min.js'
     ])
     .pipe(size())
     .pipe(sourcemaps.init())
@@ -115,20 +119,20 @@ gulp.task('js', function () { //обновляем браузер, если в �
     }))
 });
 
-gulp.task('pug', function () {
-  return gulp.src(['src/pug/**/*.pug', '!src/pug/pug_components/**/*.pug'])
-    .pipe(newer('src'))
-    .pipe(pug({
-      pretty: true
-    }))
-    .pipe(sourcemaps.write())
-    .pipe(gulp.dest('src'))
-    .pipe(size())
-});
+// gulp.task('pug', function () {
+//   return gulp.src(['src/pug/**/*.pug', '!src/pug/pug_components/**/*.pug'])
+//     //.pipe(newer('src'))
+//     .pipe(pug({
+//       pretty: true
+//     }))
+//     .pipe(sourcemaps.write())
+//     .pipe(gulp.dest('src'))
+//     .pipe(size())
+// });
 
 gulp.task('html', function () { //собираем html из кусочков
   return gulp.src(['src/**/*.html', '!src/components/**/*.html'])
-    .pipe(newer('build/'))
+    //.pipe(newer('build/'))
     .pipe(sourcemaps.init())
     .pipe(include({ //импортируем файлы с префиксом @@. ПРефикс можно настроить под себя.
       prefix: '@@',
@@ -212,7 +216,7 @@ gulp.task('watch', function () { //Следим за изменениями в �
   gulp.watch('src/fonts/**/*.*', gulp.parallel('fonts'));
   gulp.watch('src/js/**/*.js', gulp.parallel('minjs', 'js'));
   gulp.watch('src/img/**/*.*', gulp.parallel('images'));
-  gulp.watch('src/pug/**/*.*', gulp.parallel('pug', 'html'));
+  //gulp.watch('src/pug/**/*.*', gulp.parallel('pug', 'html'));
 });
 
 gulp.task('deploy', function () { //грузим файлы на хостинг по FTP
@@ -244,4 +248,4 @@ gulp.task('browser-sync', function () { //настройки лайв-серве
   })
 });
 
-gulp.task('default', gulp.parallel('browser-sync', 'watch', 'scss', 'style', 'script', 'minjs', 'pug', 'html', 'fonts', 'images')) //запускает все перечисленные задачи разом
+gulp.task('default', gulp.parallel('browser-sync', 'watch', 'scss', 'style', 'script', 'minjs', 'html', 'fonts', 'images')) //запускает все перечисленные задачи разом
