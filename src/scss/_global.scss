@@ -1,12 +1,38 @@
-html{
+html {
   box-sizing: border-box;
 }
 
-*, *::before, *::after{
+*,
+*::before,
+*::after {
   box-sizing: inherit;
 }
 
-html, body{
+html,
+body {
   height: 100%;
   position: relative;
+}
+
+ul,
+ol,
+li,
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+  padding: 0;
+}
+
+a {
+  text-decoration: none;
+}
+
+button:focus,
+input:focus {
+  outline: transparent;
 }
