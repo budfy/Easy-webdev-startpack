@@ -20,8 +20,7 @@ let gulp = require('gulp'),
   ttf2eot = require('gulp-ttf2eot'), //конвертирует шрифты в веб-формат
   //font2css = require('gulp-font2css').default, //собирает файл _local-fonts.scss - ДАННАЯ ФУНКЦИЯ ЕЩЁ НЕ ГОТОВА
   size = require('gulp-filesize'), //выводит в консоль размер файлов до и после их сжатия, чем создаёт чувство глубокого морального удовлетворения, особенно при минификации картинок
-  newer = require('gulp-newer'), //запрещает обрабатывать файлы, если они не изменились
-  rsync = require('gulp-rsync'), //заливает файлы ghjtrnf на хостинг по ftp с заданными параметрами
+  rsync = require('gulp-rsync'), //заливает файлы проекта на хостинг по ftp с заданными параметрами
   //favgen = require('gulp-favicons'), //создаём иконки под все типы устройств
   sourcemaps = require('gulp-sourcemaps'); //рисует карту слитого воедино файла, чтобы было понятно, что из какого файла бралось
 
