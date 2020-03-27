@@ -1,6 +1,6 @@
 <!-- @format -->
 
-# Startpack_Gulp4
+# Easy-webdev-startpack
 
 Сборка Gulp4 с плагинами для разработки вебпроектов.
 
