@@ -19,13 +19,12 @@
 - автоматичская отправка на хостинг по FTP/SFTP.
 
 Как установить:
+NPM
 ```
-//npm
 npm i easy-webdev-startpack
 ```
-
+Yarn
 ```
-//yarn
 yarn add easy-webdev-startpack
 ```
 
