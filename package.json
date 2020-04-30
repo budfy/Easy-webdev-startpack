@@ -4,7 +4,7 @@
   "description": "HTML5+CSS3 template for easy start website project'",
   "main": "gulpfile.js",
   "dependencies": {
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.0",
     "normalize.css": "^8.0.1"
   },
   "devDependencies": {
