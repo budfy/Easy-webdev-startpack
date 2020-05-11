@@ -233,7 +233,7 @@ gulp.task("font-eot", function () {
 gulp.task("images", function () {
 	//пережимаем изображения и складываем их в директорию build
 	return gulp
-		.src("src/img/**/*.+(png|jpg|jpeg|gif|svg|ico)")
+		.src("src/images/**/*.+(png|jpg|jpeg|gif|svg|ico|webp)")
 		.pipe(size())
 		.pipe(
 			imagemin([
@@ -249,7 +249,7 @@ gulp.task("images", function () {
 				imagemin.svgo(),
 			]),
 		)
-		.pipe(gulp.dest("build/img"))
+		.pipe(gulp.dest("build/images"))
 		.pipe(
 			browserSync.reload({
 				stream: true,
@@ -277,7 +277,7 @@ gulp.task("watch", function () {
 		gulp.parallel("font-woff", "font-woff2", "font-eot"),
 	);
 	gulp.watch("src/js/**/*.js", gulp.parallel("minjs", "js"));
-	gulp.watch("src/img/**/*.*", gulp.parallel("images"));
+	gulp.watch("src/images/**/*.*", gulp.parallel("images"));
 });
 
 gulp.task("deploy", function () {
