@@ -14,6 +14,10 @@ let gulp = require("gulp"),
 	rename = require("gulp-rename"), //переименовывает файлы, добавляет им префиксы и суффиксы
 	imagemin = require("gulp-imagemin"), //пережимает изображения
 	recompress = require("imagemin-jpeg-recompress"), //тоже пережимает, но лучше. Плагин для плагина
+	pngquant = require("imagemin-pngquant"),
+	webp = require('gulp-webp'),
+	webphtml = require('gulp-webp-html'),
+	webpcss = require("gulp-webpcss"),
 	uglify = require("gulp-uglify"), //то же, что cssmin, только для js
 	concat = require("gulp-concat"), //склеивает css и js-файлы в один
 	del = require("del"), //удаляет указанные файлы и директории. Нужен для очистки перед билдом
@@ -70,11 +74,12 @@ gulp.task("scss", function () {
 						removeDuplicateFontRules: true,
 						removeDuplicateMediaBlocks: true,
 						removeDuplicateRules: true,
-						removeUnusedAtRules: false,
+						removeUnusedAtRules: true,
 					},
 				},
 			}),
 		)
+		.pipe(webpcss())
 		.pipe(sourcemaps.write()) //записываем карту в итоговый файл
 		.pipe(gulp.dest("build/css")) //кладём итоговый файл в директорию build/css
 		.pipe(
@@ -94,10 +99,8 @@ gulp.task("style", function () {
 			//указываем, где брать исходники
 			"node_modules/normalize.css/normalize.css",
 		])
-		.pipe(sourcemaps.init())
 		.pipe(concat("libs.min.css")) //склеиваем их в один файл с указанным именем
 		.pipe(cssmin()) //минифицируем полученный файл
-		.pipe(sourcemaps.write())
 		.pipe(gulp.dest("build/css")) //кидаем готовый файл в директорию
 		.pipe(size());
 });
@@ -110,11 +113,9 @@ gulp.task("script", function () {
 			"node_modules/jquery/dist/jquery.js",
 		])
 		.pipe(size())
-		.pipe(sourcemaps.init())
 		.pipe(babel())
 		.pipe(concat("libs.min.js"))
 		.pipe(uglify())
-		.pipe(sourcemaps.write())
 		.pipe(gulp.dest("build/js"))
 		.pipe(size());
 });
@@ -148,7 +149,6 @@ gulp.task("html", function () {
 	//собираем html из кусочков
 	return gulp
 		.src(["src/**/*.html", "!src/components/**/*.html"])
-		.pipe(sourcemaps.init())
 		.pipe(
 			include({
 				//импортируем файлы с префиксом @@. ПРефикс можно настроить под себя.
@@ -156,7 +156,7 @@ gulp.task("html", function () {
 				basepath: "@file",
 			}),
 		)
-		.pipe(sourcemaps.write())
+		.pipe(webphtml())
 		.pipe(gulp.dest("build/"))
 		.pipe(size())
 		.pipe(
@@ -236,18 +236,21 @@ gulp.task("images", function () {
 		.src("src/images/**/*.+(png|jpg|jpeg|gif|svg|ico|webp)")
 		.pipe(size())
 		.pipe(
-			imagemin([
-				recompress({
-					//Настройки сжатия изображений. Сейчас всё настроено так, что сжатие почти незаметно для глаза на обычных экранах. Можете покрутить настройки, но за результат не отвечаю.
-					loops: 4, //количество прогонок изображения
-					min: 70, //минимальное качество в процентах
-					max: 80, //максимальное качество в процентах
-					quality: "high", //тут всё говорит само за себя, если хоть капельку понимаешь английский
-				}),
-				imagemin.gifsicle(), //тут и ниже всякие плагины для обработки разных типов изображений
-				imagemin.optipng(),
-				imagemin.svgo(),
-			]),
+			imagemin(
+				[
+					recompress({
+						//Настройки сжатия изображений. Сейчас всё настроено так, что сжатие почти незаметно для глаза на обычных экранах. Можете покрутить настройки, но за результат не отвечаю.
+						loops: 4, //количество прогонок изображения
+						min: 80, //минимальное качество в процентах
+						max: 100, //максимальное качество в процентах
+						quality: "high", //тут всё говорит само за себя, если хоть капельку понимаешь английский
+						use: [pngquant()],
+					}),
+					imagemin.gifsicle(), //тут и ниже всякие плагины для обработки разных типов изображений
+					imagemin.optipng(),
+					imagemin.svgo(),
+				],
+			),
 		)
 		.pipe(gulp.dest("build/images"))
 		.pipe(
@@ -256,6 +259,23 @@ gulp.task("images", function () {
 			}),
 		)
 		.pipe(size());
+});
+
+gulp.task("webp", function () {
+	return gulp
+		.src("src/images/**/*.+(png|jpg|jpeg|gif|svg|ico|webp)")
+		.pipe(size())
+		.pipe(webp({
+			quality: 75,
+			method: 6,
+		}))
+		.pipe(gulp.dest("build/images"))
+		.pipe(
+			browserSync.reload({
+				stream: true,
+			}),
+		)
+		.pipe(size())
 });
 
 gulp.task("deletefonts", function () {
@@ -277,7 +297,7 @@ gulp.task("watch", function () {
 		gulp.parallel("font-woff", "font-woff2", "font-eot"),
 	);
 	gulp.watch("src/js/**/*.js", gulp.parallel("minjs", "js"));
-	gulp.watch("src/images/**/*.*", gulp.parallel("images"));
+	gulp.watch("src/images/**/*.*", gulp.parallel("images", "webp"));
 });
 
 gulp.task("deploy", function () {
@@ -305,7 +325,7 @@ gulp.task("browser-sync", function () {
 		server: {
 			baseDir: "build/", //какую папку показывать в браузере
 		},
-		browser: ["chrome"], //в каком браузере
+		browser: [""], //в каком браузере
 		//tunnel: " ", //тут можно прописать название проекта и дать доступ к нему через интернет. Работает нестабильно, запускается через раз. Не рекомендуется включать без необходимости.
 		//tunnel:true, //работает, как и предыдущяя опция, но присваивает рандомное имя. Тоже запускается через раз и поэтому не рекомендуется для включения
 		host: "192.168.0.104", //IP сервера в локальной сети. Отключите, если у вас DHCP, пропишите под себя, если фиксированный IP в локалке.
