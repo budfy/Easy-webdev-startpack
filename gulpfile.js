@@ -110,7 +110,7 @@ gulp.task("script", function () {
 	return gulp
 		.src([
 			//тут подключаем разные js в общую библиотеку. Отключите то, что вам не нужно.
-			"node_modules/jquery/dist/jquery.js",
+			"node_modules/jquery/dist/jquery.js"
 		])
 		.pipe(size())
 		.pipe(babel())
@@ -123,7 +123,7 @@ gulp.task("script", function () {
 gulp.task("minjs", function () {
 	//минифицируем наш main.js и перекидываем в директорию build
 	return gulp
-		.src("src/js/main.js")
+		.src("src/js/*.js")
 		.pipe(size())
 		.pipe(babel())
 		.pipe(uglify())
