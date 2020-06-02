@@ -285,7 +285,7 @@ gulp.task("deletefonts", function () {
 
 gulp.task("deleteimg", function () {
 	//аналогично предыдущей, но с картинками.
-	return del.sync("build/img/**/*.*");
+	return del.sync("build/images/**/*.*");
 });
 
 gulp.task("watch", function () {
