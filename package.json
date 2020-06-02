@@ -28,6 +28,7 @@
     "gulp-file-include": "^2.2.2",
     "gulp-filesize": "0.0.6",
     "gulp-font2css": "^0.1.2",
+    "gulp-format-html": "^1.2.3",
     "gulp-html-import": "0.0.2",
     "gulp-imagemin": "^7.1.0",
     "gulp-newer": "^1.4.0",

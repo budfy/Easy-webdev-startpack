@@ -26,7 +26,8 @@ let gulp = require("gulp"),
 	ttf2eot = require("gulp-ttf2eot"), //конвертирует шрифты в веб-формат
 	size = require("gulp-filesize"), //выводит в консоль размер файлов до и после их сжатия, чем создаёт чувство глубокого морального удовлетворения, особенно при минификации картинок
 	rsync = require("gulp-rsync"), //заливает файлы проекта на хостинг по ftp с заданными параметрами
-	sourcemaps = require("gulp-sourcemaps"); //рисует карту слитого воедино файла, чтобы было понятно, что из какого файла бралось
+	sourcemaps = require("gulp-sourcemaps"), //рисует карту слитого воедино файла, чтобы было понятно, что из какого файла бралось
+	formatHtml = require("gulp-format-html"); //форматирует HTML в норму
 
 gulp.task("scss", function () {
 	//делаем из своего scss-кода css для браузера
@@ -157,6 +158,7 @@ gulp.task("html", function () {
 			}),
 		)
 		.pipe(webphtml())
+		.pipe(formatHtml())
 		.pipe(gulp.dest("build/"))
 		.pipe(size())
 		.pipe(
