@@ -1,8 +1,6 @@
-/** @format */
-
 "use strict";
 
-//определим переменные для функцийи плагинов
+//NOTE: определим переменные для функцийи плагинов
 let gulp = require("gulp"),
 	sass = require("gulp-sass"), //препроцессор
 	cssmin = require("gulp-cssmin"), //минификатор CSS
@@ -15,18 +13,20 @@ let gulp = require("gulp"),
 	imagemin = require("gulp-imagemin"), //пережимает изображения
 	recompress = require("imagemin-jpeg-recompress"), //тоже пережимает, но лучше. Плагин для плагина
 	pngquant = require("imagemin-pngquant"),
-	webp = require('gulp-webp'),
-	webphtml = require('gulp-webp-html'),
-	webpcss = require("gulp-webpcss"),
-	uglify = require("gulp-uglify"), //то же, что cssmin, только для js
+	uglify = require("gulp-uglify-es").default, //то же, что cssmin, только для js
 	concat = require("gulp-concat"), //склеивает css и js-файлы в один
 	del = require("del"), //удаляет указанные файлы и директории. Нужен для очистки перед билдом
-	ttf2woff = require("gulp-ttf2woff"), //конвертирует шрифты в веб-формат
-	ttf2woff2 = require("gulp-ttf2woff2"), //конвертирует шрифты в веб-формат
+	ttfwoff = require("gulp-ttf2woff"), //конвертирует шрифты в веб-формат
+	ttfwoff2 = require("gulp-ttftowoff2"), //конвертирует шрифты в веб-формат
 	ttf2eot = require("gulp-ttf2eot"), //конвертирует шрифты в веб-формат
 	size = require("gulp-filesize"), //выводит в консоль размер файлов до и после их сжатия, чем создаёт чувство глубокого морального удовлетворения, особенно при минификации картинок
-	rsync = require("gulp-rsync"), //заливает файлы проекта на хостинг по ftp с заданными параметрами
-	sourcemaps = require("gulp-sourcemaps"); //рисует карту слитого воедино файла, чтобы было понятно, что из какого файла бралось
+	sourcemaps = require("gulp-sourcemaps"), //рисует карту слитого воедино файла, чтобы было понятно, что из какого файла бралось
+	svgCss = require("gulp-svg-css"),
+	// ffgen = require("gulp-fontgen"),
+	ver = require("gulp-file-version"),
+	svgMin = require("gulp-svgmin");
+
+// NOTE: gulp scss task
 
 gulp.task("scss", function () {
 	//делаем из своего scss-кода css для браузера
@@ -79,8 +79,7 @@ gulp.task("scss", function () {
 				},
 			}),
 		)
-		.pipe(webpcss())
-		.pipe(sourcemaps.write()) //записываем карту в итоговый файл
+		.pipe(sourcemaps.write('sourcemaps/')) //записываем карту в итоговый файл
 		.pipe(gulp.dest("build/css")) //кладём итоговый файл в директорию build/css
 		.pipe(
 			browserSync.reload({
@@ -92,6 +91,8 @@ gulp.task("scss", function () {
 
 //Далее будут похожие или полностью аналогичные функции, которые нет смысла расписывать. Смотрите по аналогии с вышеописанными.
 
+// NOTE: css libs task
+
 gulp.task("style", function () {
 	//создаём единую библиотеку из css-стилей всех плагинов
 	return gulp
@@ -101,9 +102,15 @@ gulp.task("style", function () {
 		])
 		.pipe(concat("libs.min.css")) //склеиваем их в один файл с указанным именем
 		.pipe(cssmin()) //минифицируем полученный файл
+		.pipe(ver(/templateUrl:["']{1}([\w./-]*)["']{1}/g, {
+			base: "./",
+			Hash: "md5"
+		}))
 		.pipe(gulp.dest("build/css")) //кидаем готовый файл в директорию
 		.pipe(size());
 });
+
+// NOTE: js libs task
 
 gulp.task("script", function () {
 	//аналогично поступаем с js-файлами
@@ -116,9 +123,15 @@ gulp.task("script", function () {
 		.pipe(babel())
 		.pipe(concat("libs.min.js"))
 		.pipe(uglify())
+		.pipe(ver(/templateUrl:["']{1}([\w./-]*)["']{1}/g, {
+			base: "./",
+			Hash: "md5"
+		}))
 		.pipe(gulp.dest("build/js"))
 		.pipe(size());
 });
+
+// NOTE: js minification task
 
 gulp.task("minjs", function () {
 	//минифицируем наш main.js и перекидываем в директорию build
@@ -132,9 +145,15 @@ gulp.task("minjs", function () {
 				suffix: ".min",
 			}),
 		)
+		.pipe(ver(/templateUrl:["']{1}([\w./-]*)["']{1}/g, {
+			base: "./",
+			Hash: "md5"
+		}))
 		.pipe(gulp.dest("build/js"))
 		.pipe(size());
 });
+
+// NOTE: js browser reload task
 
 gulp.task("js", function () {
 	//обновляем браузер, если в наших js файлах что-то поменялось
@@ -144,6 +163,8 @@ gulp.task("js", function () {
 		}),
 	);
 });
+
+// NOTE: html files include task
 
 gulp.task("html", function () {
 	//собираем html из кусочков
@@ -156,7 +177,6 @@ gulp.task("html", function () {
 				basepath: "@file",
 			}),
 		)
-		.pipe(webphtml())
 		.pipe(gulp.dest("build/"))
 		.pipe(size())
 		.pipe(
@@ -166,74 +186,49 @@ gulp.task("html", function () {
 		);
 });
 
+// NOTE: fonts tasks
+
 gulp.task("font-woff", function () {
-	//перекидываем шрифты из директории src в build, а заодно следим за новыми файлами, чтобы обновлять браузер, когда появляется шрифт
 	return gulp
 		.src("src/fonts/**/*.+(eot|svg|ttf|otf|woff|woff2)")
-		.pipe(ttf2woff())
+		.pipe(ttfwoff())
 		.pipe(gulp.dest("build/fonts/"))
-		.pipe(
-			browserSync.reload({
-				stream: true,
-			}),
-		);
 });
 
 gulp.task("font-woff2", function () {
-	//перекидываем шрифты из директории src в build, а заодно следим за новыми файлами, чтобы обновлять браузер, когда появляется шрифт
 	return gulp
 		.src("src/fonts/**/*.+(eot|svg|ttf|otf|woff|woff2)")
-		.pipe(ttf2woff2())
+		.pipe(ttfwoff2())
 		.pipe(gulp.dest("build/fonts/"))
-		.pipe(
-			browserSync.reload({
-				stream: true,
-			}),
-		);
 });
 
 gulp.task("font-eot", function () {
-	//перекидываем шрифты из директории src в build, а заодно следим за новыми файлами, чтобы обновлять браузер, когда появляется шрифт
 	return gulp
 		.src("src/fonts/**/*.+(eot|svg|ttf|otf|woff|woff2)")
 		.pipe(ttf2eot())
 		.pipe(gulp.dest("build/fonts/"))
-		.pipe(
-			browserSync.reload({
-				stream: true,
-			}),
-		);
 });
 
-// gulp.task('favicons', function(){ //генератор favicon для всех устройств. Запускается вручную отдельной командой. Генерирует фавиконки на все случаи жизни и файл favicons.html, в котором находятся подключения этих иконок. Скопируйте подключения в файлы проекта и удалите favicons.html Больше нужно для веб-приложений, потому что их ярлыки выносят на главный экран. Сайтам же достаточно закинуть и подключить одну favicon.ico Короче, если вы не уверены, что большинство пользователей мобильных устройств запихнут ярлык вашего сайта на главный экран и разрешат push-уведомления в телефоне, ваша фамилия не Цукерберг и не Дуров - вам этот таск, скорее всего не нужен.
-//   return gulp.src('src/img/favicon/favicon.png')
-//   .pipe(favgen({
-//     appName: 'My App',
-//     appShortName: 'App',
-//     appDescription: 'This is my application',
-//     developerName: 'Hayden Bleasel',
-//     developerURL: 'http://haydenbleasel.com/',
-//     background: '#020307',
-//     path: 'favicons/',
-//     url: 'http://haydenbleasel.com/',
-//     display: 'standalone',
-//     orientation: 'portrait',
-//     scope: '/',
-//     start_url: '/?homescreen=1',
-//     version: 1.0,
-//     logging: false,
-//     html: 'favicons.html',
-//     pipeHTML: true,
-//     replace: true,
-//   })
-//   )
-//   .pipe(gulp.dest('src/'))
-// });
+gulp.task("fontgen", function () {
+	return gulp.src("build/fonts/**/*.{woff2|woff|eot}")
+		.pipe(ffgen({
+			dest: "src/scss/"
+		}));
+});
+
+gulp.task("fonts", gulp.series(
+	"font-woff2",
+	"font-woff",
+	"font-eot",
+	// "fontgen"
+));
+
+// NOTE: images task
 
 gulp.task("images", function () {
 	//пережимаем изображения и складываем их в директорию build
 	return gulp
-		.src("src/images/**/*.+(png|jpg|jpeg|gif|svg|ico|webp)")
+		.src("src/img/**/*.+(png|jpg|jpeg|gif|svg|ico|webp)")
 		.pipe(size())
 		.pipe(
 			imagemin(
@@ -252,7 +247,32 @@ gulp.task("images", function () {
 				],
 			),
 		)
-		.pipe(gulp.dest("build/images"))
+		.pipe(gulp.dest("build/img"))
+		.pipe(
+			browserSync.reload({
+				stream: true,
+			}),
+		)
+		.pipe(size())
+});
+
+// NOTE: svg task
+gulp.task("svgCss", function () {
+	return gulp
+		.src("src/img/svg-to-css/**/*.svg")
+		.pipe(size())
+		.pipe(svgMin())
+		.pipe(svgCss({
+			fileName: '_svg',
+			fileExt: 'scss',
+			cssPrefix: '--svg__',
+			addSize: false
+		}))
+		.pipe(ver(/templateUrl:["']{1}([\w./-]*)["']{1}/g, {
+			base: "./",
+			Hash: "md5"
+		}))
+		.pipe(gulp.dest('src/scss'))
 		.pipe(
 			browserSync.reload({
 				stream: true,
@@ -261,22 +281,10 @@ gulp.task("images", function () {
 		.pipe(size());
 });
 
-gulp.task("webp", function () {
-	return gulp
-		.src("src/images/**/*.+(png|jpg|jpeg|gif|svg|ico|webp)")
-		.pipe(size())
-		.pipe(webp({
-			quality: 75,
-			method: 6,
-		}))
-		.pipe(gulp.dest("build/images"))
-		.pipe(
-			browserSync.reload({
-				stream: true,
-			}),
-		)
-		.pipe(size())
-});
+gulp.task("img", gulp.series(
+	"images",
+	"svgCss"
+))
 
 gulp.task("deletefonts", function () {
 	//задачи для очистки директории со шрифтами в build. Нужна для того, чтобы удалить лишнее.
@@ -288,35 +296,43 @@ gulp.task("deleteimg", function () {
 	return del.sync("build/img/**/*.*");
 });
 
-gulp.task("watch", function () {
-	//Следим за изменениями в файлах и директориях и запускаем задачи, если эти изменения произошли
-	gulp.watch("src/scss/**/*.scss", gulp.parallel("scss"));
-	gulp.watch("src/**/*.html", gulp.parallel("html"));
-	gulp.watch(
-		"src/fonts/**/*.*",
-		gulp.parallel("font-woff", "font-woff2", "font-eot"),
-	);
-	gulp.watch("src/js/**/*.js", gulp.parallel("minjs", "js"));
-	gulp.watch("src/images/**/*.*", gulp.parallel("images", "webp"));
+gulp.task("jSon", function () {
+	return gulp
+		.src("src/js/json/**/*.*")
+		.pipe(size())
+		.pipe(ver(/templateUrl:["']{1}([\w./-]*)["']{1}/g, {
+			base: "./",
+			Hash: "md5"
+		}))
+		.pipe(gulp.dest("build/js/json/"))
+		.pipe(
+			browserSync.reload({
+				stream: true,
+			}),
+		)
+		.pipe(size())
 });
 
-gulp.task("deploy", function () {
-	//грузим файлы на хостинг по FTP
-	return gulp.src("build/**").pipe(
-		rsync({
-			root: "build/", //откуда берём файлы
-			hostname: "yourLogin@yourIp", //ваш логин на хостинге@IPхостинга
-			destination: "sitePath", //папка, в которую будем загружать
-			//port: 25212, //порт, к которому пойдёт подключение. Нужна, если нестандартный порт
-			include: ["*.htaccess"], //файлы, которые нужно включить в передачу
-			exclude: ["**/Thumbs.db", "**/*.DS_Store"], //файлы, которые нужно исключить из передачи
-			recursive: true, //передавать все файлы и папки рекурсивно
-			archive: true, //режим архива
-			silent: false, //отключим ведение журнала
-			compress: true, //включим сжатие
-			progress: true, //выведем прогресс передачи в консоль
-		}),
-	);
+gulp.task("php", function () {
+	return gulp
+		.src("src/**/*.php")
+		.pipe(
+			include({
+				prefix: "@@",
+				basepath: "@file",
+			}),
+		)
+		.pipe(ver(/templateUrl:["']{1}([\w./-]*)["']{1}/g, {
+			base: "./",
+			Hash: "md5"
+		}))
+		.pipe(gulp.dest("build/"))
+		.pipe(
+			browserSync.reload({
+				stream: true,
+			})
+		)
+		.pipe(size())
 });
 
 gulp.task("browser-sync", function () {
@@ -325,11 +341,57 @@ gulp.task("browser-sync", function () {
 		server: {
 			baseDir: "build/", //какую папку показывать в браузере
 		},
-		browser: [""], //в каком браузере
+		browser: ["chrome"], //в каком браузере
 		//tunnel: " ", //тут можно прописать название проекта и дать доступ к нему через интернет. Работает нестабильно, запускается через раз. Не рекомендуется включать без необходимости.
 		//tunnel:true, //работает, как и предыдущяя опция, но присваивает рандомное имя. Тоже запускается через раз и поэтому не рекомендуется для включения
 		host: "192.168.0.104", //IP сервера в локальной сети. Отключите, если у вас DHCP, пропишите под себя, если фиксированный IP в локалке.
+		logLevel: "info",
+		logPrefix: "browserSync",
+		logConnections: true,
+		logFileChanges: true,
+		open: true,
+		timestamps: true
 	});
+});
+
+gulp.task("browser-sync-php", function () {
+	browserSync.init({
+		browser: ["chrome"],
+		watch: true,
+		proxy: "", //тут пишем длокальный домен, заданный в алиасах OpenServer
+		logLevel: "info",
+		logPrefix: "browserSync",
+		logConnections: true,
+		logFileChanges: true,
+		open: true,
+		timestamps: true
+	})
+});
+
+gulp.task("watch", function () {
+	//Следим за изменениями в файлах и директориях и запускаем задачи, если эти изменения произошли
+	gulp.watch("src/scss/**/*.scss", gulp.parallel("scss"));
+	gulp.watch("src/**/*.html", gulp.parallel("html"));
+	gulp.watch(
+		"src/fonts/**/*.*",
+		gulp.parallel("fonts"),
+	);
+	gulp.watch("src/js/**/*.js", gulp.parallel("minjs", "js"));
+	gulp.watch("src/img/svg-to-css/**/*.*", gulp.parallel("svgCss"));
+	gulp.watch("src/js/json/**/*.*", gulp.parallel("jSon"));
+});
+
+gulp.task("watch-php", function () {
+	//Следим за изменениями в файлах и директориях и запускаем задачи, если эти изменения произошли
+	gulp.watch("src/scss/**/*.scss", gulp.parallel("scss"));
+	gulp.watch(
+		"src/fonts/**/*.*",
+		gulp.parallel("fonts"),
+	);
+	gulp.watch("src/js/**/*.js", gulp.parallel("minjs", "js"));
+	gulp.watch("src/img/svg-to-css/**/*.*", gulp.parallel("svgCss"));
+	gulp.watch("src/js/json/**/*.*", gulp.parallel("jSon"));
+	gulp.watch("src/**/*.php", gulp.parallel("php"));
 });
 
 gulp.task(
@@ -342,9 +404,36 @@ gulp.task(
 		"script",
 		"minjs",
 		"html",
-		"font-woff",
-		"font-eot",
-		"font-woff2",
-		"images",
-	),
-); //запускает все перечисленные задачи разом
+		"fonts",
+		"img",
+		"jSon"
+	)); //запускает все перечисленные задачи разом
+
+gulp.task(
+	"php",
+	gulp.parallel(
+		"browser-sync-php",
+		"watch-php",
+		"scss",
+		"style",
+		"script",
+		"minjs",
+		"fonts",
+		"img",
+		"jSon",
+		"php"
+	)); //запускает все перечисленные задачи разом
+
+gulp.task(
+	"build",
+	gulp.parallel(
+		"scss",
+		"style",
+		"script",
+		"minjs",
+		"html",
+		"fonts",
+		"img",
+		"jSon",
+		"php"
+	)); //запускает задачи для сборки проекта в build без запуска сервера
