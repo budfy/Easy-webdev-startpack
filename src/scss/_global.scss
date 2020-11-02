@@ -1,17 +1,19 @@
 html {
-  box-sizing: border-box;
+	box-sizing: border-box;
+	font-size: 16px;
 }
 
 *,
 *::before,
 *::after {
-  box-sizing: inherit;
+	box-sizing: inherit;
 }
 
 html,
 body {
-  height: 100%;
-  position: relative;
+	height: 100%;
+	position: relative;
+	font-family: 'Roboto';
 }
 
 ul,
@@ -24,15 +26,21 @@ h3,
 h4,
 h5,
 h6 {
-  margin: 0;
-  padding: 0;
+	margin: 0;
+	padding: 0;
 }
 
 a {
-  text-decoration: none;
+	text-decoration: none;
 }
 
 button:focus,
 input:focus {
-  outline: transparent;
+	outline: transparent;
+}
+
+.flex {
+	display: flex;
+	align-items: flex-start;
+	justify-content: flex-start;
 }
