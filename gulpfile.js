@@ -124,10 +124,6 @@ gulp.task("script", function () {
 		.pipe(babel())
 		.pipe(concat("libs.min.js"))
 		.pipe(uglify())
-		.pipe(ver(/templateUrl:["']{1}([\w./-]*)["']{1}/g, {
-			base: "./",
-			Hash: "md5"
-		}))
 		.pipe(gulp.dest("build/js"))
 		.pipe(size());
 });
@@ -146,10 +142,6 @@ gulp.task("minjs", function () {
 				suffix: ".min",
 			}),
 		)
-		.pipe(ver(/templateUrl:["']{1}([\w./-]*)["']{1}/g, {
-			base: "./",
-			Hash: "md5"
-		}))
 		.pipe(gulp.dest("build/js"))
 		.pipe(size());
 });
@@ -229,9 +221,11 @@ gulp.task("fontsgen", function (done) {
 				fontname = fontname[0];
 				if (c_fontname != fontname) {
 					if (fontExt == "woff" || fontExt == "woff2" || fontExt == "eot") {
-						console.log(`Added font ${fontname}.${fontExt}
-Please, move mixin call from src/scss/_local-fonts.scss to src/scss/_fonts.scss and change it? if font from this family added ealy!`);
 						fs.appendFile(srcFonts, '@include font-face("' + fontname + '", "' + fontname + '", 400);\r\n', cb);
+						console.log(`Added font ${fontname}.
+----------------------------------------------------------------------------------
+Please, move mixin call from src/scss/_local-fonts.scss to src/scss/_fonts.scss and change it, if font from this family added ealy!
+----------------------------------------------------------------------------------`);
 					}
 				}
 				c_fontname = fontname;
