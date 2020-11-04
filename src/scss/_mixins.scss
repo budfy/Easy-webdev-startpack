@@ -1,0 +1,61 @@
+@mixin bg_cont {
+	background-size: contain;
+	background-position: center center;
+	background-repeat: no-repeat;
+}
+
+@mixin bg_cov {
+	background-size: cover;
+	background-position: center center;
+	background-repeat: no-repeat;
+}
+
+@mixin abs_cent {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+@mixin abs_vert {
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+}
+
+@mixin abs_hor {
+	position: absolute;
+	left: 50%;
+	transform: translateX(-50%);
+}
+
+@mixin btn_anim {
+	transform-origin: center center;
+	transition: all ease-out 240ms;
+
+	&:hover {
+		transform: scale(1.05);
+	}
+
+	&:focus {
+		outline: transparent;
+		transform: scale(1.05) trahslateY(-5%);
+	}
+
+	&:active {
+		transform: scale(0.95);
+	}
+}
+
+@mixin font-face($name, $file, $weight: 400, $style: normal) {
+	@font-face {
+		font-family: "#{$name}";
+		src: url('../fonts/#{$file}.eot');
+		src: url('../fonts/#{$file}.eot?#iefix') format('embedded-opentype'),
+		url('../fonts/#{$file}.woff2') format('woff2'),
+		url('../fonts/#{$file}.woff') format('woff');
+		font-weight: $weight;
+		font-style: $style;
+		font-display: swap;
+	}
+}

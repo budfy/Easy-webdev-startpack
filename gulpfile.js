@@ -21,10 +21,11 @@ let gulp = require("gulp"),
 	ttf2eot = require("gulp-ttf2eot"), //конвертирует шрифты в веб-формат
 	size = require("gulp-filesize"), //выводит в консоль размер файлов до и после их сжатия, чем создаёт чувство глубокого морального удовлетворения, особенно при минификации картинок
 	sourcemaps = require("gulp-sourcemaps"), //рисует карту слитого воедино файла, чтобы было понятно, что из какого файла бралось
+	svgMin = require("gulp-svgmin"),
 	svgCss = require("gulp-svg-css"),
-	// ffgen = require("gulp-fontgen"),
-	ver = require("gulp-file-version"),
-	svgMin = require("gulp-svgmin");
+	svgSprite = require("gulp-svg-sprite"),
+	fs = require('fs'),
+	ver = require("gulp-file-version");
 
 // NOTE: gulp scss task
 
@@ -138,8 +139,8 @@ gulp.task("minjs", function () {
 	return gulp
 		.src("src/js/*.js")
 		.pipe(size())
-		.pipe(babel())
 		.pipe(uglify())
+		.pipe(babel())
 		.pipe(
 			rename({
 				suffix: ".min",
@@ -209,18 +210,42 @@ gulp.task("font-eot", function () {
 		.pipe(gulp.dest("build/fonts/"))
 });
 
-gulp.task("fontgen", function () {
-	return gulp.src("build/fonts/**/*.{woff2|woff|eot}")
-		.pipe(ffgen({
-			dest: "src/scss/"
-		}));
-});
+const cb = () => {}
+
+let srcFonts = './src/scss/_local-fonts.scss';
+let appFonts = './build/fonts/';
+
+gulp.task("fontsgen", function (done) {
+	let file_content = fs.readFileSync(srcFonts);
+
+	fs.writeFile(srcFonts, '', cb);
+	fs.readdir(appFonts, function (err, items) {
+		if (items) {
+			let c_fontname;
+			for (var i = 0; i < items.length; i++) {
+				let fontname = items[i].split('.'),
+					fontExt;
+				fontExt = fontname[1];
+				fontname = fontname[0];
+				if (c_fontname != fontname) {
+					if (fontExt == "woff" || fontExt == "woff2" || fontExt == "eot") {
+						console.log(`Added font ${fontname}.${fontExt}
+Please, move mixin call from src/scss/_local-fonts.scss to src/scss/_fonts.scss and change it? if font from this family added ealy!`);
+						fs.appendFile(srcFonts, '@include font-face("' + fontname + '", "' + fontname + '", 400);\r\n', cb);
+					}
+				}
+				c_fontname = fontname;
+			}
+		}
+	})
+	done();
+})
 
 gulp.task("fonts", gulp.series(
 	"font-woff2",
 	"font-woff",
 	"font-eot",
-	// "fontgen"
+	"fontsgen"
 ));
 
 // NOTE: images task
@@ -228,7 +253,7 @@ gulp.task("fonts", gulp.series(
 gulp.task("images", function () {
 	//пережимаем изображения и складываем их в директорию build
 	return gulp
-		.src("src/img/**/*.+(png|jpg|jpeg|gif|svg|ico|webp)")
+		.src(["src/img/**/*.+(png|jpg|jpeg|gif|svg|ico|webp)", "!src/img/svg-to-css, !src/img/svg-to-sprite"])
 		.pipe(size())
 		.pipe(
 			imagemin(
@@ -256,7 +281,7 @@ gulp.task("images", function () {
 		.pipe(size())
 });
 
-// NOTE: svg task
+// NOTE: svg tasks
 gulp.task("svgCss", function () {
 	return gulp
 		.src("src/img/svg-to-css/**/*.svg")
@@ -281,9 +306,38 @@ gulp.task("svgCss", function () {
 		.pipe(size());
 });
 
+gulp.task("svgSprite", function () {
+	return gulp
+		.src("src/img/svg-to-sprite/**/*.svg")
+		.pipe(svgMin({
+			plugins: [{
+					removeComments: true
+				},
+				{
+					removeEmptyContainers: true
+				}
+			]
+		}))
+		.pipe(svgSprite({
+			mode: {
+				stack: {
+					sprite: "../sprite.svg" //sprite file name
+				}
+			},
+		}))
+		.pipe(gulp.dest('src/img/'))
+		.pipe(
+			browserSync.reload({
+				stream: true,
+			}),
+		)
+		.pipe(size())
+});
+
 gulp.task("img", gulp.series(
-	"images",
-	"svgCss"
+	"svgCss",
+	"svgSprite",
+	"images"
 ))
 
 gulp.task("deletefonts", function () {
@@ -370,28 +424,30 @@ gulp.task("browser-sync-php", function () {
 
 gulp.task("watch", function () {
 	//Следим за изменениями в файлах и директориях и запускаем задачи, если эти изменения произошли
-	gulp.watch("src/scss/**/*.scss", gulp.parallel("scss"));
-	gulp.watch("src/**/*.html", gulp.parallel("html"));
 	gulp.watch(
 		"src/fonts/**/*.*",
 		gulp.parallel("fonts"),
 	);
 	gulp.watch("src/js/**/*.js", gulp.parallel("minjs", "js"));
 	gulp.watch("src/img/svg-to-css/**/*.*", gulp.parallel("svgCss"));
+	gulp.watch("src/img/svg-to-sprite/**/*.*", gulp.series("svgSprite", "images"));
 	gulp.watch("src/js/json/**/*.*", gulp.parallel("jSon"));
+	gulp.watch("src/scss/**/*.scss", gulp.parallel("scss"));
+	gulp.watch("src/**/*.html", gulp.parallel("html"));
 });
 
 gulp.task("watch-php", function () {
 	//Следим за изменениями в файлах и директориях и запускаем задачи, если эти изменения произошли
-	gulp.watch("src/scss/**/*.scss", gulp.parallel("scss"));
 	gulp.watch(
 		"src/fonts/**/*.*",
 		gulp.parallel("fonts"),
 	);
 	gulp.watch("src/js/**/*.js", gulp.parallel("minjs", "js"));
 	gulp.watch("src/img/svg-to-css/**/*.*", gulp.parallel("svgCss"));
+	gulp.watch("src/img/svg-to-sprite/**/*.*", gulp.series("svgSprite", "images"));
 	gulp.watch("src/js/json/**/*.*", gulp.parallel("jSon"));
 	gulp.watch("src/**/*.php", gulp.parallel("php"));
+	gulp.watch("src/scss/**/*.scss", gulp.parallel("scss"));
 });
 
 gulp.task(
