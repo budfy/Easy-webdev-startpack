@@ -82,11 +82,6 @@ gulp.task("scss", function () {
 		)
 		.pipe(sourcemaps.write('sourcemaps/')) //записываем карту в итоговый файл
 		.pipe(gulp.dest("build/css")) //кладём итоговый файл в директорию build/css
-		.pipe(
-			browserSync.reload({
-				stream: true,
-			}),
-		) //обновляем браузер
 		.pipe(size()); //смотрим размер получившегося файла
 });
 
@@ -146,17 +141,6 @@ gulp.task("minjs", function () {
 		.pipe(size());
 });
 
-// NOTE: js browser reload task
-
-gulp.task("js", function () {
-	//обновляем браузер, если в наших js файлах что-то поменялось
-	return gulp.src("src/js/**/*.js").pipe(
-		browserSync.reload({
-			stream: true,
-		}),
-	);
-});
-
 // NOTE: html files include task
 
 gulp.task("html", function () {
@@ -172,11 +156,6 @@ gulp.task("html", function () {
 		)
 		.pipe(gulp.dest("build/"))
 		.pipe(size())
-		.pipe(
-			browserSync.reload({
-				stream: true,
-			}),
-		);
 });
 
 // NOTE: fonts tasks
@@ -267,11 +246,6 @@ gulp.task("images", function () {
 			),
 		)
 		.pipe(gulp.dest("build/img"))
-		.pipe(
-			browserSync.reload({
-				stream: true,
-			}),
-		)
 		.pipe(size())
 });
 
@@ -292,11 +266,6 @@ gulp.task("svgCss", function () {
 			Hash: "md5"
 		}))
 		.pipe(gulp.dest('src/scss'))
-		.pipe(
-			browserSync.reload({
-				stream: true,
-			}),
-		)
 		.pipe(size());
 });
 
@@ -320,11 +289,6 @@ gulp.task("svgSprite", function () {
 			},
 		}))
 		.pipe(gulp.dest('src/img/'))
-		.pipe(
-			browserSync.reload({
-				stream: true,
-			}),
-		)
 		.pipe(size())
 });
 
@@ -353,11 +317,6 @@ gulp.task("jSon", function () {
 			Hash: "md5"
 		}))
 		.pipe(gulp.dest("build/js/json/"))
-		.pipe(
-			browserSync.reload({
-				stream: true,
-			}),
-		)
 		.pipe(size())
 });
 
@@ -375,11 +334,6 @@ gulp.task("php", function () {
 			Hash: "md5"
 		}))
 		.pipe(gulp.dest("build/"))
-		.pipe(
-			browserSync.reload({
-				stream: true,
-			})
-		)
 		.pipe(size())
 });
 
@@ -399,7 +353,7 @@ gulp.task("browser-sync", function () {
 		logFileChanges: true,
 		open: true,
 		timestamps: true
-	});
+	})
 });
 
 gulp.task("browser-sync-php", function () {
@@ -416,18 +370,22 @@ gulp.task("browser-sync-php", function () {
 	})
 });
 
+gulp.task("bs-reload", function () {
+	browserSync.reload();
+})
+
 gulp.task("watch", function () {
 	//Следим за изменениями в файлах и директориях и запускаем задачи, если эти изменения произошли
 	gulp.watch(
 		"src/fonts/**/*.*",
 		gulp.parallel("fonts"),
 	);
-	gulp.watch("src/js/**/*.js", gulp.parallel("minjs", "js"));
-	gulp.watch("src/img/svg-to-css/**/*.*", gulp.parallel("svgCss"));
-	gulp.watch("src/img/svg-to-sprite/**/*.*", gulp.series("svgSprite", "images"));
-	gulp.watch("src/js/json/**/*.*", gulp.parallel("jSon"));
-	gulp.watch("src/scss/**/*.scss", gulp.parallel("scss"));
-	gulp.watch("src/**/*.html", gulp.parallel("html"));
+	gulp.watch("src/js/**/*.js", gulp.parallel("minjs", "bs-reload"));
+	gulp.watch("src/img/svg-to-css/**/*.*", gulp.parallel("svgCss", "bs-reload"));
+	gulp.watch("src/img/svg-to-sprite/**/*.*", gulp.series("svgSprite", "images", "bs-reload"));
+	gulp.watch("src/js/json/**/*.*", gulp.parallel("jSon", "bs-reload"));
+	gulp.watch("src/scss/**/*.scss", gulp.parallel("scss", "bs-reload"));
+	gulp.watch("src/**/*.html", gulp.parallel("html", "bs-reload"));
 });
 
 gulp.task("watch-php", function () {
@@ -436,12 +394,12 @@ gulp.task("watch-php", function () {
 		"src/fonts/**/*.*",
 		gulp.parallel("fonts"),
 	);
-	gulp.watch("src/js/**/*.js", gulp.parallel("minjs", "js"));
-	gulp.watch("src/img/svg-to-css/**/*.*", gulp.parallel("svgCss"));
-	gulp.watch("src/img/svg-to-sprite/**/*.*", gulp.series("svgSprite", "images"));
-	gulp.watch("src/js/json/**/*.*", gulp.parallel("jSon"));
-	gulp.watch("src/**/*.php", gulp.parallel("php"));
-	gulp.watch("src/scss/**/*.scss", gulp.parallel("scss"));
+	gulp.watch("src/js/**/*.js", gulp.parallel("minjs", "bs-reload"));
+	gulp.watch("src/img/svg-to-css/**/*.*", gulp.parallel("svgCss", "bs-reload"));
+	gulp.watch("src/img/svg-to-sprite/**/*.*", gulp.series("svgSprite", "images", "bs-reload"));
+	gulp.watch("src/js/json/**/*.*", gulp.parallel("jSon", "bs-reload"));
+	gulp.watch("src/**/*.php", gulp.parallel("php", "bs-reload"));
+	gulp.watch("src/scss/**/*.scss", gulp.parallel("scss", "bs-reload"));
 });
 
 gulp.task(
