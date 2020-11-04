@@ -3,6 +3,7 @@
 .LSOverride
 .vs
 
+.vscode/
 node_modules/
 package.lock.json
 yarn.lock
