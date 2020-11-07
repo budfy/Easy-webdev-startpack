@@ -1,9 +1,11 @@
 @import 'mixins';
 @import 'vars';
 @import 'fonts';
+@import 'local-fonts';
 @import 'global';
 @import 'svg';
+@import 'bem-blocks';
+/* NOTE - import here your style modules */
 
 
-
-@import 'media';
+@import'media';
