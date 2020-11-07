@@ -15,7 +15,6 @@ body {
 	position: relative;
 }
 
-
 ul,
 ol,
 li,
@@ -27,12 +26,17 @@ h4,
 h5,
 h6 {
 	margin: 0;
-	padding: 0;
 }
+
+
 
 button:focus,
 input:focus {
 	outline: transparent;
+}
+
+h5 {
+	font-size: 20px;
 }
 
 .flex {
