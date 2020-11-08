@@ -1,3 +1,5 @@
+"use strict";
+
 const gulp = require('gulp');
 const sass = require('gulp-sass');
 const bs = require('browser-sync');
@@ -22,6 +24,9 @@ const ttf2woff2 = require('gulp-ttftowoff2');
 const ttf2woff = require('gulp-ttf2woff');
 const ttf2eot = require('gulp-ttf2eot');
 const fs = require('fs');
+const {
+	strict
+} = require('assert');
 
 let settings_size = {
 		'gzip': true,
@@ -297,11 +302,7 @@ gulp.task('fontsgen', (done) => {
 				fontname = fontname[0];
 				if (c_fontname != fontname) {
 					if (fontExt == 'woff' || fontExt == 'woff2' || fontExt == 'eot') {
-						fs.appendFile(srcFonts, '@include font-face('
-							' + fontname + '
-							', '
-							' + fontname + '
-							', 400);\r\n', cb);
+						fs.appendFile(srcFonts, `@include font-face("${fontname}", "${fontname}", 400);\r\n`, cb);
 						console.log(`Added font ${fontname}.
 ----------------------------------------------------------------------------------
 Please, move mixin call from src/scss/_local-fonts.scss to src/scss/_fonts.scss and then change it, if font from this family added ealy!
