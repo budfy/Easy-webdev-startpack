@@ -74,12 +74,6 @@ gulp.task('dev_styles', () => {
 		.pipe(sass({
 			outputStyle: 'compressed'
 		}).on('error', sass.logError))
-		.pipe(cleanCss({
-			level: 2
-		}))
-		.pipe(rename({
-			suffix: '.min'
-		}))
 		.pipe(prefixer({
 			overrideBrowserslist: ['last 8 versions'],
 			browsers: [
@@ -91,6 +85,12 @@ gulp.task('dev_styles', () => {
 				'Opera >= 12',
 				'Safari >= 6',
 			],
+		}))
+		.pipe(cleanCss({
+			level: 2
+		}))
+		.pipe(rename({
+			suffix: '.min'
 		}))
 		.pipe(map.write('../sourcemaps'))
 		.pipe(gulp.dest('build/css'))
