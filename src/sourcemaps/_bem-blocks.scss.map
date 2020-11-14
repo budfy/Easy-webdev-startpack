@@ -1,0 +1,1 @@
+{"version":3,"sources":["button/_button.scss"],"names":[],"mappings":"AAAA;AACA;AACA;AACA;AACA","file":"../bem-blocks/_bem-blocks.scss","sourcesContent":["button {\r\n\tmargin: 0;\r\n\tpadding: 0;\r\n\tfont-size: 20px;\r\n}"]}

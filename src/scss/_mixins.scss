@@ -1,32 +1,28 @@
-@mixin bg_cont {
-	background-size: contain;
+@mixin bg ($size) {
+	background-size: #{$size};
 	background-position: center center;
 	background-repeat: no-repeat;
 }
 
-@mixin bg_cov {
-	background-size: cover;
-	background-position: center center;
-	background-repeat: no-repeat;
-}
 
-@mixin abs_cent {
+@mixin centering ($dir) {
 	position: absolute;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%);
-}
 
-@mixin abs_vert {
-	position: absolute;
-	top: 50%;
-	transform: translateY(-50%);
-}
+	@if $dir==v {
+		top: 50%;
+		transform: translateY(-50%);
+	}
 
-@mixin abs_hor {
-	position: absolute;
-	left: 50%;
-	transform: translateX(-50%);
+	@else if $dir==h {
+		left: 50%;
+		transform: translateX(-50%);
+	}
+
+	@else {
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+	}
 }
 
 @mixin btn_anim {
