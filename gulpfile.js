@@ -20,6 +20,7 @@ const pngquant = require('imagemin-pngquant');
 const svgmin = require('gulp-svgmin');
 const svgcss = require('gulp-svg-css');
 const svgsprite = require('gulp-svg-sprite');
+const svgInclude = require('gulp-embed-svg');
 const ttf2woff2 = require('gulp-ttftowoff2');
 const ttf2woff = require('gulp-ttf2woff');
 const ttf2eot = require('gulp-ttf2eot');
@@ -169,6 +170,9 @@ gulp.task('html', () => {
 	return gulp
 		.src(['src/**/*.html', '!src/**/_*.html'])
 		.pipe(include())
+		.pipe(svgInclude({
+			selectors: '.include-svg'
+		}))
 		.pipe(htmlmin({
 			collapseWhitespace: true
 		}))
@@ -180,6 +184,9 @@ gulp.task('html', () => {
 gulp.task('php', () => {
 	return gulp
 		.src('src/**/*.php')
+		.pipe(svgInclude({
+			selectors: '.include-svg'
+		}))
 		.pipe(size(settings_size))
 		.pipe(gulp.dest('build/'))
 		.pipe(bs.stream())

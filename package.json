@@ -14,6 +14,7 @@
 		"gulp-changed": "^4.0.2",
 		"gulp-clean-css": "^4.3.0",
 		"gulp-concat": "^2.6.1",
+		"gulp-embed-svg": "^1.2.0",
 		"gulp-file-include": "^2.2.2",
 		"gulp-htmlmin": "^5.0.1",
 		"gulp-imagemin": "^7.1.0",
