@@ -30,10 +30,10 @@
 		"gulp-ttftowoff2": "^1.0.1",
 		"gulp-uglify-es": "^2.0.0",
 		"imagemin-jpeg-recompress": "^7.0.0",
-		"imagemin-pngquant": "^9.0.1"
+		"imagemin-pngquant": "^9.0.1",
+		"vinyl-ftp": "^0.6.1"
 	},
 	"dependencies": {
-		"jquery": "^3.5.1",
 		"normalize.css": "^8.0.1"
 	},
 	"scripts": {
