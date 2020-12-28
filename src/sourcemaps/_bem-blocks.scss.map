@@ -1,1 +1,1 @@
-{"version":3,"sources":["button/_button.scss"],"names":[],"mappings":"AAAA;AACA;AACA;AACA;AACA","file":"../bem-blocks/_bem-blocks.scss","sourcesContent":["button {\r\n\tmargin: 0;\r\n\tpadding: 0;\r\n\tfont-size: 20px;\r\n}"]}
+{"version":3,"sources":["_btn.scss"],"names":[],"mappings":"AAAA;AACA;AACA;AACA;AACA;AACA;AACA","file":"../bem-blocks/_bem-blocks.scss","sourcesContent":["button {\r\n\t@include no-btn;\r\n\t@include btn_anim(1.05, 0.95);\r\n\t@include bg('contain');\r\n\tdisplay: block;\r\n\tmargin: 100px auto;\r\n}"]}

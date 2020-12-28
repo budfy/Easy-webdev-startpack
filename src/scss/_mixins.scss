@@ -4,7 +4,6 @@
 	background-repeat: no-repeat;
 }
 
-
 @mixin centering ($dir) {
 	position: absolute;
 
@@ -25,21 +24,20 @@
 	}
 }
 
-@mixin btn_anim {
+@mixin btn_anim($scaleMax, $scaleMin) {
 	transform-origin: center center;
 	transition: all ease-out 240ms;
 
 	&:hover {
-		transform: scale(1.05);
+		transform: scale($scaleMax);
 	}
 
 	&:focus {
-		outline: transparent;
-		transform: scale(1.05) trahslateY(-5%);
+		transform: scale($scaleMax) trahslateY(-5%);
 	}
 
 	&:active {
-		transform: scale(0.95);
+		transform: scale($scaleMin);
 	}
 }
 
@@ -54,4 +52,14 @@
 		font-style: $style;
 		font-display: swap;
 	}
+}
+
+@mixin no-btn {
+	padding: 0;
+	margin: 0;
+	border: 0;
+	background-color: transparent;
+	border-radius: 0;
+	cursor: pointer;
+	-webkit-appearance: none;
 }

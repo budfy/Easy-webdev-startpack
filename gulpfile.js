@@ -25,9 +25,15 @@ const ttf2woff2 = require('gulp-ttftowoff2');
 const ttf2woff = require('gulp-ttf2woff');
 const ttf2eot = require('gulp-ttf2eot');
 const fs = require('fs');
+const ftp = require('vinyl-ftp');
 const {
 	strict
 } = require('assert');
+
+const js_plugins = [];
+const css_plugins = [
+	'node_modules/normalize.css/normalize.css'
+];
 
 let settings_size = {
 		'gzip': true,
@@ -43,7 +49,14 @@ let settings_size = {
 				removeEmptyContainers: true
 			}
 		]
-	};
+	},
+	connect = ftp.create({
+		host: '',
+		user: '',
+		pass: '',
+		parallel: 10,
+		log: ''
+	});
 
 gulp.task('bem_styles', () => {
 	return gulp
@@ -56,16 +69,17 @@ gulp.task('bem_styles', () => {
 });
 
 gulp.task('libs_styles', () => {
-	return gulp
-		.src([
-			'node_modules/normalize.css/normalize.css'
-			/* insert here path to libs and plugins css/scss files by comma, like 'node_modules/lib-1/lib-1.css','node_modules/lib-2/lib-2.scss'  */
-		])
-		.pipe(map.init())
-		.pipe(concat('libs.scss'))
-		.pipe(map.write('../sourcemaps'))
-		.pipe(size(settings_size))
-		.pipe(gulp.dest('src/scss/'))
+	if (css_plugins.length > 0) {
+		return gulp
+			.src(css_plugins)
+			.pipe(map.init())
+			.pipe(concat('libs.scss'))
+			.pipe(map.write('../sourcemaps'))
+			.pipe(size(settings_size))
+			.pipe(gulp.dest('src/scss/'))
+	} else {
+		return true;
+	}
 });
 
 gulp.task('dev_styles', () => {
@@ -111,30 +125,27 @@ gulp.task('bem_js', () => {
 	return gulp
 		.src('src/components/bem-blocks/**/*.js')
 		.pipe(map.init())
-		.pipe(concat('bem.js'))
+		.pipe(concat('02__bem.js'))
 		.pipe(uglify())
 		.pipe(map.write('../sourcemaps'))
 		.pipe(size(settings_size))
 		.pipe(gulp.dest('src/js/'))
 });
 
-gulp.task('libs_js', () => {
-	return gulp
-		.src([
-			'node_modules/jquery/dist/jquery.min.js'
-			/* insert here path to libs and plugins js files, like 'node_modules/lib-1/lib-1.js','node_modules/lib-2/lib-2.js'  */
-		])
-		.pipe(map.init())
-		.pipe(concat('libs.min.js'))
-		.pipe(uglify())
-		.pipe(map.write('../sourcemaps'))
-		.pipe(size(settings_size))
-		.pipe(gulp.dest('build/js/'))
-});
+// gulp.task('libs_js', () => {
+// 	return gulp
+// 		.src(js_plugins)
+// 		.pipe(map.init())
+// 		.pipe(concat('libs.min.js'))
+// 		.pipe(uglify())
+// 		.pipe(map.write('../sourcemaps'))
+// 		.pipe(size(settings_size))
+// 		.pipe(gulp.dest('build/js/'))
+// });
 
 gulp.task('dev_js', () => {
 	return gulp
-		.src('src/js/**/*.js')
+		.src(['src/js/01__main.js', 'src/js/02__bem.js'])
 		.pipe(map.init())
 		.pipe(uglify())
 		.pipe(concat('main.min.js'))
@@ -146,7 +157,7 @@ gulp.task('dev_js', () => {
 
 gulp.task('build_js', () => {
 	return gulp
-		.src('src/js/**/*.js')
+		.src(['src/js/01__main.js', 'src/js/02__bem.js'])
 		.pipe(map.init())
 		.pipe(uglify())
 		.pipe(babel({
@@ -156,12 +167,12 @@ gulp.task('build_js', () => {
 		.pipe(map.write('../sourcemaps'))
 		.pipe(size(settings_size))
 		.pipe(gulp.dest('build/js/'))
-})
+});
 
 gulp.task('js',
 	gulp.series(
 		'bem_js',
-		'libs_js',
+		// 'libs_js',
 		'dev_js'
 	)
 );
@@ -172,9 +183,6 @@ gulp.task('html', () => {
 		.pipe(include())
 		.pipe(svgInclude({
 			selectors: '.include-svg'
-		}))
-		.pipe(htmlmin({
-			collapseWhitespace: true
 		}))
 		.pipe(size(settings_size))
 		.pipe(gulp.dest('build'))
@@ -232,19 +240,27 @@ gulp.task('svg2sprite', () => {
 gulp.task('img', () => {
 	return gulp
 		.src('src/img/**/*.+(png|jpg|jpeg|gif|svg|ico|webp)')
-		.pipe(changed('build/img/'))
-		.pipe(imagemin([
-			recompress({
-				loops: 4,
-				min: 80,
-				max: 100,
-				quality: 'high',
-				use: [pngquant()],
-			}),
-			imagemin.gifsicle(),
-			imagemin.optipng(),
-			imagemin.svgo()
-		], ), )
+		.pipe(imagemin({
+				interlaced: true,
+				progressive: true,
+				optimizationLevel: 5,
+			},
+			[
+				recompress({
+					loops: 6,
+					min: 50,
+					max: 90,
+					quality: 'high',
+					use: [pngquant({
+						quality: [0.7, 0.9],
+						strip: true,
+						speed: 1
+					})],
+				}),
+				imagemin.gifsicle(),
+				imagemin.optipng(),
+				imagemin.svgo()
+			], ), )
 		.pipe(gulp.dest('build/img'))
 		.pipe(size(settings_size))
 		.pipe(bs.stream())
@@ -356,6 +372,13 @@ gulp.task('server_php', () => {
 	})
 });
 
+gulp.task('deploy', () => {
+	return gulp
+		.src('build/**/*.*')
+		.pipe(connect.newer('html/'))
+		.pipe(connect.dest('html/'))
+});
+
 gulp.task('watch_html', () => {
 	gulp.watch('src/scss/**/*.scss', gulp.parallel('dev_styles'));
 	gulp.watch('src/components/bem-blocks/**/*.scss', gulp.series('bem_styles', 'dev_styles'));
@@ -394,6 +417,7 @@ gulp.task('default',
 		'server_html'
 	)
 );
+
 gulp.task('dev-php',
 	gulp.parallel(
 		'style',

@@ -15,6 +15,10 @@ body {
 	position: relative;
 }
 
+body {
+	font-family: "Avenir";
+}
+
 ul,
 ol,
 li,
@@ -33,8 +37,8 @@ input:focus {
 	outline: transparent;
 }
 
-h5 {
-	font-size: 20px;
+button {
+	@include no-btn;
 }
 
 .flex {
@@ -45,6 +49,10 @@ h5 {
 
 .--just-space {
 	justify-content: space-between;
+}
+
+.--just-center {
+	justify-content: center;
 }
 
 .--just-end {
