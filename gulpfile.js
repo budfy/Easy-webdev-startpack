@@ -6,6 +6,7 @@ const bs = require('browser-sync');
 const rename = require('gulp-rename');
 const prefixer = require('gulp-autoprefixer');
 const cleanCss = require('gulp-clean-css');
+const bulkSass = require('gulp-sass-bulk-importer');
 const concat = require('gulp-concat');
 const map = require('gulp-sourcemaps');
 const include = require('gulp-file-include');
@@ -18,7 +19,7 @@ const imagemin = require('gulp-imagemin');
 const recompress = require('imagemin-jpeg-recompress');
 const pngquant = require('imagemin-pngquant');
 const svgmin = require('gulp-svgmin');
-const svgcss = require('gulp-svg-css');
+const svgcss = require('gulp-svg-css-pseudo');
 const svgsprite = require('gulp-svg-sprite');
 const svgInclude = require('gulp-embed-svg');
 const ttf2woff2 = require('gulp-ttftowoff2');
@@ -58,25 +59,18 @@ let settings_size = {
 		log: ''
 	});
 
-gulp.task('bem_styles', () => {
-	return gulp
-		.src('src/components/bem-blocks/**/*.scss')
-		.pipe(map.init())
-		.pipe(concat('_bem-blocks.scss'))
-		.pipe(map.write('../sourcemaps'))
-		.pipe(size(settings_size))
-		.pipe(gulp.dest('src/scss'))
-});
-
 gulp.task('libs_styles', () => {
 	if (css_plugins.length > 0) {
 		return gulp
 			.src(css_plugins)
 			.pipe(map.init())
-			.pipe(concat('libs.scss'))
-			.pipe(map.write('../sourcemaps'))
+			.pipe(sass({
+				outputStyle: 'compressed'
+			}).on('error', sass.logError))
+			.pipe(concat('libs.min.css'))
+			.pipe(map.write('../sourcemaps/'))
 			.pipe(size(settings_size))
-			.pipe(gulp.dest('src/scss/'))
+			.pipe(gulp.dest('build/css/'))
 	} else {
 		return true;
 	}
@@ -84,8 +78,9 @@ gulp.task('libs_styles', () => {
 
 gulp.task('dev_styles', () => {
 	return gulp
-		.src('src/scss/**/*.scss')
+		.src('src/scss/*.scss', '!src/scss/libs.scss')
 		.pipe(map.init())
+		.pipe(bulkSass())
 		.pipe(sass({
 			outputStyle: 'compressed'
 		}).on('error', sass.logError))
@@ -104,52 +99,42 @@ gulp.task('dev_styles', () => {
 		.pipe(cleanCss({
 			level: 2
 		}))
-		.pipe(rename({
-			suffix: '.min'
-		}))
-		.pipe(map.write('../sourcemaps'))
-		.pipe(gulp.dest('build/css'))
+		.pipe(concat('style.min.css'))
+		.pipe(map.write('../sourcemaps/'))
+		.pipe(gulp.dest('build/css/'))
 		.pipe(size(settings_size))
 		.pipe(bs.stream())
 });
 
 gulp.task('style',
 	gulp.series(
-		'bem_styles',
 		'libs_styles',
 		'dev_styles'
 	)
 );
 
-gulp.task('bem_js', () => {
-	return gulp
-		.src('src/components/bem-blocks/**/*.js')
-		.pipe(map.init())
-		.pipe(concat('02__bem.js'))
-		.pipe(uglify())
-		.pipe(map.write('../sourcemaps'))
-		.pipe(size(settings_size))
-		.pipe(gulp.dest('src/js/'))
+gulp.task('libs_js', () => {
+	if (js_plugins.length) {
+		return gulp
+			.src(js_plugins)
+			.pipe(map.init())
+			.pipe(concat('libs.min.js'))
+			.pipe(uglify())
+			.pipe(map.write('../sourcemaps/'))
+			.pipe(size(settings_size))
+			.pipe(gulp.dest('build/js/'))
+	} else {
+		return true
+	}
 });
-
-// gulp.task('libs_js', () => {
-// 	return gulp
-// 		.src(js_plugins)
-// 		.pipe(map.init())
-// 		.pipe(concat('libs.min.js'))
-// 		.pipe(uglify())
-// 		.pipe(map.write('../sourcemaps'))
-// 		.pipe(size(settings_size))
-// 		.pipe(gulp.dest('build/js/'))
-// });
 
 gulp.task('dev_js', () => {
 	return gulp
-		.src(['src/js/01__main.js', 'src/js/02__bem.js'])
+		.src(['src/js/01__main.js', 'src/components/bem-blocks/**/*.js'])
 		.pipe(map.init())
 		.pipe(uglify())
 		.pipe(concat('main.min.js'))
-		.pipe(map.write('../sourcemaps'))
+		.pipe(map.write('../sourcemaps/'))
 		.pipe(size(settings_size))
 		.pipe(gulp.dest('build/js/'))
 		.pipe(bs.stream())
@@ -157,22 +142,21 @@ gulp.task('dev_js', () => {
 
 gulp.task('build_js', () => {
 	return gulp
-		.src(['src/js/01__main.js', 'src/js/02__bem.js'])
+		.src(['src/js/01__main.js', 'src/components/bem-blocks/**/*.js'])
 		.pipe(map.init())
 		.pipe(uglify())
 		.pipe(babel({
 			presets: ['@babel/env']
 		}))
 		.pipe(concat('main.min.js'))
-		.pipe(map.write('../sourcemaps'))
+		.pipe(map.write('../sourcemaps/'))
 		.pipe(size(settings_size))
 		.pipe(gulp.dest('build/js/'))
 });
 
 gulp.task('js',
 	gulp.series(
-		'bem_js',
-		// 'libs_js',
+		'libs_js',
 		'dev_js'
 	)
 );
@@ -182,7 +166,8 @@ gulp.task('html', () => {
 		.src(['src/**/*.html', '!src/**/_*.html'])
 		.pipe(include())
 		.pipe(svgInclude({
-			selectors: '.include-svg'
+			selectors: '.include-svg',
+			root: './src/svg/include'
 		}))
 		.pipe(size(settings_size))
 		.pipe(gulp.dest('build'))
@@ -193,7 +178,8 @@ gulp.task('php', () => {
 	return gulp
 		.src('src/**/*.php')
 		.pipe(svgInclude({
-			selectors: '.include-svg'
+			selectors: '.include-svg',
+			root: './src/svg/include'
 		}))
 		.pipe(size(settings_size))
 		.pipe(gulp.dest('build/'))
@@ -213,12 +199,12 @@ gulp.task('svg2css', () => {
 		.src('src/svg/css/**/*.svg')
 		.pipe(svgmin(svgmin_plugins))
 		.pipe(svgcss({
-			fileName: '_svg',
+			fileName: '_05-svg',
 			fileExt: 'scss',
 			cssPrefix: '--svg__',
 			addSize: false
 		}))
-		.pipe(gulp.dest('src/scss'))
+		.pipe(gulp.dest('src/scss/global'))
 		.pipe(size(settings_size));
 });
 
@@ -380,28 +366,26 @@ gulp.task('deploy', () => {
 });
 
 gulp.task('watch_html', () => {
-	gulp.watch('src/scss/**/*.scss', gulp.parallel('dev_styles'));
-	gulp.watch('src/components/bem-blocks/**/*.scss', gulp.series('bem_styles', 'dev_styles'));
+	gulp.watch('src/**/*.scss', gulp.parallel('dev_styles'));
 	gulp.watch('src/**/*.html', gulp.parallel('html'));
-	gulp.watch('src/components/bem-blocks/**/*.js', gulp.series('bem_js', 'dev_js'));
-	gulp.watch('src/js/**/*.js', gulp.parallel('dev_js'));
+	gulp.watch('src/**/*.js', gulp.parallel('dev_js'));
 	gulp.watch('src/**/*.json', gulp.parallel('json'));
 	gulp.watch('src/img/**/*.*', gulp.parallel('img'));
 	gulp.watch('src/svg/css/**/*.svg', gulp.parallel('svg2css'));
 	gulp.watch('src/svg/sprite/**/*.svg', gulp.parallel('svg2sprite'));
+	gulp.watch('src/svg/include/**/*.svg', gulp.parallel('html'));
 	gulp.watch('src/fonts/**/*.ttf', gulp.parallel('fonts'));
 });
 
 gulp.task('watch_php', () => {
-	gulp.watch('src/scss/**/*.scss', gulp.parallel('dev_styles'));
-	gulp.watch('src/components/bem-blocks/**/*.scss', gulp.series('bem_styles', 'dev_styles'));
+	gulp.watch('src/**/*.scss', gulp.parallel('dev_styles'));
 	gulp.watch('src/**/*.php', gulp.parallel('php'));
-	gulp.watch('src/components/bem-blocks/**/*.js', gulp.series('bem_js', 'dev_js'));
-	gulp.watch('src/js/**/*.js', gulp.parallel('dev_js'));
+	gulp.watch('src/**/*.js', gulp.parallel('dev_js'));
 	gulp.watch('src/**/*.json', gulp.parallel('json'));
 	gulp.watch('src/img/**/*.*', gulp.parallel('img'));
 	gulp.watch('src/svg/css/**/*.svg', gulp.parallel('svg2css'));
 	gulp.watch('src/svg/sprite/**/*.svg', gulp.parallel('svg2sprite'));
+	gulp.watch('src/svg/include/**/*.svg', gulp.parallel('php'));
 	gulp.watch('src/fonts/**/*.ttf', gulp.parallel('fonts'));
 });
 
