@@ -1,7 +1,0 @@
-button {
-	@include no-btn;
-	@include btn_anim(1.05, 0.95);
-	@include bg('contain');
-	display: block;
-	margin: 100px auto;
-}
