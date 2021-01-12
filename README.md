@@ -1,6 +1,7 @@
 <!-- @format -->
-
+[![Donate](https://img.shields.io/badge/donate-dyaka.com-red?style=plastic)](https://css_notes.dyaka.com/startpack) 
 # Easy-webdev-startpack
+![CodeFactor Grade](https://img.shields.io/codefactor/grade/github/budfy/easy-webdev-startpack?style=plastic) ![GitHub release (latest by date)](https://img.shields.io/github/v/release/budfy/Easy-webdev-startpack?style=plastic) ![GitHub last commit](https://img.shields.io/github/last-commit/budfy/easy-webdev-startpack?style=plastic) ![GitHub Repo stars](https://img.shields.io/github/stars/budfy/Easy-webdev-startpack?style=plastic) ![GitHub forks](https://img.shields.io/github/forks/budfy/Easy-webdev-startpack?style=plastic)
 
 ## Сборка Gulp4 с плагинами для разработки вебпроектов.
 
