@@ -1,0 +1,62 @@
+{
+  "name": "gulp-sourcemaps",
+  "version": "3.0.0",
+  "description": "Sourcemap support for gulpjs.",
+  "homepage": "http://github.com/gulp-sourcemaps/gulp-sourcemaps",
+  "repository": "git://github.com/gulp-sourcemaps/gulp-sourcemaps.git",
+  "main": "index.js",
+  "scripts": {
+    "lint": "eslint .",
+    "pretest": "npm run lint",
+    "test": "mocha --async-only",
+    "cover": "istanbul cover _mocha --report lcovonly",
+    "coveralls": "npm run cover && istanbul-coveralls"
+  },
+  "keywords": [
+    "gulpplugin",
+    "gulp",
+    "source maps",
+    "sourcemaps"
+  ],
+  "author": "Florian Reiterer <me@florianreiterer.com>",
+  "license": "ISC",
+  "dependencies": {
+    "@gulp-sourcemaps/identity-map": "^2.0.1",
+    "@gulp-sourcemaps/map-sources": "^1.0.0",
+    "acorn": "^6.4.1",
+    "convert-source-map": "^1.0.0",
+    "css": "^3.0.0",
+    "debug-fabulous": "^1.0.0",
+    "detect-newline": "^2.0.0",
+    "graceful-fs": "^4.0.0",
+    "source-map": "^0.6.0",
+    "strip-bom-string": "^1.0.0",
+    "through2": "^2.0.0"
+  },
+  "devDependencies": {
+    "bootstrap": "^3.4.1",
+    "eslint": "^5.16.0",
+    "eslint-config-gulp": "^3.0.1",
+    "expect": "^1.20.2",
+    "gulp": "^4.0.0",
+    "gulp-concat": "^2.6.1",
+    "gulp-if": "^2.0.2",
+    "gulp-less": "^3.0.0",
+    "gulp-load-plugins": "^1.5.0",
+    "hook-std": "0.2.X",
+    "istanbul": "^0.4.3",
+    "istanbul-coveralls": "^1.0.3",
+    "mississippi": "1.X",
+    "mocha": "^3.5.3",
+    "object-assign": "^4.1.1",
+    "rimraf": "^2.6.3",
+    "vinyl": "^2.2.0"
+  },
+  "files": [
+    "index.js",
+    "src"
+  ],
+  "engines": {
+    "node": ">= 6"
+  }
+}

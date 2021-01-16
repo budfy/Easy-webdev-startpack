@@ -1,0 +1,48 @@
+{
+	"name": "o-stream",
+	"version": "0.2.2",
+	"description": "Intuitive node streams in typescript.",
+	"main": "./lib/main.js",
+	"typings": "./lib/main.d.ts",
+	"config": {
+		"outputDir": "lib"
+	},
+	"files": [
+		"lib/"
+	],
+	"author": {
+		"name": "Itay Ronen",
+		"email": "",
+		"url": ""
+	},
+	"homepage": "https://gitlab.com/itayronen/o-stream",
+	"license": "MIT",
+	"keywords": [
+		"stream",
+		"transform",
+		"combined stream",
+		"CombinedStream",
+		"ts",
+		"typescript",
+		"gulp"
+	],
+	"publishConfig": {
+		"registry": "https://registry.npmjs.org/"
+	},
+	"scripts": {
+		"test": "gulp build && just-test"
+	},
+	"dependencies": {},
+	"devDependencies": {
+		"@types/chai": "^4.0.4",
+		"@types/node": "^8.0.28",
+		"chai": "^4.1.2",
+		"del": "^3.0.0",
+		"gulp": "^3.9.1",
+		"gulp-ignore": "^2.0.2",
+		"gulp-tap": "^1.0.1",
+		"gulp-typescript": "^3.1.5",
+		"just-test-node": "^1.2.5",
+		"typescript": "^2.2.1"
+	}
+}
