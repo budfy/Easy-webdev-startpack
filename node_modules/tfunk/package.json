@@ -1,0 +1,44 @@
+{
+  "name": "tfunk",
+  "version": "4.0.0",
+  "description": "Multi-colour console output from chalk with added awesome",
+  "repository": "shakyShane/tfunk",
+  "keywords": [
+    "color",
+    "colour",
+    "colors",
+    "terminal",
+    "console",
+    "cli",
+    "string",
+    "styles",
+    "formatting",
+    "rgb",
+    "shell",
+    "xterm",
+    "log",
+    "logging",
+    "command-line",
+    "text"
+  ],
+  "files": [
+    "index.js",
+    "lib"
+  ],
+  "scripts": {
+    "lint": "jshint test/*.js index.js",
+    "test": "npm run lint && mocha"
+  },
+  "author": "Shane Osbourne",
+  "license": "MIT",
+  "dependencies": {
+    "chalk": "^1.1.3",
+    "dlv": "^1.1.3"
+  },
+  "devDependencies": {
+    "chai": "^1.10.0",
+    "jshint": "^2.6.0",
+    "mocha": "^8.2.0",
+    "pegjs": "^0.8.0"
+  }
+}

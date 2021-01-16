@@ -1,0 +1,30 @@
+{
+  "name": "flatnest",
+  "version": "1.0.0",
+  "description": "Flatten/Nest Javascript objects.",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "tape": "~4.0.0"
+  },
+  "scripts": {
+    "test": "node test/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/brycebaril/node-flatnest.git"
+  },
+  "keywords": [
+    "flatten",
+    "nest",
+    "keyspec"
+  ],
+  "author": "Bryce B. Baril",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/brycebaril/node-flatnest/issues"
+  }
+}

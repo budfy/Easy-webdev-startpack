@@ -1,0 +1,16 @@
+{
+  "name": "stream-counter",
+  "version": "1.0.0",
+  "description": "keeps track of how many bytes have been written to a stream",
+  "main": "index.js",
+  "scripts": {
+    "test": "node test/test.js"
+  },
+  "repository": "git://github.com/superjoe30/node-stream-counter.git",
+  "author": "Andrew Kelley <superjoe30@gmail.com>",
+  "license": "MIT",
+  "engines": {
+    "node": ">=0.10.20"
+  },
+  "dependencies": {}
+}
