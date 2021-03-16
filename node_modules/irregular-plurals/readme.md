@@ -8,7 +8,7 @@
 > - If the noun ends in a "y" and is preceded by a consonant, drop the "y" and add "ies"
 > - If the noun ends in a "y" and is preceded by a vowel, add "s"
 
-The list is just a [JSON file](irregular-plurals.json) and can be used wherever.
+The list is just a [JSON file](irregular-plurals.json) and can be used anywhere.
 
 
 ## Install
@@ -23,14 +23,14 @@ $ npm install irregular-plurals
 ```js
 const irregularPlurals = require('irregular-plurals');
 
-console.log(irregularPlurals['cactus']);
+console.log(irregularPlurals.get('cactus'));
 //=> 'cacti'
 
 console.log(irregularPlurals);
 /*
-{
-	addendum: 'addenda',
-	alga: 'algae',
+Map {
+	[addendum, 'addenda'],
+	[alga, 'algae'],
 	…
 }
 */

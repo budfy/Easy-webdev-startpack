@@ -1,29 +1,43 @@
 'use strict';
-var fs = require('graceful-fs');
-var Promise = require('pinkie-promise');
-var pify = require('pify');
+const {promisify} = require('util');
+const fs = require('fs');
 
-function type(fn, fn2, fp) {
-	if (typeof fp !== 'string') {
-		return Promise.reject(new TypeError('Expected a string'));
+async function isType(fsStatType, statsMethodName, filePath) {
+	if (typeof filePath !== 'string') {
+		throw new TypeError(`Expected a string, got ${typeof filePath}`);
 	}
 
-	return pify(fs[fn], Promise)(fp).then(function (stats) {
-		return stats[fn2]();
-	});
+	try {
+		const stats = await promisify(fs[fsStatType])(filePath);
+		return stats[statsMethodName]();
+	} catch (error) {
+		if (error.code === 'ENOENT') {
+			return false;
+		}
+
+		throw error;
+	}
 }
 
-function typeSync(fn, fn2, fp) {
-	if (typeof fp !== 'string') {
-		throw new TypeError('Expected a string');
+function isTypeSync(fsStatType, statsMethodName, filePath) {
+	if (typeof filePath !== 'string') {
+		throw new TypeError(`Expected a string, got ${typeof filePath}`);
 	}
 
-	return fs[fn](fp)[fn2]();
+	try {
+		return fs[fsStatType](filePath)[statsMethodName]();
+	} catch (error) {
+		if (error.code === 'ENOENT') {
+			return false;
+		}
+
+		throw error;
+	}
 }
 
-exports.file = type.bind(null, 'stat', 'isFile');
-exports.dir = type.bind(null, 'stat', 'isDirectory');
-exports.symlink = type.bind(null, 'lstat', 'isSymbolicLink');
-exports.fileSync = typeSync.bind(null, 'statSync', 'isFile');
-exports.dirSync = typeSync.bind(null, 'statSync', 'isDirectory');
-exports.symlinkSync = typeSync.bind(null, 'lstatSync', 'isSymbolicLink');
+exports.isFile = isType.bind(null, 'stat', 'isFile');
+exports.isDirectory = isType.bind(null, 'stat', 'isDirectory');
+exports.isSymlink = isType.bind(null, 'lstat', 'isSymbolicLink');
+exports.isFileSync = isTypeSync.bind(null, 'statSync', 'isFile');
+exports.isDirectorySync = isTypeSync.bind(null, 'statSync', 'isDirectory');
+exports.isSymlinkSync = isTypeSync.bind(null, 'lstatSync', 'isSymbolicLink');

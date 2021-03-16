@@ -16,8 +16,12 @@ function ctor(options, fn) {
 
   var Filter = through2.ctor(options, function (chunk, encoding, callback) {
     if (this.options.wantStrings) chunk = chunk.toString()
-    if (fn.call(this, chunk, this._index++)) this.push(chunk)
-    return callback()
+    try {
+      if (fn.call(this, chunk, this._index++)) this.push(chunk)
+      return callback()
+    } catch (e) {
+      return callback(e)
+    }
   })
   Filter.prototype._index = 0
   return Filter
