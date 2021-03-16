@@ -1,6 +1,6 @@
 {
   "name": "through2-filter",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "description": "A through2 to create an Array.prototype.filter analog for streams.",
   "files": [
     "index.js"

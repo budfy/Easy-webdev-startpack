@@ -1,7 +1,7 @@
 {
   "name": "localtunnel",
   "description": "Expose localhost to the world",
-  "version": "2.0.1",
+  "version": "2.0.0",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -15,19 +15,19 @@
   ],
   "main": "./localtunnel.js",
   "bin": {
-    "lt": "bin/lt.js"
+    "lt": "./bin/lt.js"
   },
   "scripts": {
-    "test": "mocha --reporter list --timeout 60000 -- *.spec.js"
+    "test": "mocha --ui qunit --reporter list --timeout 60000 -- *.spec.js"
   },
   "dependencies": {
-    "axios": "0.21.1",
-    "debug": "4.3.1",
+    "axios": "0.19.0",
+    "debug": "4.1.1",
     "openurl": "1.1.1",
-    "yargs": "16.2.0"
+    "yargs": "13.3.0"
   },
   "devDependencies": {
-    "mocha": "~8.2.1"
+    "mocha": "~1.17.0"
   },
   "engines": {
     "node": ">=8.3.0"

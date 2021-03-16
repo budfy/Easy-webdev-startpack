@@ -6,7 +6,7 @@
 ## Install
 
 ```
-$ npm install --save plur
+$ npm install plur
 ```
 
 
@@ -41,7 +41,7 @@ Word to pluralize.
 
 #### plural
 
-Type: `string`  
+Type: `string`<br>
 Default:
 
 - Irregular nouns will use this [list](https://github.com/sindresorhus/irregular-plurals/blob/master/irregular-plurals.json).
@@ -64,4 +64,4 @@ Count to determine whether to use singular or plural.
 
 ## License
 
-MIT © [Sindre Sorhus](http://sindresorhus.com)
+MIT © [Sindre Sorhus](https://sindresorhus.com)

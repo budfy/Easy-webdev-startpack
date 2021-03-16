@@ -3,8 +3,12 @@
 "use strict";
 var through2 = require('through2');
 
+function cbNoop (cb) {
+  cb();
+}
+
 module.exports = function concurrentThrough (options, transform, flush) {
-  var concurrent = 0, lastCallback = null, pendingFlush = null, concurrency;
+  var concurrent = 0, lastCallback = null, pendingFinish = null;
 
   if (typeof options === 'function') {
     flush     = transform;
@@ -45,34 +49,41 @@ module.exports = function concurrentThrough (options, transform, flush) {
         lastCallback = null;
         cb();
       }
-      if (concurrent === 0 && pendingFlush) {
-        pendingFlush();
-        pendingFlush = null;
+      if (concurrent === 0 && pendingFinish) {
+        pendingFinish();
+        pendingFinish = null;
       }
     });
   }
 
-  // Provide a default implementation of the 'flush' argument so that
-  // the waiting code below can stay simple. We need to pass in flush
-  // to through2 even if the caller has not given us a flush argument
-  // so that it will wait for all transform callbacks to complete
-  // before emitting an "end" event.
+  // We need to pass in final to through2 even if the caller has
+  // not given us a final option  so that it will wait for all
+  // transform callbacks to complete before emitting a "finish"
+  // and "end" event.
+  if (typeof options.final !== 'function') {
+    options.final = cbNoop;
+  }
+  // We also wrap flush to make sure anyone using an ancient version
+  // of through2 without support for final will get the old behaviour.
+  // TODO: don't wrap flush after upgrading through2 to a version with guaranteed `_final`
   if (typeof flush !== 'function') {
-    flush = function (callback) {
-      callback();
-    };
+    flush = cbNoop;
   }
 
-  function _flush (callback) {
-    // Ensure that flush isn't called until all transforms are complete
-    if (concurrent === 0) {
-      flush.call(this,callback);
-    } else {
-      pendingFlush = flush.bind(this, callback);
+  // Flush is always called only after Final has finished
+  // to ensure that data from Final gets processed, so we only need one pending callback at a time
+  function callOnFinish (original) {
+    return function (callback) {
+      if (concurrent === 0) {
+        original.call(this, callback);
+      } else {
+        pendingFinish = original.bind(this, callback);
+      }
     }
   }
 
-  return through2(options, _transform, _flush);
+  options.final = callOnFinish(options.final);
+  return through2(options, _transform, callOnFinish(flush));
 };
 
 module.exports.obj = function (options, transform, flush) {
