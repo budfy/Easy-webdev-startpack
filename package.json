@@ -1,8 +1,8 @@
 {
-  "name": "easy-webdev-startpack-new",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "name": "Easy-webdev-startpack",
+  "version": "3.0.0",
+  "description": "HTML5+CSS3 template for easy start website project'",
+  "main": "gulpfile.js",
   "scripts": {
     "html": "gulp",
     "php": "gulp dev_php",
@@ -42,7 +42,5 @@
     "require-dir": "^1.2.0",
     "vinyl-ftp": "^0.6.1"
   },
-  "dependencies": {
-    "normalize-css": "^2.3.1"
-  }
+  "dependencies": {}
 }
