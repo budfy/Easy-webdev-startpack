@@ -6,7 +6,6 @@ const changed = require('gulp-changed');
 const imagemin = require('gulp-imagemin');
 const recompress = require('imagemin-jpeg-recompress');
 const pngquant = require('imagemin-pngquant');
-const size = require('gulp-size');
 const bs = require('browser-sync');
 const plumber = require('gulp-plumber');
 
@@ -35,12 +34,6 @@ module.exports = function rastr() {
 				imagemin.optipng(),
 				imagemin.svgo()
 			], ), )
-		.pipe(size({
-			'gzip': true,
-			'pretty': true,
-			'showFiles': true,
-			'showTotal': true
-		}))
 		.pipe(dest('build/img'))
 		.pipe(bs.stream())
 }

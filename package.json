@@ -4,7 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "html": "gulp",
+    "php": "gulp dev_php",
+    "build": "gulp libs_style && gulp svg_css && gulp ttf && gulp fonts && gulp style && gulp libs_js && gulp build_js && gulp rastr && gulp webp && gulp svg_sprite && gulp html && gulp php",
+    "ftp": "gulp deploy",
+    "build-ftp": "npm run build && npm run ftp"
   },
   "author": "",
   "license": "ISC",
@@ -14,7 +18,7 @@
     "browser-sync": "^2.26.14",
     "chalk": "^4.1.1",
     "gulp": "^4.0.2",
-    "gulp-autoprefixer": "^7.0.1",
+    "gulp-autoprefixer": "^8.0.0",
     "gulp-babel": "^8.0.0",
     "gulp-changed": "^4.0.2",
     "gulp-clean-css": "^4.3.0",
@@ -25,7 +29,6 @@
     "gulp-plumber": "^1.2.1",
     "gulp-sass": "^4.1.0",
     "gulp-sass-bulk-importer": "^3.0.1",
-    "gulp-size": "^4.0.0",
     "gulp-sourcemaps": "^3.0.0",
     "gulp-svg-css-pseudo": "^1.0.4",
     "gulp-svg-sprite": "^1.5.0",
@@ -39,5 +42,7 @@
     "require-dir": "^1.2.0",
     "vinyl-ftp": "^0.6.1"
   },
-  "dependencies": {}
+  "dependencies": {
+    "normalize-css": "^2.3.1"
+  }
 }
