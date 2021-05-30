@@ -285,7 +285,7 @@
 						},
 						"content": [{
 								"type": "text",
-								"text": "Первое, что нам нужно сделать - это инициализировать проект. Открываем папку проекта в командной строке (очень надеюсь, вы знаете, как это делается) и вводим команду "
+								"text": "Первое, что нам нужно сделать - это инициализировать проект. Открываем директорию проекта в командной строке (очень надеюсь, вы знаете, как это делается) и вводим команду "
 							},
 							{
 								"type": "text",
@@ -471,7 +471,7 @@
 							},
 							{
 								"type": "text",
-								"text": "). После установки подключаем его и прописываем путь к папке, в которую будем складывать модули (у меня это папка tasks):"
+								"text": "). После установки подключаем его и прописываем путь к директории, в которую будем складывать модули (у меня это директория tasks):"
 							}
 						]
 					},
@@ -531,7 +531,7 @@
 						"type": "code_block",
 						"attrs": {
 							"lang": "javascript",
-							"code": "module.exports = function () {\n\tconsole.log(\"Hello Gulp!\");\n}",
+							"code": "module.exports = function hello () {\n\tconsole.log(\"Hello Gulp!\");\n}",
 							"inserted": true
 						}
 					},
@@ -542,7 +542,7 @@
 						},
 						"content": [{
 							"type": "text",
-							"text": "Теперь вернёмся в gulpfile.js и создадим там задачу hello:"
+							"text": "Теперь вернёмся в gulpfile.js и зададим там задачу hello:"
 						}]
 					},
 					{
@@ -586,6 +586,39 @@
 							"code": "[13:17:15] Using gulpfile D:\\Web projects\\Easy-webdev-startpack-new\\gulpfile.js\n[13:17:15] Starting 'hello'...\nHello Gulp!\n[13:17:15] The following tasks did not complete: hello\n[13:17:15] Did you forget to signal async completion?",
 							"inserted": true
 						}
+					},
+					{
+						"type": "paragraph",
+						"attrs": {
+							"align": null
+						},
+						"content": [{
+								"type": "text",
+								"text": "Так же, можно получить "
+							},
+							{
+								"type": "text",
+								"marks": [{
+									"type": "bold"
+								}],
+								"text": "список всех заданных задач"
+							},
+							{
+								"type": "text",
+								"text": " командой "
+							},
+							{
+								"type": "text",
+								"marks": [{
+									"type": "code"
+								}],
+								"text": "gulp --tasks"
+							},
+							{
+								"type": "text",
+								"text": "."
+							}
+						]
 					},
 					{
 						"type": "heading",
@@ -815,7 +848,29 @@
 							},
 							{
 								"type": "text",
-								"text": " в пустых директориях, таких как img/, fonts/ и т.п. перед тем как пушить в удалённый репозиторий (например на Github) нужно создать пустые файлы с именем .gitkeep. Это нужно для того, чтобы Github не удалил пустые директории из сборки."
+								"text": " в пустых директориях, таких как "
+							},
+							{
+								"type": "text",
+								"marks": [{
+									"type": "code"
+								}],
+								"text": "img/"
+							},
+							{
+								"type": "text",
+								"text": ", "
+							},
+							{
+								"type": "text",
+								"marks": [{
+									"type": "code"
+								}],
+								"text": "fonts/"
+							},
+							{
+								"type": "text",
+								"text": " и т.п. перед тем как пушить в удалённый репозиторий (например на Github) нужно создать пустые файлы с именем .gitkeep. Это нужно для того, чтобы Github не удалил пустые директории из сборки."
 							}
 						]
 					},
@@ -984,14 +1039,14 @@
 						},
 						"content": [{
 							"type": "text",
-							"text": "Далее экспортируем безымянную функцию: "
+							"text": "Далее экспортируем функцию: "
 						}]
 					},
 					{
 						"type": "code_block",
 						"attrs": {
 							"lang": "javascript",
-							"code": "module.exports = function () {\n\treturn\n}",
+							"code": "module.exports = function style() {\n\treturn\n}",
 							"inserted": true
 						}
 					},
@@ -1432,7 +1487,7 @@
 								"type": "code_block",
 								"attrs": {
 									"lang": "javascript",
-									"code": "const {\n\tsrc,\n\tdest\n} = require('gulp');\nconst sass = require('gulp-sass');\nconst bulk = require('gulp-sass-bulk-importer');\nconst prefixer = require('gulp-autoprefixer');\nconst clean = require('gulp-clean-css');\nconst concat = require('gulp-concat');\nconst map = require('gulp-sourcemaps');\nconst bs = require('browser-sync');\n\nmodule.exports = function () {\n\treturn src('src/scss/**/*.scss')\n\t\t.pipe(map.init())\n\t\t.pipe(bulk())\n\t\t.pipe(sass({\n\t\t\toutputStyle: 'compressed'\n\t\t}).on('error', sass.logError))\n\t\t.pipe(prefixer({\n\t\t\toverrideBrowserslist: ['last 8 versions'],\n\t\t\tbrowsers: [\n\t\t\t\t'Android >= 4',\n\t\t\t\t'Chrome >= 20',\n\t\t\t\t'Firefox >= 24',\n\t\t\t\t'Explorer >= 11',\n\t\t\t\t'iOS >= 6',\n\t\t\t\t'Opera >= 12',\n\t\t\t\t'Safari >= 6',\n\t\t\t],\n\t\t}))\n\t\t.pipe(clean({\n\t\t\tlevel: 2\n\t\t}))\n\t\t.pipe(concat('style.min.css'))\n\t\t.pipe(map.write('../sourcemaps/'))\n\t\t.pipe(dest('build/css/'))\n    .pipe(bs.stream())\n}",
+									"code": "const {\n\tsrc,\n\tdest\n} = require('gulp');\nconst sass = require('gulp-sass');\nconst bulk = require('gulp-sass-bulk-importer');\nconst prefixer = require('gulp-autoprefixer');\nconst clean = require('gulp-clean-css');\nconst concat = require('gulp-concat');\nconst map = require('gulp-sourcemaps');\nconst bs = require('browser-sync');\n\nmodule.exports = function style() {\n\treturn src('src/scss/**/*.scss')\n\t\t.pipe(map.init())\n\t\t.pipe(bulk())\n\t\t.pipe(sass({\n\t\t\toutputStyle: 'compressed'\n\t\t}).on('error', sass.logError))\n\t\t.pipe(prefixer({\n\t\t\toverrideBrowserslist: ['last 8 versions'],\n\t\t\tbrowsers: [\n\t\t\t\t'Android >= 4',\n\t\t\t\t'Chrome >= 20',\n\t\t\t\t'Firefox >= 24',\n\t\t\t\t'Explorer >= 11',\n\t\t\t\t'iOS >= 6',\n\t\t\t\t'Opera >= 12',\n\t\t\t\t'Safari >= 6',\n\t\t\t],\n\t\t}))\n\t\t.pipe(clean({\n\t\t\tlevel: 2\n\t\t}))\n\t\t.pipe(concat('style.min.css'))\n\t\t.pipe(map.write('../sourcemaps/'))\n\t\t.pipe(dest('build/css/'))\n    .pipe(bs.stream())\n}",
 									"inserted": true
 								}
 							},
@@ -1572,9 +1627,46 @@
 							"align": null
 						},
 						"content": [{
-							"type": "text",
-							"text": "Но тут есть одна особенность - добавим условие, если длина массива plugins будет равна нулю - эта функция просто вернёт true, без выполнения других действий. Без этого, наша функция будет ругаться на отсутствие плагинов. А они нужны далеко не всегда."
-						}]
+								"type": "text",
+								"text": "Но тут есть одна особенность - добавим условие, если длина массива plugins будет равна нулю - эта функция  и вернёт коллбэк "
+							},
+							{
+								"type": "text",
+								"marks": [{
+									"type": "code"
+								}],
+								"text": "done()"
+							},
+							{
+								"type": "text",
+								"text": ", который просто выдаст сообщение в терминал, что плагинов нет без выполнения других действий. Без этого, наша функция будет ругаться на отсутствие плагинов. А они нужны далеко не всегда."
+							}
+						]
+					},
+					{
+						"type": "paragraph",
+						"attrs": {
+							"align": null
+						},
+						"content": [{
+								"type": "text",
+								"text": "А так же нам понадобится плагин "
+							},
+							{
+								"type": "text",
+								"marks": [{
+									"type": "link",
+									"attrs": {
+										"href": "https://www.npmjs.com/package/chalk"
+									}
+								}],
+								"text": "chalk"
+							},
+							{
+								"type": "text",
+								"text": " для раскрашивания сообщения в консоли, чтобы мы обратили на неё внимание. Принципиально этот плагин не будет влиять на работу задачи, только разукрашивать консоль, примерно так:"
+							}
+						]
 					},
 					{
 						"type": "spoiler",
@@ -1585,7 +1677,7 @@
 								"type": "code_block",
 								"attrs": {
 									"lang": "javascript",
-									"code": "const plugins = [];\nconst {\n\tsrc,\n\tdest\n} = require('gulp');\nconst sass = require('gulp-sass');\nconst concat = require('gulp-concat');\nconst map = require('gulp-sourcemaps');\n\nmodule.exports = function () {\n\tif (plugins.length > 0) {\n\t\treturn src(plugins)\n\t\t\t.pipe(map.init())\n\t\t\t.pipe(sass({\n\t\t\t\toutputStyle: 'compressed'\n\t\t\t}).on('error', sass.logError))\n\t\t\t.pipe(concat('libs.min.css'))\n\t\t\t.pipe(map.write('../sourcemaps/'))\n\t\t\t.pipe(dest('build/css/'))\n\t} else {\n\t\treturn true;\n\t}\n}",
+									"code": "const plugins = [];\n\nconst {\n\tsrc,\n\tdest\n} = require('gulp');\nconst sass = require('gulp-sass');\nconst concat = require('gulp-concat');\nconst map = require('gulp-sourcemaps');\nconst chalk = require('chalk');\n\nmodule.exports = function libs_style(done) {\n\tif (plugins.length > 0) {\n\t\treturn src(plugins)\n\t\t\t.pipe(map.init())\n\t\t\t.pipe(sass({\n\t\t\t\toutputStyle: 'compressed'\n\t\t\t}).on('error', sass.logError))\n\t\t\t.pipe(concat('libs.min.css'))\n\t\t\t.pipe(map.write('../sourcemaps/'))\n\t\t\t.pipe(dest('build/css/'))\n\t} else {\n\t\treturn done(console.log(chalk.redBright('No added CSS/SCSS plugins')));\n\t}\n}",
 									"inserted": true
 								}
 							},
@@ -1837,7 +1929,7 @@
 								"type": "code_block",
 								"attrs": {
 									"lang": "javascript",
-									"code": "const {\n\tsrc,\n\tdest\n} = require('gulp');\nconst uglify = require('gulp-uglify-es').default;\nconst concat = require('gulp-concat');\nconst map = require('gulp-sourcemaps');\nconst bs = require('browser-sync');\n\nmodule.exports = function () {\n\treturn src(['src/components/bem-blocks/**/*.js', 'src/js/01_main.js'])\n\t\t.pipe(map.init())\n\t\t.pipe(uglify())\n\t\t.pipe(concat('main.min.js'))\n\t\t.pipe(map.write('../sourcemaps'))\n\t\t.pipe(dest('build/js/'))\n    .pipe(bs.stream())\n}",
+									"code": "const {\n\tsrc,\n\tdest\n} = require('gulp');\nconst uglify = require('gulp-uglify-es').default;\nconst concat = require('gulp-concat');\nconst map = require('gulp-sourcemaps');\nconst bs = require('browser-sync');\n\nmodule.exports = function dev_js() {\n\treturn src(['src/components/**/*.js', 'src/js/01_main.js'])\n\t\t.pipe(map.init())\n\t\t.pipe(uglify())\n\t\t.pipe(concat('main.min.js'))\n\t\t.pipe(map.write('../sourcemaps'))\n\t\t.pipe(dest('build/js/'))\n    .pipe(bs.stream())\n}",
 									"inserted": true
 								}
 							},
@@ -1858,7 +1950,7 @@
 								"type": "code_block",
 								"attrs": {
 									"lang": "javascript",
-									"code": "const plugins = [];\nconst {\n\tsrc,\n\tdest\n} = require('gulp');\nconst uglify = require('gulp-uglify-es').default;\nconst concat = require('gulp-concat');\nconst map = require('gulp-sourcemaps');\n\nmodule.exports = function () {\n\tif (plugins.length > 0)\n\t\treturn src(['src/js/01__main.js', 'src/components/bem-blocks/**/*.js'])\n\t\t\t.pipe(map.init())\n\t\t\t.pipe(uglify())\n\t\t\t.pipe(concat('main.min.js'))\n\t\t\t.pipe(map.write('../sourcemaps'))\n\t\t\t.pipe(dest('build/js/'))\n\telse {\n\t\treturn true;\n\t}\n}",
+									"code": "const plugins = [];\nconst {\n\tsrc,\n\tdest\n} = require('gulp');\nconst uglify = require('gulp-uglify-es').default;\nconst concat = require('gulp-concat');\nconst map = require('gulp-sourcemaps');\nconst chalk = require('chalk');\n\nmodule.exports = function libs_js(done) {\n\tif (plugins.length > 0)\n\t\treturn src(plugins)\n\t\t\t.pipe(map.init())\n\t\t\t.pipe(uglify())\n\t\t\t.pipe(concat('main.min.js'))\n\t\t\t.pipe(map.write('../sourcemaps'))\n\t\t\t.pipe(dest('build/js/'))\n\telse {\n\t\treturn done(console.log(chalk.redBright('No added JS plugins')));\n\t}\n}",
 									"inserted": true
 								}
 							},
@@ -1879,7 +1971,7 @@
 								"type": "code_block",
 								"attrs": {
 									"lang": "javascript",
-									"code": "const {\n\tsrc,\n\tdest\n} = require('gulp');\nconst uglify = require('gulp-uglify-es').default;\nconst babel = require('gulp-babel');\nconst concat = require('gulp-concat');\n\nmodule.exports = function () {\n\treturn src(['src/components/bem-blocks/**/*.js', 'src/js/01_main.js'])\n\t\t.pipe(uglify())\n\t\t.pipe(babel({\n\t\t\tpresets: ['@babel/env']\n\t\t}))\n\t\t.pipe(concat('main.min.js'))\n\t\t.pipe(dest('build/js/'))\n}",
+									"code": "const {\n\tsrc,\n\tdest\n} = require('gulp');\nconst uglify = require('gulp-uglify-es').default;\nconst babel = require('gulp-babel');\nconst concat = require('gulp-concat');\n\nmodule.exports = function build_js() {\n\treturn src(['src/components/**/*.js', 'src/js/01_main.js'])\n\t\t.pipe(uglify())\n\t\t.pipe(babel({\n\t\t\tpresets: ['@babel/env']\n\t\t}))\n\t\t.pipe(concat('main.min.js'))\n\t\t.pipe(dest('build/js/'))\n}",
 									"inserted": true
 								}
 							},
@@ -1898,7 +1990,7 @@
 						},
 						"content": [{
 								"type": "text",
-								"text": "Как видим, тут есть Указанный напрямую файл "
+								"text": "Как видим, тут есть указанный напрямую файл "
 							},
 							{
 								"type": "text",
@@ -2115,7 +2207,7 @@
 								"type": "code_block",
 								"attrs": {
 									"lang": "javascript",
-									"code": "const {\n\tsrc,\n\tdest\n} = require('gulp');\nconst include = require('gulp-file-include');\nconst bs = require('browser-sync');\n\nmodule.exports = function () {\n\treturn src(['src/**/*.html', '!src/**/_*.html'])\n\t\t.pipe(include())\n\t\t.pipe(dest('build'))\n    .pipe(bs.stream())\n}",
+									"code": "const {\n\tsrc,\n\tdest\n} = require('gulp');\nconst include = require('gulp-file-include');\nconst bs = require('browser-sync');\n\nmodule.exports = function html() {\n\treturn src(['src/**/*.html', '!!src/components/**/*.html'])\n\t\t.pipe(include())\n\t\t.pipe(dest('build'))\n    .pipe(bs.stream())\n}",
 									"inserted": true
 								}
 							},
@@ -2163,11 +2255,22 @@
 								"marks": [{
 									"type": "code"
 								}],
-								"text": "'!src/**/_*.html'"
+								"text": "'"
 							},
 							{
 								"type": "text",
-								"text": " начинаются с подчёркивания. В дальнейшем это позволит нам создавать файлы модулей, которые не должны попасть в build директорию, а служат, так сказать, служебными шаблонами. Об этих шаблонах мы поговорим ниже."
+								"text": "!src/components/**/*.html"
+							},
+							{
+								"type": "text",
+								"marks": [{
+									"type": "code"
+								}],
+								"text": "'"
+							},
+							{
+								"type": "text",
+								"text": " находятся в директории src/components. В дальнейшем это позволит нам создавать файлы модулей, которые не должны попасть в build директорию, а служат, так сказать, служебными шаблонами. Об этих шаблонах мы поговорим ниже."
 							}
 						]
 					},
@@ -2190,7 +2293,7 @@
 								"type": "code_block",
 								"attrs": {
 									"lang": "javascript",
-									"code": "const {\n\tsrc,\n\tdest\n} = require('gulp');\nconst include = require('gulp-file-include');\nconst bs = require('browser-sync');\n\nmodule.exports = function () {\n\treturn src('src/**/*.php')\n\t\t.pipe(include())\n\t\t.pipe(dest('build'))\n    .pipe(bs.stream())\n}",
+									"code": "const {\n\tsrc,\n\tdest\n} = require('gulp');\nconst include = require('gulp-file-include');\nconst bs = require('browser-sync');\n\nmodule.exports = function php() {\n\treturn src('src/**/*.php')\n\t\t.pipe(include())\n\t\t.pipe(dest('build'))\n    .pipe(bs.stream())\n}",
 									"inserted": true
 								}
 							},
@@ -2644,7 +2747,7 @@
 								"type": "code_block",
 								"attrs": {
 									"lang": "javascript",
-									"code": "const {\n\tsrc,\n\tdest\n} = require('gulp');\nconst changed = require('gulp-changed');\nconst imagemin = require('gulp-imagemin');\nconst recompress = require('imagemin-jpeg-recompress');\nconst pngquant = require('imagemin-pngquant');\nconst bs = require('browser-sync');\n\nmodule.exports = function () {\n\treturn src('src/img/**/*.+(png|jpg|jpeg|gif|svg|ico)')\n\t\t.pipe(changed('build/img'))\n\t\t.pipe(imagemin({\n\t\t\t\tinterlaced: true,\n\t\t\t\tprogressive: true,\n\t\t\t\toptimizationLevel: 5,\n\t\t\t},\n\t\t\t[\n\t\t\t\trecompress({\n\t\t\t\t\tloops: 6,\n\t\t\t\t\tmin: 50,\n\t\t\t\t\tmax: 90,\n\t\t\t\t\tquality: 'high',\n\t\t\t\t\tuse: [pngquant({\n\t\t\t\t\t\tquality: [0.8, 1],\n\t\t\t\t\t\tstrip: true,\n\t\t\t\t\t\tspeed: 1\n\t\t\t\t\t})],\n\t\t\t\t}),\n\t\t\t\timagemin.gifsicle(),\n\t\t\t\timagemin.optipng(),\n\t\t\t\timagemin.svgo()\n\t\t\t], ), )\n\t\t.pipe(dest('build/img'))\n  \t.pipe(bs.stream())\n}",
+									"code": "const {\n\tsrc,\n\tdest\n} = require('gulp');\nconst changed = require('gulp-changed');\nconst imagemin = require('gulp-imagemin');\nconst recompress = require('imagemin-jpeg-recompress');\nconst pngquant = require('imagemin-pngquant');\nconst bs = require('browser-sync');\n\nmodule.exports = function rastr() {\n\treturn src('src/img/**/*.+(png|jpg|jpeg|gif|svg|ico)')\n\t\t.pipe(changed('build/img'))\n\t\t.pipe(imagemin({\n\t\t\t\tinterlaced: true,\n\t\t\t\tprogressive: true,\n\t\t\t\toptimizationLevel: 5,\n\t\t\t},\n\t\t\t[\n\t\t\t\trecompress({\n\t\t\t\t\tloops: 6,\n\t\t\t\t\tmin: 50,\n\t\t\t\t\tmax: 90,\n\t\t\t\t\tquality: 'high',\n\t\t\t\t\tuse: [pngquant({\n\t\t\t\t\t\tquality: [0.8, 1],\n\t\t\t\t\t\tstrip: true,\n\t\t\t\t\t\tspeed: 1\n\t\t\t\t\t})],\n\t\t\t\t}),\n\t\t\t\timagemin.gifsicle(),\n\t\t\t\timagemin.optipng(),\n\t\t\t\timagemin.svgo()\n\t\t\t], ), )\n\t\t.pipe(dest('build/img'))\n  \t.pipe(bs.stream())\n}",
 									"inserted": true
 								}
 							},
@@ -2722,7 +2825,7 @@
 								"type": "code_block",
 								"attrs": {
 									"lang": "javascript",
-									"code": "const {\n\tsrc\n} = require('gulp');\nconst webp = require('gulp-webp');\nconst changed = require('gulp-changed');\nconst multiDest = require('gulp-multi-dest');\nconst plumber = require('gulp-plumber');\n\nmodule.exports = function () {\n\treturn src('build/img/**/*.+(png|jpg|jpeg)')\n\t\t.pipe(plumber())\n\t\t.pipe(changed('build/img', {\n\t\t\textension: '.webp'\n\t\t}))\n\t\t.pipe(webp())\n\t\t.pipe(multiDest(['src/img', 'build/img']))\n}",
+									"code": "const {\n\tsrc\n} = require('gulp');\nconst webpConv = require('gulp-webp');\nconst changed = require('gulp-changed');\nconst multiDest = require('gulp-multi-dest');\nconst plumber = require('gulp-plumber');\n\nmodule.exports = function webp() {\n\treturn src('build/img/**/*.+(png|jpg|jpeg)')\n\t\t.pipe(plumber())\n\t\t.pipe(changed('build/img', {\n\t\t\textension: '.webp'\n\t\t}))\n\t\t.pipe(webpConv())\n\t\t.pipe(multiDest(['src/img', 'build/img']))\n}",
 									"inserted": true
 								}
 							},
@@ -2855,7 +2958,7 @@
 							},
 							{
 								"type": "text",
-								"text": " Вы можете точно так же использовать оригинальный плагин, но он не будет работать с псевдоэлементами. На входе мы в определённую папку кладём файл, например myicon.svg, а на выходе получаем классы "
+								"text": " Вы можете точно так же использовать оригинальный плагин, но он не будет работать с псевдоэлементами. На входе мы в определённую директорию кладём файл, например myicon.svg, а на выходе получаем классы "
 							},
 							{
 								"type": "text",
@@ -2919,7 +3022,7 @@
 								"type": "code_block",
 								"attrs": {
 									"lang": "javascript",
-									"code": "const {\n\tsrc,\n\tdest\n} = require('gulp');\nconst svgmin = require('gulp-svgmin');\nconst svgCss = require('gulp-svg-css-pseudo');\n\nmodule.exports = function () {\n\treturn src('src/svg/css/**/*.svg')\n\t\t.pipe(svgmin({\n\t\t\tplugins: [{\n\t\t\t\t\tremoveComments: true\n\t\t\t\t},\n\t\t\t\t{\n\t\t\t\t\tremoveEmptyContainers: true\n\t\t\t\t}\n\t\t\t]\n\t\t}))\n\t\t.pipe(svgCss({\n\t\t\tfileName: 'svg',\n\t\t\tfileExt: 'scss',\n\t\t\tcssPrefix: '--svg__',\n\t\t\taddSize: false\n\t\t}))\n\t\t.pipe(dest('src/scss/global'))\n}",
+									"code": "const {\n\tsrc,\n\tdest\n} = require('gulp');\nconst svgmin = require('gulp-svgmin');\nconst svgCss = require('gulp-svg-css-pseudo');\n\nmodule.exports = function svg_css() {\n\treturn src('src/svg/css/**/*.svg')\n\t\t.pipe(svgmin({\n\t\t\tplugins: [{\n\t\t\t\t\tremoveComments: true\n\t\t\t\t},\n\t\t\t\t{\n\t\t\t\t\tremoveEmptyContainers: true\n\t\t\t\t}\n\t\t\t]\n\t\t}))\n\t\t.pipe(svgCss({\n\t\t\tfileName: '_svg',\n\t\t\tfileExt: 'scss',\n\t\t\tcssPrefix: '--svg__',\n\t\t\taddSize: false\n\t\t}))\n\t\t.pipe(dest('src/scss/global'))\n}",
 									"inserted": true
 								}
 							},
@@ -2965,7 +3068,7 @@
 								"type": "code_block",
 								"attrs": {
 									"lang": "javascript",
-									"code": "const {\n\tsrc,\n\tdest\n} = require('gulp');\nconst svgmin = require('gulp-svgmin');\nconst sprite = require('gulp-svg-sprite');\n\nmodule.exports = function () {\n\treturn src('src/svg/**/*.svg')\n\t\t.pipe(svgmin({\n\t\t\tplugins: [{\n\t\t\t\t\tremoveComments: true\n\t\t\t\t},\n\t\t\t\t{\n\t\t\t\t\tremoveEmptyContainers: true\n\t\t\t\t}\n\t\t\t]\n\t\t}))\n\t\t.pipe(sprite({\n\t\t\tmode: {\n\t\t\t\tstack: {\n\t\t\t\t\tsprite: '../sprite.svg'\n\t\t\t\t}\n\t\t\t}\n\t\t}))\n\t\t.pipe(dest('src/img'))\n}",
+									"code": "const {\n\tsrc,\n\tdest\n} = require('gulp');\nconst svgmin = require('gulp-svgmin');\nconst sprite = require('gulp-svg-sprite');\n\nmodule.exports = function svg_sprite() {\n\treturn src('src/svg/**/*.svg')\n\t\t.pipe(svgmin({\n\t\t\tplugins: [{\n\t\t\t\t\tremoveComments: true\n\t\t\t\t},\n\t\t\t\t{\n\t\t\t\t\tremoveEmptyContainers: true\n\t\t\t\t}\n\t\t\t]\n\t\t}))\n\t\t.pipe(sprite({\n\t\t\tmode: {\n\t\t\t\tstack: {\n\t\t\t\t\tsprite: '../sprite.svg'\n\t\t\t\t}\n\t\t\t}\n\t\t}))\n\t\t.pipe(dest('src/img'))\n}",
 									"inserted": true
 								}
 							},
@@ -3100,7 +3203,7 @@
 								"type": "code_block",
 								"attrs": {
 									"lang": "javascript",
-									"code": "const {\n\tsrc,\n\tdest\n} = require('gulp');\nconst changed = require('gulp-changed');\nconst ttf2woff2 = require('gulp-ttftowoff2');\nconst ttf2woff = require('gulp-ttf2woff');\n\nmodule.exports = function (done) {\n\tsrc('src/fonts/**/*.ttf')\n\t\t.pipe(changed('build/fonts', {\n\t\t\textension: '.woff2',\n\t\t\thasChanged: changed.compareLastModifiedTime\n\t\t}))\n\t\t.pipe(ttf2woff2())\n\t\t.pipe(dest('build/fonts'))\n\n\tsrc('src/fonts/**/*.ttf')\n\t\t.pipe(changed('build/fonts', {\n\t\t\textension: 'woff',\n\t\t\thasChanged: changed.compareLastModifiedTime\n\t\t}))\n\t\t.pipe(ttf2woff())\n\t\t.pipe(dest('build/fonts'))\n\tdone();\n}",
+									"code": "const {\n\tsrc,\n\tdest\n} = require('gulp');\nconst changed = require('gulp-changed');\nconst ttf2woff2 = require('gulp-ttftowoff2');\nconst ttf2woff = require('gulp-ttf2woff');\n\nmodule.exports = function ttf(done) {\n\tsrc('src/fonts/**/*.ttf')\n\t\t.pipe(changed('build/fonts', {\n\t\t\textension: '.woff2',\n\t\t\thasChanged: changed.compareLastModifiedTime\n\t\t}))\n\t\t.pipe(ttf2woff2())\n\t\t.pipe(dest('build/fonts'))\n\n\tsrc('src/fonts/**/*.ttf')\n\t\t.pipe(changed('build/fonts', {\n\t\t\textension: 'woff',\n\t\t\thasChanged: changed.compareLastModifiedTime\n\t\t}))\n\t\t.pipe(ttf2woff())\n\t\t.pipe(dest('build/fonts'))\n\tdone();\n}",
 									"inserted": true
 								}
 							},
@@ -3294,8 +3397,26 @@
 									"type": "code"
 								}],
 								"text": "const fs = require('fs');"
+							},
+							{
+								"type": "text",
+								"text": " "
 							}
 						]
+					},
+					{
+						"type": "image",
+						"attrs": {
+							"src": "https://habrastorage.org/getpro/habr/upload_files/cac/5a1/105/cac5a1105c503188cb39082f6ad72b78.png",
+							"title": "Вывод консоли с применением chalk",
+							"customClass": "",
+							"border": false,
+							"float": false,
+							"fullWidth": true,
+							"inserted": false,
+							"width": 831,
+							"height": 122
+						}
 					},
 					{
 						"type": "paragraph",
@@ -3304,7 +3425,7 @@
 						},
 						"content": [{
 							"type": "text",
-							"text": "Далее создадим две переменные. В первую запишем, путь к файлу, который получим на выходе, а во вторую - путь к папке шрифтов, которые нам создала предыдущая задача."
+							"text": "Далее создадим две переменные. В первую запишем, путь к файлу, который получим на выходе, а во вторую - путь к директории шрифтов, которые нам создала предыдущая задача."
 						}]
 					},
 					{
@@ -3377,7 +3498,7 @@
 								"type": "code_block",
 								"attrs": {
 									"lang": "javascript",
-									"code": "const fs = require('fs');\n\nlet srcFonts = 'src/scss/_local-fonts.scss';\nlet appFonts = 'build/fonts/';\nmodule.exports = function (done) {\n\tfs.writeFile(srcFonts, '', () => {});\n\tfs.readdir(appFonts, (err, items) => {\n\t\tif (items) {\n\t\t\tlet c_fontname;\n\t\t\tfor (let i = 0; i < items.length; i++) {\n\t\t\t\tlet fontname = items[i].split('.'),\n\t\t\t\t\tfontExt;\n\t\t\t\tfontExt = fontname[1];\n\t\t\t\tfontname = fontname[0];\n\t\t\t\tif (c_fontname != fontname) {\n\t\t\t\t\tif (fontExt == 'woff' || fontExt == 'woff2') {\n\t\t\t\t\t\tfs.appendFile(srcFonts, `@include font-face(\"${fontname}\", \"${fontname}\", 400);\\r\\n`, () => {});\n\t\t\t\t\t\tconsole.log(`Added font ${fontname}.\n----------------------------------------------------------------------------------\nPlease, move mixin call from src/scss/_local-fonts.scss to src/scss/_fonts.scss and then change it, if font from this family added ealy!\n----------------------------------------------------------------------------------`);\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t\tc_fontname = fontname;\n\t\t\t}\n\t\t}\n\t})\n\tdone();\n}",
+									"code": "const fs = require('fs');\nconst chalk = require('chalk');\n\nlet srcFonts = 'src/scss/_local-fonts.scss';\nlet appFonts = 'build/fonts/';\nmodule.exports = function fonts(done) {\n\tfs.writeFile(srcFonts, '', () => {});\n\tfs.readdir(appFonts, (err, items) => {\n\t\tif (items) {\n\t\t\tlet c_fontname;\n\t\t\tfor (let i = 0; i < items.length; i++) {\n\t\t\t\tlet fontname = items[i].split('.'),\n\t\t\t\t\tfontExt;\n\t\t\t\tfontExt = fontname[1];\n\t\t\t\tfontname = fontname[0];\n\t\t\t\tif (c_fontname != fontname) {\n\t\t\t\t\tif (fontExt == 'woff' || fontExt == 'woff2') {\n\t\t\t\t\t\tfs.appendFile(srcFonts, `@include font-face(\"${fontname}\", \"${fontname}\", 400);\\r\\n`, () => {});\n\t\t\t\t\t\tconsole.log(chalk `\n{bold {bgGray Added new font: ${fontname}.}\n----------------------------------------------------------------------------------\n{bgYellow.black Please, move mixin call from {cyan src/scss/_local-fonts.scss} to {cyan src/scss/_fonts.scss} and then change it!}}\n----------------------------------------------------------------------------------\n`);\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t\tc_fontname = fontname;\n\t\t\t}\n\t\t}\n\t})\n\tdone();\n}",
 									"inserted": true
 								}
 							},
@@ -3558,7 +3679,18 @@
 							},
 							{
 								"type": "text",
-								"text": ", который, естественно, необходимо создать. Перемещать нужно в новый файл по той причине, что при следующем запуске эта функция перезапишет файл "
+								"text": ", который, естественно, "
+							},
+							{
+								"type": "text",
+								"marks": [{
+									"type": "bold"
+								}],
+								"text": "необходимо предварительно создать"
+							},
+							{
+								"type": "text",
+								"text": ". Перемещать нужно в новый файл по той причине, что при следующем запуске эта функция перезапишет файл "
 							},
 							{
 								"type": "text",
@@ -3624,7 +3756,7 @@
 								"type": "code_block",
 								"attrs": {
 									"lang": "javascript",
-									"code": "const bs = require('browser-sync');\n\nmodule.exports = function () {\n\tbs.init({\n\t\tserver: {\n\t\t\tbaseDir: 'build/',\n\t\t\thost: '192.168.0.104',\n\t\t},\n\t\tcallbacks: {\n\t\t\tready: function (err, bs) {\n\t\t\t\tbs.addMiddleware(\"*\", function (req, res) {\n\t\t\t\t\tres.writeHead(302, {\n\t\t\t\t\t\tlocation: \"404.html\"\n\t\t\t\t\t});\n\t\t\t\t\tres.end(\"Redirecting!\");\n\t\t\t\t});\n\t\t\t}\n\t\t},\n\t\tbrowser: 'chrome',\n\t\tlogPrefix: 'BS-HTML:',\n\t\tlogLevel: 'info',\n\t\tlogConnections: true,\n\t\tlogFileChanges: true,\n\t\topen: true\n\t})\n}",
+									"code": "const bs = require('browser-sync');\n\nmodule.exports = function bs_html() {\n\tbs.init({\n\t\tserver: {\n\t\t\tbaseDir: 'build/',\n\t\t\thost: '192.168.0.104',\n\t\t},\n\t\tcallbacks: {\n\t\t\tready: function (err, bs) {\n\t\t\t\tbs.addMiddleware(\"*\", function (req, res) {\n\t\t\t\t\tres.writeHead(302, {\n\t\t\t\t\t\tlocation: \"404.html\"\n\t\t\t\t\t});\n\t\t\t\t\tres.end(\"Redirecting!\");\n\t\t\t\t});\n\t\t\t}\n\t\t},\n\t\tbrowser: 'chrome',\n\t\tlogPrefix: 'BS-HTML:',\n\t\tlogLevel: 'info',\n\t\tlogConnections: true,\n\t\tlogFileChanges: true,\n\t\topen: true\n\t})\n}",
 									"inserted": true
 								}
 							},
@@ -3642,9 +3774,21 @@
 							"align": null
 						},
 						"content": [{
-							"type": "text",
-							"text": "Параметр host отвечает за IP-адрес компьютера, с которого сайт будет раздаваться на другие устройства в сети. Важно, чтобы там был указан именно IP-адрес вашего компьютера в локальной сети, если хотите иметь доступ к разрабатываемому сайту со всех устройств. Коллбэк-функция отвечает за открытие страницы 404, если она есть и если не найдена запрашиваемая (по умолчанию это страница index.html). Все остальные параметры вы вольны настраивать как вашей душе угодно, согласно документации."
-						}]
+								"type": "text",
+								"text": "Параметр host отвечает за IP-адрес компьютера, с которого сайт будет раздаваться на другие устройства в сети. Важно, чтобы там был указан именно "
+							},
+							{
+								"type": "text",
+								"marks": [{
+									"type": "bold"
+								}],
+								"text": "IP-адрес вашего компьютера"
+							},
+							{
+								"type": "text",
+								"text": " в локальной сети, если хотите иметь доступ к разрабатываемому сайту со всех устройств. Коллбэк-функция отвечает за открытие страницы 404, если она есть и если не найдена запрашиваемая (по умолчанию это страница index.html). Все остальные параметры вы вольны настраивать как вашей душе угодно, согласно документации."
+							}
+						]
 					},
 					{
 						"type": "paragraph",
@@ -3665,7 +3809,7 @@
 								"type": "code_block",
 								"attrs": {
 									"lang": "javascript",
-									"code": "\tconst bs = require('browser-sync');\n\n\tmodule.exports = function () {\n\t\tbs.init({\n\t\t\tbrowser: ['chrome'],\n\t\t\twatch: true,\n\t\t\tproxy: '',\n\t\t\tlogLevel: 'info',\n\t\t\tlogPrefix: 'BS-PHP:',\n\t\t\tlogConnections: true,\n\t\t\tlogFileChanges: true,\n\t\t})\n\t}",
+									"code": "const bs = require('browser-sync');\n\nmodule.exports = function bs_php() {\n\tbs.init({\n\t\tbrowser: ['chrome'],\n\t\twatch: true,\n\t\tproxy: '',\n\t\tlogLevel: 'info',\n\t\tlogPrefix: 'BS-PHP:',\n\t\tlogConnections: true,\n\t\tlogFileChanges: true,\n\t})\n}",
 									"inserted": true
 								}
 							},
@@ -3735,7 +3879,7 @@
 								},
 								{
 									"type": "text",
-									"text": ", но поскольку я почти не нашёл единомшленников в данном вопросе \"засорения терминала лишней инфой\", я не описывал его здесь. При желании вы можете добавить соответствующий pipe к нужным задачам или убрать его, если вы клонировали себе готовую сборку и он вас раздражает мельканием в консоли."
+									"text": ", но поскольку я почти не нашёл единомшленников в данном вопросе \"засорения терминала лишней инфой\", я не описывал его здесь. При желании вы можете добавить соответствующий pipe к нужным задачам. В публично доступной версии сборки его так же нет."
 								}
 							]
 						}]
@@ -3759,7 +3903,7 @@
 								"type": "code_block",
 								"attrs": {
 									"lang": "javascript",
-									"code": "const {\n\twatch,\n\tparallel,\n\tseries\n} = require('gulp');\n\nmodule.exports = function () {\n\twatch('src/**/*.html', parallel('html'));\n\twatch('src/**/*.php', parallel('php'));\n\twatch('src/**/*.scss', parallel('style'));\n\twatch('src/**/*.js', parallel('dev_js'));\n\twatch('src/**/*.json', parallel('html'));\n\twatch('src/img/**/*.+(png|jpg|jpeg|gif|svg|ico)', parallel('rastr'));\n\twatch('build/img/**/*.+(png|jpg|jpeg)', parallel('webp'));\n\twatch('src/svg/css/**/*.svg', parallel('svg_css'));\n\twatch('src/svg/sprite/**/*.svg', parallel('svg_sprite'));\n\twatch('src/fonts/**/*.ttf', series('ttf', 'fonts'));\n}",
+									"code": "const {\n\twatch,\n\tparallel,\n\tseries\n} = require('gulp');\n\nmodule.exports = function watching() {\n\twatch('src/**/*.html', parallel('html'));\n\twatch('src/**/*.php', parallel('php'));\n\twatch('src/**/*.scss', parallel('style'));\n\twatch('src/**/*.js', parallel('dev_js'));\n\twatch('src/**/*.json', parallel('html'));\n\twatch('src/img/**/*.+(png|jpg|jpeg|gif|svg|ico)', parallel('rastr'));\n\twatch('build/img/**/*.+(png|jpg|jpeg)', parallel('webp'));\n\twatch('src/svg/css/**/*.svg', series('svg_css', 'style'));\n\twatch('src/svg/sprite/**/*.svg', series('svg_sprite', 'rastr'));\n\twatch('src/fonts/**/*.ttf', series('ttf', 'fonts'));\n}",
 									"inserted": true
 								}
 							},
@@ -3778,7 +3922,17 @@
 						},
 						"content": [{
 							"type": "text",
-							"text": "Здесь мы использовали два варианта запуска и выполнения задач - parallel и series. Разница между ними в том, что в первом случае задачи запускаются одновременно и выполняются параллельно друг другу, а во втором - последовательно, одна за другой в том порядке, в котором мы указали. "
+							"text": "Здесь мы использовали два варианта запуска и выполнения задач - parallel и series. Разница между ними в том, что в первом случае задачи запускаются одновременно и выполняются параллельно друг другу, а во втором - последовательно, одна за другой в том порядке, в котором мы указали."
+						}]
+					},
+					{
+						"type": "paragraph",
+						"attrs": {
+							"align": null
+						},
+						"content": [{
+							"type": "text",
+							"text": "Обратите внимание на имя нашей функции. Поскольку переменная watch уже занята методом галпа, мы назвали свою функцию несколько иначе."
 						}]
 					},
 					{
@@ -3815,7 +3969,21 @@
 						},
 						"content": [{
 								"type": "text",
-								"text": "Для этого нам потребуется отдельная задача и плагин. Я использую vinyl-ftp, хотя есть аналоги, без проблем делающие то же самое. Установим его и напишем задачу. На хостинг будем грузить только директорию "
+								"text": "Для этого нам потребуется отдельная задача и плагин. Я использую "
+							},
+							{
+								"type": "text",
+								"marks": [{
+									"type": "link",
+									"attrs": {
+										"href": "https://www.npmjs.com/package/vinyl-ftp"
+									}
+								}],
+								"text": "vinyl-ftp"
+							},
+							{
+								"type": "text",
+								"text": ", хотя есть аналоги, без проблем делающие то же самое. Установим его и напишем задачу. На хостинг будем грузить только директорию "
 							},
 							{
 								"type": "text",
@@ -3826,20 +3994,20 @@
 							},
 							{
 								"type": "text",
-								"text": ", в которой находятся готовые, скомпилированные файлы проекта."
+								"text": ", в которой находятся готовые, скомпилированные файлы проекта. Для вывода результата в консоль я буду использовать тот же chulk."
 							}
 						]
 					},
 					{
 						"type": "spoiler",
 						"attrs": {
-							"title": "tasks/ftp.js"
+							"title": "tasks/deploy.js"
 						},
 						"content": [{
 								"type": "code_block",
 								"attrs": {
 									"lang": "javascript",
-									"code": "const {\n\tsrc\n} = require('gulp');\nconst changed = require('gulp-changed');\nconst ftp = require('vinyl-ftp');\nconst connect = ftp.create({\n\thost: 'yourhosting.com',\n\tuser: 'username',\n\tpass: '*********',\n\tparallel: 10\n});\n\nmodule.exports = function () {\n\treturn src('build/**/*.*')\n\t\t.pipe(connect.changed('www/'))\n\t\t.pipe(connect.dest('www/'))\n}",
+									"code": "const {\n\tsrc\n} = require('gulp');\nconst ftp = require('vinyl-ftp');\nconst ftpSettings = require('../tasks/ftp_settings');\nconst chalk = require('chalk');\nconst connect = ftp.create(ftpSettings);\n\nmodule.exports = function deploy() {\n\treturn src(['build/**/*.*', '!build/**/*.map'])\n\t\t.pipe(connect.newer('public_html/'))\n\t\t.pipe(connect.dest('public_html/'))\n\t\t.on('success', () => console.log(`Finished deploing ./build to https://${chalk.blueBright(ftpSettings.host)}`))\n}",
 									"inserted": true
 								}
 							},
@@ -3880,18 +4048,48 @@
 							},
 							{
 								"type": "text",
-								"text": " или другое хранилище кода. Можете создать отдельный файл с настройками и добавить его в gitignore, чтобы случайно не забыть и не вывалить свои логин и пароль к хостингу на весь мир. не забудьте так же указать правильную директорию на ftp-сервере вместо "
+								"text": " или другое хранилище кода. Я создал отдельный файл tasks/ftp_settings.json с настройками и р"
+							},
+							{
+								"type": "text",
+								"marks": [{
+									"type": "bold"
+								}],
+								"text": "екомендую вам добавить его в gitignore"
+							},
+							{
+								"type": "text",
+								"text": ", чтобы случайно не забыть и не вывалить свои логин и пароль к хостингу на весь мир:"
+							}
+						]
+					},
+					{
+						"type": "code_block",
+						"attrs": {
+							"lang": null,
+							"code": "{\n\t\"host\": \"yourhosting.com\",\n\t\"user\": \"username\",\n\t\"pass\": \"*********\",\n\t\"parallel\": 10\n}",
+							"inserted": true
+						}
+					},
+					{
+						"type": "paragraph",
+						"attrs": {
+							"align": null
+						},
+						"content": [{
+								"type": "text",
+								"text": "Не забудьте так же указать правильную директорию на ftp-сервере вместо "
 							},
 							{
 								"type": "text",
 								"marks": [{
 									"type": "code"
 								}],
-								"text": "www/"
+								"text": "public_html/"
 							},
 							{
 								"type": "text",
-								"text": ", которая указана в моих настройках."
+								"text": ", которая указана в моих настройках newer и dest."
 							}
 						]
 					},
@@ -3916,7 +4114,254 @@
 						"type": "paragraph",
 						"attrs": {
 							"align": null
+						},
+						"content": [{
+							"type": "text",
+							"text": "Теперь нам нужно составить несколько gulp-сценариев, то есть поочерёдного запуска задач для того, чтобы собирать воедино наш проект. "
+						}]
+					},
+					{
+						"type": "paragraph",
+						"attrs": {
+							"align": null
+						},
+						"content": [{
+							"type": "text",
+							"text": "Для этого у нас будет две gulp-задачи: default и php, с той лишь разницей, что мы будем запускать тот или иной сервер, а так же несколько сценариев npm для запуска разработки, запуска сборки проекта и для деплоя на хостинг."
+						}]
+					},
+					{
+						"type": "paragraph",
+						"attrs": {
+							"align": null
+						},
+						"content": [{
+							"type": "text",
+							"text": "Для начала нам необходимо задать все написанные ранее aeyrwbb в gulpfile.js, чтобы они были доступны в gulp. Делать мы это будем так же, как мы делали с функцией hello:"
+						}]
+					},
+					{
+						"type": "code_block",
+						"attrs": {
+							"lang": null,
+							"code": "exports.style = tasks.style;\nexports.libs_style = tasks.libs_style;\nexports.build_js = tasks.build_js;\nexports.libs_js = tasks.libs_js;\nexports.dev_js = tasks.dev_js;\nexports.html = tasks.html;\nexports.php = tasks.php;\nexports.rastr = tasks.rastr;\nexports.webp = tasks.webp;\nexports.svg_css = tasks.svg_css;\nexports.svg_sprite = tasks.svg_sprite;\nexports.ttf = tasks.ttf;\nexports.fonts = tasks.fonts;\nexports.bs_html = tasks.bs_html;\nexports.bs_php = tasks.bs_php;\nexports.watch = tasks.watch;\nexports.deploy = tasks.deploy;",
+							"inserted": true
 						}
+					},
+					{
+						"type": "paragraph",
+						"attrs": {
+							"align": null
+						},
+						"content": [{
+							"type": "text",
+							"text": "После этого создадим сценарии, которые будем выполнять при запуске Gulp с теми или иными параметрами:"
+						}]
+					},
+					{
+						"type": "spoiler",
+						"attrs": {
+							"title": "Сценарий для html (он же - сценарий по-умолчанию)"
+						},
+						"content": [{
+								"type": "code_block",
+								"attrs": {
+									"lang": "javascript",
+									"code": "exports.default = gulp.parallel(\n\texports.libs_style,\n\texports.style,\n\texports.libs_js,\n\texports.dev_js,\n\texports.rastr,\n\texports.webp,\n\texports.svg_css,\n\texports.svg_sprite,\n\texports.ttf,\n\texports.fonts,\n\texports.html,\n\texports.bs_html,\n\texports.watch\n)",
+									"inserted": true
+								}
+							},
+							{
+								"type": "paragraph",
+								"attrs": {
+									"align": null
+								}
+							}
+						]
+					},
+					{
+						"type": "spoiler",
+						"attrs": {
+							"title": "Сценарий для php"
+						},
+						"content": [{
+								"type": "code_block",
+								"attrs": {
+									"lang": "javascript",
+									"code": "exports.dev_php = gulp.parallel(\n\texports.libs_style,\n\texports.svg_css,\n\texports.fonts,\n\texports.style,\n\texports.libs_js,\n\texports.dev_js,\n\texports.rastr,\n\texports.webp,\n\texports.svg_sprite,\n\texports.ttf,\n\texports.php,\n\texports.bs_php,\n\texports.watch\n)",
+									"inserted": true
+								}
+							},
+							{
+								"type": "paragraph",
+								"attrs": {
+									"align": null
+								}
+							}
+						]
+					},
+					{
+						"type": "paragraph",
+						"attrs": {
+							"align": null
+						},
+						"content": [{
+							"type": "text",
+							"text": "Итоговый gulpfile.js будет выглядеть так:"
+						}]
+					},
+					{
+						"type": "spoiler",
+						"attrs": {
+							"title": "gulpfile.js"
+						},
+						"content": [{
+								"type": "code_block",
+								"attrs": {
+									"lang": "javascript",
+									"code": "const gulp = require('gulp');\nconst requireDir = require('require-dir');\nconst tasks = requireDir('./tasks');\n\nexports.style = tasks.style;\nexports.libs_style = tasks.libs_style;\nexports.build_js = tasks.build_js;\nexports.libs_js = tasks.libs_js;\nexports.dev_js = tasks.dev_js;\nexports.html = tasks.html;\nexports.php = tasks.php;\nexports.rastr = tasks.rastr;\nexports.webp = tasks.webp;\nexports.svg_css = tasks.svg_css;\nexports.svg_sprite = tasks.svg_sprite;\nexports.ttf = tasks.ttf;\nexports.fonts = tasks.fonts;\nexports.bs_html = tasks.bs_html;\nexports.bs_php = tasks.bs_php;\nexports.watch = tasks.watch;\nexports.deploy = tasks.deploy;\n\nexports.default = gulp.parallel(\n\texports.libs_style,\n\texports.style,\n\texports.libs_js,\n\texports.dev_js,\n\texports.rastr,\n\texports.webp,\n\texports.svg_css,\n\texports.svg_sprite,\n\texports.ttf,\n\texports.fonts,\n\texports.html,\n\texports.bs_html,\n\texports.watch\n)\nexports.dev_php = gulp.parallel(\n\texports.libs_style,\n\texports.style,\n\texports.libs_js,\n\texports.dev_js,\n\texports.rastr,\n\texports.webp,\n\texports.svg_css,\n\texports.svg_sprite,\n\texports.ttf,\n\texports.fonts,\n\texports.php,\n\texports.bs_php,\n\texports.watch\n)",
+									"inserted": true
+								}
+							},
+							{
+								"type": "paragraph",
+								"attrs": {
+									"align": null
+								}
+							}
+						]
+					},
+					{
+						"type": "paragraph",
+						"attrs": {
+							"align": null
+						},
+						"content": [{
+							"type": "text",
+							"text": "Теперь перейдём в файл package.json и напишем несколько npm-сценариев, которые будут последовательно выполнять задачи и запускать сборку. В объекте \"scripts\" мы можем задавать в формате ключ-значение имя и наборы задач для запуска. Я сделаю пять сценариев:"
+						}]
+					},
+					{
+						"type": "code_block",
+						"attrs": {
+							"lang": "json",
+							"code": "  \"scripts\": {\n    \"html\": \"gulp\",\n    \"php\": \"gulp dev_php\",\n    \"build\": \"gulp libs_style && gulp svg_css && gulp ttf && gulp fonts && gulp style && gulp libs_js && gulp build_js && gulp rastr && gulp webp && gulp svg_sprite && gulp html && gulp php\",\n    \"ftp\": \"gulp deploy\",\n    \"build-ftp\": \"npm run build && npm run ftp\"\n  },",
+							"inserted": true
+						}
+					},
+					{
+						"type": "list",
+						"attrs": {
+							"order": 1,
+							"tag": "ul",
+							"type": "outer"
+						},
+						"content": [{
+								"type": "listitem",
+								"content": [{
+									"type": "paragraph",
+									"attrs": {
+										"align": null
+									},
+									"content": [{
+											"type": "text",
+											"marks": [{
+												"type": "bold"
+											}],
+											"text": "html"
+										},
+										{
+											"type": "text",
+											"text": " будет запускать Gulp для разработки в html-версии;"
+										}
+									]
+								}]
+							},
+							{
+								"type": "listitem",
+								"content": [{
+									"type": "paragraph",
+									"attrs": {
+										"align": null
+									},
+									"content": [{
+											"type": "text",
+											"marks": [{
+												"type": "bold"
+											}],
+											"text": "php"
+										},
+										{
+											"type": "text",
+											"text": " будет запускать Gulp для разработки в php-версии;"
+										}
+									]
+								}]
+							},
+							{
+								"type": "listitem",
+								"content": [{
+									"type": "paragraph",
+									"attrs": {
+										"align": null
+									},
+									"content": [{
+											"type": "text",
+											"marks": [{
+												"type": "bold"
+											}],
+											"text": "build"
+										},
+										{
+											"type": "text",
+											"text": " будет поочерёдно запускать задачи для сборки проекта в build без запуска вотчинга и сервера;"
+										}
+									]
+								}]
+							},
+							{
+								"type": "listitem",
+								"content": [{
+									"type": "paragraph",
+									"attrs": {
+										"align": null
+									},
+									"content": [{
+											"type": "text",
+											"marks": [{
+												"type": "bold"
+											}],
+											"text": "ftp"
+										},
+										{
+											"type": "text",
+											"text": " отправит содержимое пдиректории build кроме файловых карт (файлы с расширением .map) на ftp-сервер;"
+										}
+									]
+								}]
+							},
+							{
+								"type": "listitem",
+								"content": [{
+									"type": "paragraph",
+									"attrs": {
+										"align": null
+									},
+									"content": [{
+											"type": "text",
+											"marks": [{
+												"type": "bold"
+											}],
+											"text": "build-ftp"
+										},
+										{
+											"type": "text",
+											"text": " поочерёдно выполнит build и ftp сценарии."
+										}
+									]
+								}]
+							}
+						]
 					},
 					{
 						"type": "hr",
@@ -3939,6 +4384,543 @@
 						"type": "paragraph",
 						"attrs": {
 							"align": null
+						},
+						"content": [{
+							"type": "text",
+							"text": "Для разработки нам потребуются стартовые шаблоны html, кое-какие стили и несколько миксинов, которыми мы будем пользоваться в разработке. Начнём с html. Создадим индексный файл (index.html) со стандартной базовой разметкой:"
+						}]
+					},
+					{
+						"type": "code_block",
+						"attrs": {
+							"lang": "xml",
+							"code": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n\t<meta charset=\"UTF-8\">\n\t<meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">\n\t<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n\t<title>Document</title>\n</head>\n<body>\n  <main>\n    \n  </main>\n</body>\n</html>",
+							"inserted": true
+						}
+					},
+					{
+						"type": "paragraph",
+						"attrs": {
+							"align": null
+						},
+						"content": [{
+							"type": "text",
+							"text": "Теперь уберём в компонент то, что будет повторяться на всех страницах: "
+						}]
+					},
+					{
+						"type": "spoiler",
+						"attrs": {
+							"title": "src/components/page-blocks/_head.html"
+						},
+						"content": [{
+								"type": "code_block",
+								"attrs": {
+									"lang": "xml",
+									"code": "<html lang=\"@@lang\">\n\n<html lang=\"@@lang\">\n\n<head>\n\t<meta charset=\"UTF-8\">\n\t<meta name=\"viewport\"\n\t\t\t\tcontent=\"width=device-width, initial-scale=1.0\">\n\t<meta name=\"description\"\n\t\t\t\tcontent=\"@@description\">\n\t<meta name=\"keywords\"\n\t\t\t\tcontent=\"@@keywords\">\n\t<link rel=\"shortcut icon\"\n\t\t\t\thref=\"@@favicon.svg\"\n\t\t\t\ttype=\"image/svg+xml\">\n\t<link rel=\"shortcut icon\"\n\t\t\t\thref=\"@@favicon.webp\"\n\t\t\t\ttype=\"image/webp\">\n\t<link rel=\"shortcut icon\"\n\t\t\t\thref=\"@@favicon.png\"\n\t\t\t\ttype=\"image/x-icon\">\n\t<link rel=\"stylesheet\"\n\t\t\t\thref=\"css/libs.min.css\">\n\t<link rel=\"stylesheet\"\n\t\t\t\thref=\"css/style.min.css\">\n\t<title>@@title</title>\n</head>",
+									"inserted": true
+								}
+							},
+							{
+								"type": "paragraph",
+								"attrs": {
+									"align": null
+								}
+							}
+						]
+					},
+					{
+						"type": "paragraph",
+						"attrs": {
+							"align": null
+						},
+						"content": [{
+							"type": "text",
+							"text": "...и подключим этот компонент вместо обычного head страницы:"
+						}]
+					},
+					{
+						"type": "code_block",
+						"attrs": {
+							"lang": "xml",
+							"code": "<!DOCTYPE html>\n@@include('components/page-blocks/_head.html',{\n\"lang\":\"en\",\n\"title\":\"Easy-webdev-startpack v3.0\",\n\"description\":\"Gulp pack for easy html/php markup development\",\n\"keywords\":\"\",\n\"favicon\":\"img/favicons/favicon\",\n})\n\n<body>\n\t<main class=\"main\">\n    \n  </main>\n</body>\n\n</html>",
+							"inserted": true
+						}
+					},
+					{
+						"type": "paragraph",
+						"attrs": {
+							"align": null
+						},
+						"content": [{
+							"type": "text",
+							"text": "Как можете видеть, ничего сложного нет. Функция @@include принимает два параметра. Первый параметр - путь к файлу, который мы импортируем, а второй - json-объект (тут может быть путь к файлу json, содержащему объект или массив), в котором в формате ключ-значение указаны те переменные, которые нам нужно подставить в этом инклюде. Создадим в директории компонентов так же шаблоны хедера, футера и подключения скриптов:"
+						}]
+					},
+					{
+						"type": "spoiler",
+						"attrs": {
+							"title": "src/components/page-blocks/..."
+						},
+						"content": [{
+								"type": "heading",
+								"attrs": {
+									"level": 1,
+									"class": null
+								},
+								"content": [{
+									"type": "text",
+									"text": "_header.html"
+								}]
+							},
+							{
+								"type": "code_block",
+								"attrs": {
+									"lang": "xml",
+									"code": "<header class=\"header\"></header>",
+									"inserted": true
+								}
+							},
+							{
+								"type": "heading",
+								"attrs": {
+									"level": 1,
+									"class": null
+								},
+								"content": [{
+									"type": "text",
+									"text": "_footer.html"
+								}]
+							},
+							{
+								"type": "code_block",
+								"attrs": {
+									"lang": "xml",
+									"code": "<footer class=\"footer\"></footer>",
+									"inserted": true
+								}
+							},
+							{
+								"type": "heading",
+								"attrs": {
+									"level": 1,
+									"class": null
+								},
+								"content": [{
+									"type": "text",
+									"text": "_scripts.html"
+								}]
+							},
+							{
+								"type": "code_block",
+								"attrs": {
+									"lang": "xml",
+									"code": "<script src=\"js/libs.min.js\"></script>\n<script src=\"js/main.min.js\"></script>",
+									"inserted": true
+								}
+							},
+							{
+								"type": "paragraph",
+								"attrs": {
+									"align": null
+								}
+							}
+						]
+					},
+					{
+						"type": "paragraph",
+						"attrs": {
+							"align": null
+						},
+						"content": [{
+							"type": "text",
+							"text": "И теперь подключим их все в индексный файл:"
+						}]
+					},
+					{
+						"type": "code_block",
+						"attrs": {
+							"lang": "xml",
+							"code": "<!DOCTYPE html>\n@@include('components/page-blocks/_head.html',{\n\"lang\":\"en\",\n\"title\":\"Easy-webdev-startpack v3.0\",\n\"description\":\"Gulp pack for easy html/php markup development\",\n\"keywords\":\"\",\n\"favicon\":\"img/favicons/favicon\",\n})\n\n<body>\n\t@@include('components/page-blocks/_header.html')\n\t<main class=\"main\"></main>\n\t@@include('components/page-blocks/_footer.html')\n\t@@include('components/page-blocks/_scripts.html')\n</body>\n\n</html>",
+							"inserted": true
+						}
+					},
+					{
+						"type": "paragraph",
+						"attrs": {
+							"align": null
+						},
+						"content": [{
+							"type": "text",
+							"text": "Теперь при запуске Gulp на выходе мы получим готовую страницу, с прописанным head, header, footer и подключенными скриптами. Если после запуска gulp посмотреть на индексный файл в директории build, то мы увидим вполне обычный html-файл:"
+						}]
+					},
+					{
+						"type": "image",
+						"attrs": {
+							"src": "https://habrastorage.org/getpro/habr/upload_files/870/baa/1ae/870baa1ae14bb71577651da3c1a08067.png",
+							"title": "build/index.html",
+							"customClass": "image",
+							"border": false,
+							"float": false,
+							"fullWidth": true,
+							"inserted": false,
+							"width": 1216,
+							"height": 1932
+						}
+					},
+					{
+						"type": "paragraph",
+						"attrs": {
+							"align": null
+						},
+						"content": [{
+							"type": "text",
+							"text": "Останется только наполнить её нужным контентом!"
+						}]
+					},
+					{
+						"type": "paragraph",
+						"attrs": {
+							"align": null
+						},
+						"content": [{
+							"type": "text",
+							"text": "Теперь перейдём к созданию базовых стилей. Для начала, я подключу все необходимые директории с файлами в style.scss. Здесь важен порядок импорта стилей, поскольку стили, которые будут ниже в итоговом файле имеют приоритет:"
+						}]
+					},
+					{
+						"type": "code_block",
+						"attrs": {
+							"lang": "css",
+							"code": "@import 'base/*.scss';\n@import 'global/*.scss';\n@import '../components/**/*.scss';\n@import '**/_*.scss';",
+							"inserted": true
+						}
+					},
+					{
+						"type": "paragraph",
+						"attrs": {
+							"align": null
+						},
+						"content": [{
+								"type": "text",
+								"text": "Далее создам в директории src/scss/base файл "
+							},
+							{
+								"type": "text",
+								"marks": [{
+									"type": "code"
+								}],
+								"text": "_01_normalize.scss"
+							},
+							{
+								"type": "text",
+								"text": " Именно так: с подчёркиванием и номером файла. Это нужно для того, чтобы стили из этого файла оказались в самом верху и их можно было перебить другими стилями, если это понадобится. Далее в этот файл я скопирую стили из "
+							},
+							{
+								"type": "text",
+								"marks": [{
+									"type": "link",
+									"attrs": {
+										"href": "https://necolas.github.io/normalize.css/"
+									}
+								}],
+								"text": "normalize.css"
+							},
+							{
+								"type": "text",
+								"text": ". Безусловно, можно подключить normalize в качестве плагина, но я выбрал именно этот  способ, в том числе, для демонстрации принципов подключения файлов со стилями."
+							}
+						]
+					},
+					{
+						"type": "paragraph",
+						"attrs": {
+							"align": null
+						},
+						"content": [{
+							"type": "text",
+							"text": "Теперь перейдём к файлу src/scss/base/_mixins.scss. Добавим сюда несколько миксинов, чтобы было удобно задавать быстрые стили:"
+						}]
+					},
+					{
+						"type": "code_block",
+						"attrs": {
+							"lang": "css",
+							"code": "@mixin bg ($size:\"contain\", $position: \"center\") {\n\tbackground-size: #{$size};\n\tbackground-position: #{$position};\n\tbackground-repeat: no-repeat;\n}",
+							"inserted": true
+						}
+					},
+					{
+						"type": "paragraph",
+						"attrs": {
+							"align": null
+						},
+						"content": [{
+								"type": "text",
+								"text": "Этот миксин поможет нам с фоновыми картинками. Достаточно нужному классу написать "
+							},
+							{
+								"type": "text",
+								"marks": [{
+									"type": "code"
+								}],
+								"text": "@include bg"
+							},
+							{
+								"type": "text",
+								"text": " и на выходе мы получим вот это:"
+							}
+						]
+					},
+					{
+						"type": "code_block",
+						"attrs": {
+							"lang": "css",
+							"code": "body {\n\tbackground-size: contain;\n\tbackground-position: center;\n\tbackground-repeat: no-repeat;\n}",
+							"inserted": true
+						}
+					},
+					{
+						"type": "paragraph",
+						"attrs": {
+							"align": null
+						},
+						"content": [{
+							"type": "text",
+							"text": "Следующий миксин, который я использую - это анимация кнопок (при наведении, фокусе и нажатии):"
+						}]
+					},
+					{
+						"type": "code_block",
+						"attrs": {
+							"lang": "css",
+							"code": "@mixin btn_anim($scaleMax:1.05, $scaleMin:0.95) {\n\ttransform-origin: center center;\n\ttransition: all ease-out 240ms;\n\n\t&:hover {\n\t\ttransform: scale($scaleMax);\n\t}\n\n\t&:focus{\n\t\toutline: transparent;\n\t}\n\n\t&:focus-visible {\n\t\ttransform: scale($scaleMax) trahslateY(-5%);\n\t}\n\n\t&:active {\n\t\ttransform: scale($scaleMin);\n\t}\n}",
+							"inserted": true
+						}
+					},
+					{
+						"type": "paragraph",
+						"attrs": {
+							"align": null
+						},
+						"content": [{
+							"type": "text",
+							"text": "Далее идёт миксин для сброса стилей кнопки. Очень часто такой необходим."
+						}]
+					},
+					{
+						"type": "code_block",
+						"attrs": {
+							"lang": "css",
+							"code": "@mixin no-btn ($display:\"inline-block\") {\n\tpadding: 0;\n\tmargin: 0;\n\tborder: 0;\n\tbackground-color: transparent;\n\tborder-radius: 0;\n\tcursor: pointer;\n\tappearance: none;\n\tdisplay: #{$display};\n}",
+							"inserted": true
+						}
+					},
+					{
+						"type": "paragraph",
+						"attrs": {
+							"align": null
+						},
+						"content": [{
+							"type": "text",
+							"text": "Следующий миксин достаточно спорный, но я исплоьзую. Он делает transition:"
+						}]
+					},
+					{
+						"type": "code_block",
+						"attrs": {
+							"lang": "css",
+							"code": "@mixin transit ($tr:0.24) {\n\ttransition: all #{$tr}s;\n}",
+							"inserted": true
+						}
+					},
+					{
+						"type": "paragraph",
+						"attrs": {
+							"align": null
+						},
+						"content": [{
+							"type": "text",
+							"text": "И ещё один миксин для контейнеров:"
+						}]
+					},
+					{
+						"type": "code_block",
+						"attrs": {
+							"lang": "css",
+							"code": "@mixin container($max-width:\"120rem\",$padding:\"2rem\"){\n\twidth: 100%;\n\tmax-width: #{$max-width};\n\tpadding: 0 #{$padding};\n\tmargin: 0 auto;\n}",
+							"inserted": true
+						}
+					},
+					{
+						"type": "paragraph",
+						"attrs": {
+							"align": null
+						},
+						"content": [{
+								"type": "text",
+								"text": "Теперь перейдём в файл "
+							},
+							{
+								"type": "text",
+								"marks": [{
+									"type": "code"
+								}],
+								"text": "src/scss/global/_global.scss"
+							},
+							{
+								"type": "text",
+								"text": " и создадим несколько \"служебных\" классов и общих стилей. Я и не припомню проекта, где они не были бы мне нужны."
+							}
+						]
+					},
+					{
+						"type": "paragraph",
+						"attrs": {
+							"align": null
+						},
+						"content": [{
+							"type": "text",
+							"text": "Во-первых, установим box-sizing: border-box для всех элементов страницы:"
+						}]
+					},
+					{
+						"type": "code_block",
+						"attrs": {
+							"lang": "css",
+							"code": "*,\n*::before,\n*::after {\n\tbox-sizing: border-box;\n}",
+							"inserted": true
+						}
+					},
+					{
+						"type": "paragraph",
+						"attrs": {
+							"align": null
+						},
+						"content": [{
+							"type": "text",
+							"text": "Во-вторых, распишем стили для флексов:"
+						}]
+					},
+					{
+						"type": "code_block",
+						"attrs": {
+							"lang": "css",
+							"code": ".flex {\n\tdisplay: flex;\n\talign-items: flex-start;\n\tjustify-content: flex-start;\n}\n.--just-space {\n\tjustify-content: space-between;\n}\n\n.--just-center {\n\tjustify-content: center;\n}\n\n.--just-end {\n\tjustify-content: flex-end;\n}\n\n.--align-str {\n\talign-items: stretch;\n}\n\n.--align-center {\n\talign-items: center;\n}\n\n.--align-end {\n\talign-items: flex-end;\n}\n\n.--dir-col{\n\tflex-direction: column;\n}",
+							"inserted": true
+						}
+					},
+					{
+						"type": "paragraph",
+						"attrs": {
+							"align": null
+						},
+						"content": [{
+							"type": "text",
+							"text": "В-третьих, для html и body заранее установим некоторые стили:"
+						}]
+					},
+					{
+						"type": "code_block",
+						"attrs": {
+							"lang": "css",
+							"code": "html{\n\tfont-size: 16px;\n}\n\nhtml,\nbody {\n\tmin-height: 100%;\n\tposition: relative;\n}\n\nbody{\n\tfont-size: 1rem;\n}",
+							"inserted": true
+						}
+					},
+					{
+						"type": "paragraph",
+						"attrs": {
+							"align": null
+						},
+						"content": [{
+							"type": "text",
+							"text": "И далее момент спорный, но я использую. Это сброс отступов у некоторых блочных элементов:"
+						}]
+					},
+					{
+						"type": "code_block",
+						"attrs": {
+							"lang": "css",
+							"code": "ul,\nol,\nli,\np,\nh1,\nh2,\nh3,\nh4,\nh5,\nh6 {\n\tmargin: 0;\n}",
+							"inserted": true
+						}
+					},
+					{
+						"type": "paragraph",
+						"attrs": {
+							"align": null
+						},
+						"content": [{
+							"type": "text",
+							"text": "И того, у нас должны получиться файлы:"
+						}]
+					},
+					{
+						"type": "spoiler",
+						"attrs": {
+							"title": "src/scss/base/_mixins.scss"
+						},
+						"content": [{
+								"type": "code_block",
+								"attrs": {
+									"lang": "css",
+									"code": "@mixin font-face($name, $file, $weight: 400, $style: normal) {\n\t@font-face {\n\t\tfont-family: \"#{$name}\";\n\t\tsrc: local(\"#{$file}\"),\n\t\turl('../fonts/#{$file}.woff2') format('woff2'),\n\t\turl('../fonts/#{$file}.woff') format('woff');\n\t\tfont-weight: $weight;\n\t\tfont-style: $style;\n\t\tfont-display: swap;\n\t}\n}\n\n@mixin bg ($size:\"contain\", $position: \"center\") {\n\tbackground-size: #{$size};\n\tbackground-position: #{$position};\n\tbackground-repeat: no-repeat;\n}\n\n@mixin btn_anim($scaleMax:1.05, $scaleMin:0.95) {\n\ttransform-origin: center center;\n\ttransition: all ease-out 240ms;\n\n\t&:hover {\n\t\ttransform: scale(#{$scaleMax});\n\t}\n\n\t&:focus {\n\t\toutline: transparent;\n\t}\n\n\t&:focus-visible {\n\t\ttransform: scale(#{$scaleMax}) trahslateY(-5%);\n\t}\n\n\t&:active {\n\t\ttransform: scale(#{$scaleMin});\n\t}\n}\n\n@mixin no-btn ($display:\"inline-block\") {\n\tpadding: 0;\n\tmargin: 0;\n\tborder: 0;\n\tbackground-color: transparent;\n\tborder-radius: 0;\n\tcursor: pointer;\n\tappearance: none;\n\tdisplay: #{$display};\n}\n\n@mixin transit ($tr:0.24) {\n\ttransition: all #{$tr}s;\n}\n\n@mixin container($max-width:\"120rem\", $padding:\"2rem\") {\n\twidth: 100%;\n\tmax-width: #{$max-width};\n\tpadding: 0 #{$padding};\n\tmargin: 0 auto;\n}",
+									"inserted": true
+								}
+							},
+							{
+								"type": "paragraph",
+								"attrs": {
+									"align": null
+								}
+							}
+						]
+					},
+					{
+						"type": "spoiler",
+						"attrs": {
+							"title": "src/scss/global/_global.scss"
+						},
+						"content": [{
+								"type": "code_block",
+								"attrs": {
+									"lang": "css",
+									"code": "*,\n*::before,\n*::after {\n\tbox-sizing: border-box;\n}\n\n.flex {\n\tdisplay: flex;\n\talign-items: flex-start;\n\tjustify-content: flex-start;\n}\n\n.--just-space {\n\tjustify-content: space-between;\n}\n\n.--just-center {\n\tjustify-content: center;\n}\n\n.--just-end {\n\tjustify-content: flex-end;\n}\n\n.--align-str {\n\talign-items: stretch;\n}\n\n.--align-center {\n\talign-items: center;\n}\n\n.--align-end {\n\talign-items: flex-end;\n}\n\n.--dir-col {\n\tflex-direction: column;\n}\n\nhtml {\n\tfont-size: 16px;\n}\n\nhtml,\nbody {\n\tmin-height: 100%;\n\tposition: relative;\n}\n\nbody {\n\tfont-size: 1rem;\n}\n\nul,\nol,\nli,\np,\nh1,\nh2,\nh3,\nh4,\nh5,\nh6 {\n\tmargin: 0;\n}",
+									"inserted": true
+								}
+							},
+							{
+								"type": "paragraph",
+								"attrs": {
+									"align": null
+								}
+							}
+						]
+					},
+					{
+						"type": "paragraph",
+						"attrs": {
+							"align": null
+						},
+						"content": [{
+							"type": "text",
+							"text": "Вот, собственно и всё. Поздравляю! Наша сборка готова к работе."
+						}]
+					},
+					{
+						"type": "image",
+						"attrs": {
+							"src": "https://habrastorage.org/getpro/habr/upload_files/b60/790/cc6/b60790cc6c995dfb8fbac05aaec552f1.jpg",
+							"title": null,
+							"customClass": "image",
+							"border": false,
+							"float": false,
+							"fullWidth": true,
+							"inserted": false,
+							"width": 890,
+							"height": 450
 						}
 					},
 					{
@@ -3955,14 +4937,73 @@
 						},
 						"content": [{
 							"type": "text",
-							"text": "Процесс разработки или краткое howto"
+							"text": "Краткое howto"
 						}]
 					},
 					{
 						"type": "paragraph",
 						"attrs": {
 							"align": null
-						}
+						},
+						"content": [{
+								"type": "text",
+								"marks": [{
+									"type": "bold"
+								}],
+								"text": "Первое"
+							},
+							{
+								"type": "text",
+								"text": " что следует сказать, что с помощью @@include-функции вы можете вставлять не только html файлы, но и любые другие, в которых есть текстовая информация. Например, вы можете вставлять инлайновые svg в html, не загромождая код."
+							}
+						]
+					},
+					{
+						"type": "paragraph",
+						"attrs": {
+							"align": null
+						},
+						"content": [{
+								"type": "text",
+								"marks": [{
+									"type": "bold"
+								}],
+								"text": "Второе."
+							},
+							{
+								"type": "text",
+								"text": " В функции @@include есть особый режим @@loop, который принимает вторым аргументом массив объектов и повторяет элемент столько раз, сколько объектов есть в массиве. То есть можно создать, например, слайдер с разными картинками, скормив функции @@loop массив путей к картинкам. "
+							},
+							{
+								"type": "text",
+								"marks": [{
+									"type": "bold"
+								}],
+								"text": "ВАЖНОЕ ОГРАНИЧЕНИЕ!"
+							},
+							{
+								"type": "text",
+								"text": " loop не работает внутри includ'а - только в корневых файлах."
+							}
+						]
+					},
+					{
+						"type": "paragraph",
+						"attrs": {
+							"align": null
+						},
+						"content": [{
+								"type": "text",
+								"marks": [{
+									"type": "bold"
+								}],
+								"text": "Третье."
+							},
+							{
+								"type": "text",
+								"text": " Старайтесь дробить свой код на как можно большее количество компонентов. Так вам будет удобнее разрабатывать свои проекты. В директории components можно создавать вложенные директории, в которых хранить шаблоны html, scss и js отдельного компонента (например, слайдера). Scss и js из этой директории подтянутся в выходные файлы, можете об этом не переживать."
+							}
+						]
 					},
 					{
 						"type": "hr",
@@ -3971,14 +5012,54 @@
 						}
 					},
 					{
+						"type": "heading",
+						"attrs": {
+							"level": 1,
+							"class": null
+						},
+						"content": [{
+							"type": "text",
+							"text": "Вместо послесловия"
+						}]
+					},
+					{
 						"type": "paragraph",
 						"attrs": {
 							"align": null
-						}
+						},
+						"content": [{
+								"type": "text",
+								"text": "Если вы дочитали аж до сюда, значит статья была для вас интересной и познавательной. Поэтому, пожалуйста, пройдите по "
+							},
+							{
+								"type": "text",
+								"marks": [{
+									"type": "link",
+									"attrs": {
+										"href": "https://github.com/budfy/Easy-webdev-startpack"
+									}
+								}],
+								"text": "этой ссылке "
+							},
+							{
+								"type": "text",
+								"text": "и поставьте звезду моей сборке. Вам это 10 секунд времени, а мне будет приятно и я буду понимать, что есть запрос на дальнейшее развитие сборки."
+							}
+						]
+					},
+					{
+						"type": "paragraph",
+						"attrs": {
+							"align": null
+						},
+						"content": [{
+							"type": "text",
+							"text": "Если же Вы знаете, как можно улучшить сборку, отрефакторить какую-то задачу, то напишите об этом в комментариях, а лучше, оставьте свой pull-request в репозитории. Я всегда открыт к улучшениям и готов обсуждению."
+						}]
 					}
 				]
 			},
-			"textContent": "Как я сделал свою сборку Gulp для быстрой, лёгкой и приятной вёрстки.Серьёзно и профессионально я начал заниматься вёрсткой в 2019 году, хотя до этого ещё со школы интересовался данной темой как любитель. Поэтому новичком мне себя назвать сложно, но и профессионалом с опытом 5+ лет я тоже не являюсь.  Тем не менее, я успел познакомиться со сборщиком Gulp, его плагинами и сделал для себя хорошую, как по мне, сборку для работы. О её возможностях сегодня и расскажу.ВАЖНО! В этой статье речь пойдёт о самой последней версии сборки. Если вы пользуетесь версиями сборки, вышедшими до публикации этой статьи, информация будет для вас не релевантна, но полезна.Какие задачи решает эта сборка?вёрстка компонентами (вам не нужно в каждую страницу копировать head, header, footer и другие повторяющиеся элементы, вплоть до кнопок или кастомных чекбоксов);вёрстка с препроцессорами (SASS/SCSS);конвертация шрифтов из ttf в eot, woff, woff2;лёгкое (почти автоматическое) подключение шрифтов;лёгкое (почти автоматическое) создание псевдоэлементов-иконок;обработка изображений \"на лету\";минификация html/css/js файлов;возможность вёрстки с использованием php;выгрузка файлов на хостинг по FTP;несколько мелких задач с помощью миксинов.https://github.com/budfy/Easy-webdev-startpackСобственно создание сборкиНачнём собирать нашу сборку (простите за тавтологию). Предварительно нам потребуется уже установленная на компьютере LTS-версия Node.js и NPM (входит в пакет Node.js) либо Yarn. Для нашей задачи не имеет значения, какой из этих пакетных менеджеров использовать, однако я буду объяснять на примере NPM, соответственно, для Yarn вам потребуется нагуглить аналоги NPM-команд.Первое, что нам нужно сделать - это инициализировать проект. Открываем папку проекта в командной строке (очень надеюсь, вы знаете, как это делается) и вводим команду npm init.После этого npm задаст нам неесколько стандартных вопросов по типу названия проекта, автора, версии и т.д... Отвечаем на них как душе угодно. Для нашей задачи это не имеет никакого значения.Далее будет намного удобнее работать через Visual Studio Code (поскольку у него есть встроенный терминал) или любой другой удобный вам редактор + терминал.Прежде всего, нам нужно установить сам Gulp. Делается это двумя командами npm i gulp -global - устанавливаем Gulp глобально на систему и npm i gulp --save-dev - устанавливаем Gulp локально в проект. Ключ --save здесь отвечает за сохранение версии плагина при дальнейшей установке (без него вам может установить более новую, несовместимую с другими плагинами версию), а ключ -dev указывает на то, что этот пакет необходим только во время разработки проекта, а не во время его выполнения. Например, если мы устанавливаем в проект пакет Swiper, который содержит скрипты слайдера и будет отображаться на странице, мы будем устанавливать его без ключа -dev, поскольку он нужен для выполнения, а не для разработки.После того, как Gulp установился, имеет смысл создать в корне проекта управляющий файл gulpfile.js, в котором мы и будем писать задачи для сборщика.После этого нам нужно подключить Gulp в нашем файле, для того чтобы он исполнялся. Это делается с помощью require:Далее, для каждой задачи будем использовать модули в отдельных файлах. Для того, чтобы не подключать каждый модуль отдельно, нужно установить и подключить плагин require-dir. Устанавливается он всё той же командой (как и все последующие плагины, поэтому далее повторяться не буду, просто знайте, что установить - это npm i $PLUGIN-NAME$ --save-dev). После установки подключаем его и прописываем путь к папке, в которую будем складывать модули (у меня это папка tasks):Первая задачаДавайте проверим, всё ли мы правильно сделали. Создадим в директории tasks файл модуля с именем hello.js. В созданном файле напишем простейшую функцию, которая будет выводить в консоль строку \"Hello Gulp!\" (можете придумать что-то менее банальное, если хотите).Теперь вернёмся в gulpfile.js и создадим там задачу hello:ТТеперь командой gulp hello в терминале запустим нашу задачу. Если всё сделано правильно - в терминал должно вывестись приблизительно такое сообщение:Файловая структураТеперь, когда мы создали первую функцию, можно подумать о том, какая структура будет у наших проектов. Я предпочитаю использовать директорию (папку) /src для хранения исходных файлов и директорию /build для готовых файлов проекта.components/ - директория для компонентовcomponents/bem-blocks/ - директория для БЭМ-блоковcomponents/page-blocks/ - директория для типовых блоков страницы, таких как хедер, футер и т.п.fonts/ - директория для шрифтовimg/ - директория для изображенийjs/ - директория для файлов JavaScriptscss/ - директория для файлов стилейscss/base/ - директория для базовых стилей, которые мы изменять не будемsvg/ - директория для файлов SVGsvg/css/ - директория для SVG-файлов, которые будут интегрироваться в CSS Получиться в итоге должно приблизительно следующее:ВАЖНО: в пустых директориях, таких как img/, fonts/ и т.п. перед тем как пушить в удалённый репозиторий (например на Github) нужно создать пустые файлы с именем .gitkeep. Это нужно для того, чтобы Github не удалил пустые директории из сборки.Добавление задач и настройка плагиновОсновной целью Gulp является автоматизация рутинных действий в разработке, которые мы можем запрограммировать с помощью задач и плагинов. Первую тестовую задачу мы с вами уже написали. Давайте теперь напишем настоящие задачи, которые будут нам помогать в работе.Задачи стилейДля работы с scss нам нужно будет установить некоторые плагины, которые будут обрабатывать и компилировать наш scss код в готовый css. Прежде всего, установим сам плагин Gulp-sass, который будет компилировать scss файлы в обычный css, понятный браузеру. Так же, для того, чтобы scss-файлы можно было импортировать не по одному, а целыми директориями нам понадобится gulp-sass-bulk-importer, для автоматической расстановки префиксов - gulp-autoprefixer, для очистки лишнего css - gulp-clean-css и для конкатинации (\"склеивания\" файлов вместе) - gulp-concat. Так же, для того, чтобы в DevTools было понятно, из какого файла взялись стили, установим gulp-sourcemaps. Можно каждый раз не прописывать команду npm i в терминале, а указать перечень устанавливаемых плагинов через пробел, но ключи тогда нужно будет указать перед названиями плагинов: npm i --save-dev gulp-sass gulp-sass-bulk-importer gulp-autoprefixer gulp-clean-css gulp-concat gulp-sourcemapsТеперь создадим в директории tasks/ файл модуля, в котором опишем, что нужно делать галпу с scss-файлами. От gulp нам понадобятся src и dest, а остальные плагины подключим полностью:Далее экспортируем безымянную функцию: В ней-то мы и будем обрабатывать наши scss файлы. Gulp выполняет последовательность действий .pipe над объектами, указанными в модуле src. Это похоже на конвейер, проходя по которому, код или файлы, которые мы создали в директории src/, превращаются в то, что мы хотим видеть в итоге и складываются в директорию build/. Давайте определим порядок действий:Взять файлы scss из директорий scss/Инициализировать карту исходных файлов (sourcepams)Скомпилировать в cssРасставить вендорные префиксыОчистить от лишнегоСклеить в единый файл style.cssЗаписать карту исходных файлов в получившемся файлеПоложить его в buildИтогом (return) нашей функции как раз и будет результат всей последовательности действий, которые мы определили. Это и запишем:src('src/scss/**/*.scss') - определяем источник исходного кода (source).pipe(map.init()) - инициализируем маппинг, чтобы он отслеживал включаемые файлы.pipe(bulk()) - проводим код через плагин, который ползволяет использовать директиву @include в scss для директорий, а не только для отдельных файлов.pipe(sass()) - проводим код через сам компиллятор sass.pipe(prefixer()) - проводим код через префиксер, который расставит вендорные префиксы.pipe(clean()) - проводим код через \"очиститель\" от лишнего css.pipe(concat('style.min.css')) - склеиваем все исходные файлы в один.pipe(map.write('../sourcemaps/')) - записываем \"карту\" источников полученного файла.pipe(dest('build/css/')) - кладём итоговый файл в директориюЕдинственное, чего нам здесь не хватает - настроек и методов для некоторых плагинов. Настройки для плагинов задаются в виде объектов, которые передаются аргументом в функцию плагина. Звучит страшно, а на деле выглядит примерно так: .pipe(sass({outputStyle: 'compressed'}). Для sass я определяю степень сжатия выходного css как compressed, а так же добавляю на событие error логирование ошибки, чтобы было понятно, что не так (если вдруг). И того получаем такой пайп: Для автопрефиксера возьму рекомендованые в документации параметры. Для того, чтобы задать свои значения настроек - переходите к документации каждого плагина и читайте, за что отвечает та или иная опция.С клинером вообще всё просто: выставляю уровень очистки (level) в значение 2 и готово.Что такое bs и для чего он нужен я опишу ниже, в соответствующем разделе.Приблизитекльно аналогичным образом поступаем со стилями библиотек и плагинов, которые будем подключать к будущим проектам. Создаём константу plugins, в которой у нас будет массив файлов-источников из node_modules const plugins = []; . Путь к файлам стилей будем писать в кавычках через запятую - получится массив строк с путями к файлам плагинов. Подключаем в файл gulp.src и gulp.dest, плагины gulp-concat и gulp-sourcemaps аналогично предыдущей задаче и прописываем наш \"конвейер\":Взять файлы из источников (в данном случае - из константы)Инициализировать маппингПрогнать всё через sassПодчистить неиспользуемый css (в библиотеках это особенно важно)Сконкатенировать файлы в одинЗаписать маппингСложить в директорию build/cssНо тут есть одна особенность - добавим условие, если длина массива plugins будет равна нулю - эта функция просто вернёт true, без выполнения других действий. Без этого, наша функция будет ругаться на отсутствие плагинов. А они нужны далеко не всегда.Задачи для JavaScriptC JavaScript всё будет немного сложнее. Для разработки нам понадобится чистый, не редактированный и не минимизированный код. При этом, в готовом проекте мы будем прогонять код через babel, который не только приводит код к стандарту ES5, но и скоращает его, путём замены имён переменных и функций на более короткие (одно-двух символьные). Поэтому, нам потребуется три разные задачи: для нашего JS-кода, для плагинов/библиотек и для билда.Для обработки JS нам понадобится gulp-uglify-es - для минификации JS-кода и gulp-babel для оптимизации. С остальными плагинами, которыми мы будем обрабатывать наш код вы уже знакомы.Для начала, опишем процесс работы с кодом:Определить источники (sources)Инициализировать маппингСклеить в один файлМинифицировать полученны файлЗаписать источники в файлПоложить итоговый файл в build/js/Для итоговой (билдовой) версии после 4 пункта мы ещё прогоним его через babel для оптимизации. И для этого нам понадобится установить @babel/core , а так же @babel/preset-env. После установки, в корне проекта нужно будет создать файл .babelrc , который указывает на пресет настроек Babel со следующим содержимым:Теперь можем приступать к написанию файлов задач. Они будут максимально похожи друг на друга, поэтому нет смысла описывать каждый отдельно. Разница будет лишь в задаче build, какк я уже писал выше.Как видим, тут есть Указанный напрямую файл src/js/01_main.js который должен присутствовать для выполнения задач, поэтому создадим его в директории src/js. Так же стоит отметить ещё пару мелких особенностей. Во-первых, как видите, подключение плагина gulp-uglify-es я сделал сразу с параметром (свойством) default: const uglify = require('gulp-uglify-es').default - указание какого-либо параметра обязательно для успешной работы плагина. Я использую стандартную настройку. Вы-же можете порыться в документации к плагину и использовать другие настройки, если хотите. Во-вторых, в build-задаче я не использовал sourcemaps, поскольку они там и не нужны. Эта карта необходима при разработке, чтобы видеть источники кода в итоговом файле.Задачи для HTML/PHPСледующим этапом будет обработка HTML или PHP, в зависимости от того, на чём вы пишете. Мы не будем рассматривать препроцессоры, такие как Pug или Nunjucks по той простой причине, что с появлением Emmet они перестали значительно ускорять процесс разработки на HTML, а шаблоны мы вполне можем строить другим плагином: gulp-file-include, который умеет, как мне кажется, нечто большее - включать текстовое представление любых файлов в любые файлы. Далее, вы поймёте, почему я считаю это важным. Для разработки на PHP это вообще не имеет никакого значения. Там можно использовать require и другие возможности PHP из коробки. Если же вы привыкли пользоваться препроцессорами - вы легко сможете настроить Gulp для их обработки, я считаю.Для минификации HTML можно использовать gulp-htmlmin, добавив его в виде .pipe(htmlmin({ collapseWhitespace: true })) в свою задачу html. Однако, как показывает практика, вёрстка -  не конечный этап разработки в 90% случаев, поэтому добавлять его в сборку я не буду. При необходимости, сможете установить и добавить в задачу по аналогией с другими плагинами.Устанавливаем gulp-file-include и пишем задачу для html:Здесь вы увидели немного новую конструкцию. В src аргумент стал массивом, в котором один из элементов обозначени восклицательным знаком(!) в начале. Это на языке JavaScript буквально означает \"не\". То есть мы берём все файлы html 'src/**/*.html', но только не те, которые '!src/**/_*.html' начинаются с подчёркивания. В дальнейшем это позволит нам создавать файлы модулей, которые не должны попасть в build директорию, а служат, так сказать, служебными шаблонами. Об этих шаблонах мы поговорим ниже.Создадим аналогичную задачу для php. Абсолютно такую же, один в один., кроме исключений. Они нам в этой задаче не потребуются.Задачи для изображенийЗдесь всё будет несколько сложнее. Нам потребуется как минимум две задачи для svg, две для растровых изображений. Что нам нужно:Сжимать растровые изображения.Конвертировать растровые изображения в webp.Объединять svg в спрайт.Включать svg в виде класа с фоном в CSS b cоздавать для svg класс с псевдоэлементами ::after и ::before Это всё мы будем делать разными задачами и тут нам понадобится просто тонна разных плагинов! Их так много, что я решил оформить их названия в отдельный список и убрать под спойлер.gulp-changed - понадобится нам для отслеживания изменения в файле. Если файл не изменился, дальнейшие действия с ним не производятся.gulp-multi-dest - понадобится нам для складывания результатов обработки в несколько директорий.gulp-imagemin - сжимает изображенияimagemin-jpeg-recompress - тоже сжимает изображенияimagemin-pngquant - и этот тоже сжимает изображенияgulp-webp - конвертирует растровые форматы (png, jpeg) в webpgulp-svgmin - сжимает svggulp-svg-css-pseudo - добавляет svg фоном в css и сразу же создаёт псевдоэлементыgulp-svg-sprite - склеивает все svg в один спрайт. Лично я им пользуюсь крайне редко, но это ввиду особенностей проектов. Вообще весьма полезен для снижения запросов к серверу.Теперь создадим под всё это файлы задач: tasks/rastr.js, tasks/webp.js, tasks/svg_css.js и tasks/svg_sprite.js. Самая сложная задача будет для растровых изображений, ввиду того, что там много настроек, для объяснения значаний которых нужна отдельная статья. Здесь я детали всех настроек описывать не буду. Just belive me, что я долго сидел подбирал эти настройки с дизайнером так, чтобы качество графики сильно снижало трафик и не сильно резало глаз. В итоге у нас получился вот такой монстр:В этой задаче мы применили фильтр по расширениям файлов таким образом, чтобы обрабатывались только конкретные расширения: src('src/img/**/*.+(png|jpg|jpeg|gif|svg|ico)'). В данном случае прямой слеш (знак |) означает буквально \"или\". Таким образом, при обработке эта функция выберет файлы с данными расширениями, а все остальные просто проигнорирует. Так же с помощью gulp-changed мы запретим обработку старых изображений - это ускорит выполнение задачи. Для того же, чтобы выполнение задачи не вызывало ошибку, если входящих файлов для конвертации нет - используем gulp-plumber.Теперь создадим webp-дубликаты этих изображений. Эти дубликаты мы будем делать одновременно и в директорию src, и в build, банально для того, чтобы path-intellisense подсказывал нам пути к ним.Следующий этап - обработка SVG. Здесь у нас будет две задачи: добавление svg в качестве отдельного класса фоном прямо в css и создание svg-спрайта. У этих задач, хоть и похожее, но всё-же разное назначение. Я сейчас не буду вдаваться в подробности, поскольку они не предмет данной статьи. Если вам интересно, зачем нужны svg-спрайты и как этим пользоваться, то об этом писали тут и тут. Давайте перейдём к установке нужных плагинов и написанию задач.Прежде всего, нам нужно очистить наш svg от всего лишнего. Для этого я буду использовать gulp-svgmin.Для добавления svg в качестве background-image я буду использовать плагин gulp-svg-css-pseudo. Точнее это форк плагина gulp-svg-css, который я сделал после того, как авторы оригинального плагина не добавили мой пропоуз в свой плагин. Разница между ними заключается в том, что он создаёт для каждого класса псевдоэлементы ::before и ::after. Вы можете точно так же использовать оригинальный плагин, но он не будет работать с псевдоэлементами. На входе мы в определённую папку кладём файл, например myicon.svg, а на выходе получаем классы --svg__myicon, --svg__myicon-before и --svg__myicon-after, у которых background-image уже задан в виде нашей картинки. Это очень просто и удобно, если картинку не нужно менять (анимировать или изменять цвет):И так, мы будем брать файлы из директории src/svg/css и обрабатывать нашими плагинами, получая на выходе файл svg.scss и положим его в директорию src/scss/base. Полный файл этой задачи будет выглядеть так:Теперь напишем задачу для svg-спрайта. Смысл спрайтов в том, что он объединяет svg в один файл, который содержит набор векторных картинок. К этим картинкам можно обращаться по ID и вставлять их в нужное место с возможностью изменять их (например цвет) средствами css. Установим плагин gulp-svg-sprite и создадим под него вот такую задачу:На выходе мы получим файл src/img/sprite.svg внутри которого и будут все наши svg. Обратиться к ним в html можно будет так: <img src=\"sprite.svg#myIconFileName\"> или так:Если же иконка находилась во вложенной директории (например, как в нашем случае, в директории css), то перед именем файла нужно поставить имя этой директории и два дефиса. Вот так: <img src=\"sprite.svg#css--myIconFileName\">Чуть позже покажу ещё и третий способ вставлять svg в html с помощью сборки. Вы можете использовать любой из этих способов или их комбинировать, в зависимости от задач, которые нужно решить.Задачи для шрифтовЗдесь у нас будет две задачи. Первая направлена на конвертацию шрифтов из формата ttf в форматы woff и woff2. Во всех остальных форматах в 2021 году не вижу никакого смысла, поскольку поддержка формата woff простирается аж до Internet Explorer 9. Давно ли вы видели компьютеры с IE9 на борту? Конвертиролвать будем с помощью двух плагинов: gulp-ttftowoff2 и gulp-ttftowoff, соответственно. Файл задачи для конвертации шрифтов будет выглядеть так:После того, как шрифты сконвертированы, нам нужно их подключить. Я так и не смог добиться полной автоматизации подключения шрифтов, объединения их по жирности и стилю начертания, в зависимости от имени файла и присвоения нескольких вариантов локального имени. Тем не менее, процесс подключения тоже можно немного автоматизировать. Для этого, во-первых, создадим в директороии src/scss/base файл _mixins.scss. В дальнейшем, он нам ещё понадобится и для других миксинов. Напишем в этом файле следующий миксин:В этот миксин нам нужно будет передать такие параметры: $name - имя шрифтового семейства;$file - имя файла;$weight - жирность шрифта (по-умолчанию установлено значение 400, но если мы передадим параметр, то значение по-умолчанию будет проигнорировано)$style - стиль начертания (тоже установлен по-умолчанию normal)На выходе мы получим уже подключенный файл шрифта, но с ним потребуются некоторые манипуляции вручную, которые я опишу чуть ниже. Далее нам нужно написать задачу, которая будет подключать наши шрифты. По сути эта задача будет циклом проходиться по файлам, брать имя каждого файла, отсекать расширение и на основе имени генерировать код для его подключения через миксин. Для этого нам потребуется модуль nodeJS для работы с файлами, который называется fs. Он уже установлен вместе с nodejs, поэтому устанавливать его нет необходимости - нужно только подключить: const fs = require('fs');Далее создадим две переменные. В первую запишем, путь к файлу, который получим на выходе, а во вторую - путь к папке шрифтов, которые нам создала предыдущая задача.Дальнейший код этой функции я честно скопировал у Максима Васяновича (  ), с его урока про Gulp и немного переписал. В итоге, у нас получится вот такая функция:Эта функция на выходе создаст нам файл src/scss/_local-fonts.scss, в котором под каждый файл шрифтов будет содержаться вызов миксина для его подключения. Так же, при выполнении функции в консоль будет выдаваться следующее сообщение:Как видите, в сообщении написано следующее: \"Добавлен новый шрифт: названиешрифта. Пожалуйста, переместите вызов миксина из src/scss/_local-fonts.scss в src/scss/_fonts.scss после чего измените его\". Давайте разберёмся, что куда нужно переместить и как изменить. Но прежде создадим тот самый файл src/scss/_fonts.scss - он будет содержать уже реальные вызовы миксина для подключения шрифтов, которыми мы и будем пользоваться.Когда мы добавляем шрифты, чаще всего, у нас есть отдельные файлы для разной жирности шрифта и для разных стилей начертания (наклонные и прямые, тонкие и жирные и т.п.). Каждый такой файл шрифта создаст отдельный вызов миксина и на выходе мы получим файл src/scss/_local-fonts.scss примерно такого содержания:Как видим, мы подключаем шрифты отдельными названиями. Это неправильно с точки зрения читабельности и удобства использования шрифта, поскольку вместо того, чтобы прописывать font-weight: 700, нам каждый раз придётся указывать font-family: \"ArialBold\". Это плохая практика, поэтому нам нужно переписать эти вызовы. Как помним из миксина, который мы написали, первым параметром он принимает имя шрифтового семейства. В данном случае это \"Arial\". Второй параметр мы не меняем - это имя файла без расширения (расширения подставит миксин). Третий параметр отвечает за жирность. Изменим во второй строке 400 на 700. Четвёртый параметр, который здесь не указан, отвечает за стиль начертания. В третей строке миксин вызывается для наклонного шрифта, поэтому четвёртым параметром нужно это указать. В итоге получим:Теперь это всё нужно переместить в файл src/scss/_fonts.scss, который, естественно, необходимо создать. Перемещать нужно в новый файл по той причине, что при следующем запуске эта функция перезапишет файл src/scss/_local-fonts.scss и все наши изменения затрутся.Автоматическое обновление и синхронизация браузеровНам нужно настроить Gulp таким образом, чтобы он при запуске открывал наш проект в браузере и автоматически обновлял его при каких-либо изменениях. Я для этого использую browser-sync. Этот плагин создаёт сервер средствами nodejs и позволяет подключать к нему различные браузеры. Для него у нас будет две задачи - для html-разработки и для php соответственно. Установим этот плагин и создадим два соответствующих файла задач. В первом файле мы укажем настройки для разработки html. Параметр host отвечает за IP-адрес компьютера, с которого сайт будет раздаваться на другие устройства в сети. Важно, чтобы там был указан именно IP-адрес вашего компьютера в локальной сети, если хотите иметь доступ к разрабатываемому сайту со всех устройств. Коллбэк-функция отвечает за открытие страницы 404, если она есть и если не найдена запрашиваемая (по умолчанию это страница index.html). Все остальные параметры вы вольны настраивать как вашей душе угодно, согласно документации.Для php мы напишем гораздо более простую задачу. Она будет только обновлять браузер в случае изменений, а локальный сервер Вы будете запускать с помощью сторонней программы: openserver, wamp или любой другой.Теперь нам нужно подключить в ранее написанные задачи browser-sync и pipe для обновления браузера в конце выполнения задачи. Как подключить  - вы уже знаете: так же, как и др угие плагины. А добавлять pipe мы будем следуюший: .pipe(bs.stream()).Перезагружать страницу нам придётся при изменении html, scss и js, php, а так же растровых картинок. Соответственно, в эти задачи я уже добавил нужный pipe.Лично мне нравится, когда в консоли показывается исходный размер изображений до сжатия и итоговый - после сжатия, поэтому в сборку я добавил плагин gulp-size, но поскольку я почти не нашёл единомшленников в данном вопросе \"засорения терминала лишней инфой\", я не описывал его здесь. При желании вы можете добавить соответствующий pipe к нужным задачам или убрать его, если вы клонировали себе готовую сборку и он вас раздражает мельканием в консоли.Далее нам следует заняться функциями вотчинга. Вотчинг - это состояние, когда вся наша программа запущена, следит за файлами и их изменением и выполняет те или иные функции, если эти файлы изменились. И так, за чем будем следить: html, php, scss, js, json (ниже объясню, для чего), изображения в src, изображения в build (помните, что у нас webp конвертируются из уже сжатых изображений?), svg, шрифты. Давайте напишем соответствующую задачу:Здесь мы использовали два варианта запуска и выполнения задач - parallel и series. Разница между ними в том, что в первом случае задачи запускаются одновременно и выполняются параллельно друг другу, а во втором - последовательно, одна за другой в том порядке, в котором мы указали. Вот и всё. Мы научили Gulp следить за файлами и выполнять те или иные задачи в тот момент, когда эти файлы изменились.Деплой на хостинг по FTPДля этого нам потребуется отдельная задача и плагин. Я использую vinyl-ftp, хотя есть аналоги, без проблем делающие то же самое. Установим его и напишем задачу. На хостинг будем грузить только директорию build/, в которой находятся готовые, скомпилированные файлы проекта.Константа connect - это функция, в которую аргументом передаётся объект с настройками хостинга - адрес сервера, логин, пароль. Будьте аккуратны, выкладывая подобные данные на Github или другое хранилище кода. Можете создать отдельный файл с настройками и добавить его в gitignore, чтобы случайно не забыть и не вывалить свои логин и пароль к хостингу на весь мир. не забудьте так же указать правильную директорию на ftp-сервере вместо www/, которая указана в моих настройках.Написание GULP- и NPM-сценариевСоздание базовых шаблоновПроцесс разработки или краткое howto"
+			"textContent": "Как я сделал свою сборку Gulp для быстрой, лёгкой и приятной вёрстки.Серьёзно и профессионально я начал заниматься вёрсткой в 2019 году, хотя до этого ещё со школы интересовался данной темой как любитель. Поэтому новичком мне себя назвать сложно, но и профессионалом с опытом 5+ лет я тоже не являюсь.  Тем не менее, я успел познакомиться со сборщиком Gulp, его плагинами и сделал для себя хорошую, как по мне, сборку для работы. О её возможностях сегодня и расскажу.ВАЖНО! В этой статье речь пойдёт о самой последней версии сборки. Если вы пользуетесь версиями сборки, вышедшими до публикации этой статьи, информация будет для вас не релевантна, но полезна.Какие задачи решает эта сборка?вёрстка компонентами (вам не нужно в каждую страницу копировать head, header, footer и другие повторяющиеся элементы, вплоть до кнопок или кастомных чекбоксов);вёрстка с препроцессорами (SASS/SCSS);конвертация шрифтов из ttf в eot, woff, woff2;лёгкое (почти автоматическое) подключение шрифтов;лёгкое (почти автоматическое) создание псевдоэлементов-иконок;обработка изображений \"на лету\";минификация html/css/js файлов;возможность вёрстки с использованием php;выгрузка файлов на хостинг по FTP;несколько мелких задач с помощью миксинов.https://github.com/budfy/Easy-webdev-startpackСобственно создание сборкиНачнём собирать нашу сборку (простите за тавтологию). Предварительно нам потребуется уже установленная на компьютере LTS-версия Node.js и NPM (входит в пакет Node.js) либо Yarn. Для нашей задачи не имеет значения, какой из этих пакетных менеджеров использовать, однако я буду объяснять на примере NPM, соответственно, для Yarn вам потребуется нагуглить аналоги NPM-команд.Первое, что нам нужно сделать - это инициализировать проект. Открываем директорию проекта в командной строке (очень надеюсь, вы знаете, как это делается) и вводим команду npm init.После этого npm задаст нам неесколько стандартных вопросов по типу названия проекта, автора, версии и т.д... Отвечаем на них как душе угодно. Для нашей задачи это не имеет никакого значения.Далее будет намного удобнее работать через Visual Studio Code (поскольку у него есть встроенный терминал) или любой другой удобный вам редактор + терминал.Прежде всего, нам нужно установить сам Gulp. Делается это двумя командами npm i gulp -global - устанавливаем Gulp глобально на систему и npm i gulp --save-dev - устанавливаем Gulp локально в проект. Ключ --save здесь отвечает за сохранение версии плагина при дальнейшей установке (без него вам может установить более новую, несовместимую с другими плагинами версию), а ключ -dev указывает на то, что этот пакет необходим только во время разработки проекта, а не во время его выполнения. Например, если мы устанавливаем в проект пакет Swiper, который содержит скрипты слайдера и будет отображаться на странице, мы будем устанавливать его без ключа -dev, поскольку он нужен для выполнения, а не для разработки.После того, как Gulp установился, имеет смысл создать в корне проекта управляющий файл gulpfile.js, в котором мы и будем писать задачи для сборщика.После этого нам нужно подключить Gulp в нашем файле, для того чтобы он исполнялся. Это делается с помощью require:Далее, для каждой задачи будем использовать модули в отдельных файлах. Для того, чтобы не подключать каждый модуль отдельно, нужно установить и подключить плагин require-dir. Устанавливается он всё той же командой (как и все последующие плагины, поэтому далее повторяться не буду, просто знайте, что установить - это npm i $PLUGIN-NAME$ --save-dev). После установки подключаем его и прописываем путь к директории, в которую будем складывать модули (у меня это директория tasks):Первая задачаДавайте проверим, всё ли мы правильно сделали. Создадим в директории tasks файл модуля с именем hello.js. В созданном файле напишем простейшую функцию, которая будет выводить в консоль строку \"Hello Gulp!\" (можете придумать что-то менее банальное, если хотите).Теперь вернёмся в gulpfile.js и зададим там задачу hello:ТТеперь командой gulp hello в терминале запустим нашу задачу. Если всё сделано правильно - в терминал должно вывестись приблизительно такое сообщение:Так же, можно получить список всех заданных задач командой gulp --tasks.Файловая структураТеперь, когда мы создали первую функцию, можно подумать о том, какая структура будет у наших проектов. Я предпочитаю использовать директорию (папку) /src для хранения исходных файлов и директорию /build для готовых файлов проекта.components/ - директория для компонентовcomponents/bem-blocks/ - директория для БЭМ-блоковcomponents/page-blocks/ - директория для типовых блоков страницы, таких как хедер, футер и т.п.fonts/ - директория для шрифтовimg/ - директория для изображенийjs/ - директория для файлов JavaScriptscss/ - директория для файлов стилейscss/base/ - директория для базовых стилей, которые мы изменять не будемsvg/ - директория для файлов SVGsvg/css/ - директория для SVG-файлов, которые будут интегрироваться в CSS Получиться в итоге должно приблизительно следующее:ВАЖНО: в пустых директориях, таких как img/, fonts/ и т.п. перед тем как пушить в удалённый репозиторий (например на Github) нужно создать пустые файлы с именем .gitkeep. Это нужно для того, чтобы Github не удалил пустые директории из сборки.Добавление задач и настройка плагиновОсновной целью Gulp является автоматизация рутинных действий в разработке, которые мы можем запрограммировать с помощью задач и плагинов. Первую тестовую задачу мы с вами уже написали. Давайте теперь напишем настоящие задачи, которые будут нам помогать в работе.Задачи стилейДля работы с scss нам нужно будет установить некоторые плагины, которые будут обрабатывать и компилировать наш scss код в готовый css. Прежде всего, установим сам плагин Gulp-sass, который будет компилировать scss файлы в обычный css, понятный браузеру. Так же, для того, чтобы scss-файлы можно было импортировать не по одному, а целыми директориями нам понадобится gulp-sass-bulk-importer, для автоматической расстановки префиксов - gulp-autoprefixer, для очистки лишнего css - gulp-clean-css и для конкатинации (\"склеивания\" файлов вместе) - gulp-concat. Так же, для того, чтобы в DevTools было понятно, из какого файла взялись стили, установим gulp-sourcemaps. Можно каждый раз не прописывать команду npm i в терминале, а указать перечень устанавливаемых плагинов через пробел, но ключи тогда нужно будет указать перед названиями плагинов: npm i --save-dev gulp-sass gulp-sass-bulk-importer gulp-autoprefixer gulp-clean-css gulp-concat gulp-sourcemapsТеперь создадим в директории tasks/ файл модуля, в котором опишем, что нужно делать галпу с scss-файлами. От gulp нам понадобятся src и dest, а остальные плагины подключим полностью:Далее экспортируем функцию: В ней-то мы и будем обрабатывать наши scss файлы. Gulp выполняет последовательность действий .pipe над объектами, указанными в модуле src. Это похоже на конвейер, проходя по которому, код или файлы, которые мы создали в директории src/, превращаются в то, что мы хотим видеть в итоге и складываются в директорию build/. Давайте определим порядок действий:Взять файлы scss из директорий scss/Инициализировать карту исходных файлов (sourcepams)Скомпилировать в cssРасставить вендорные префиксыОчистить от лишнегоСклеить в единый файл style.cssЗаписать карту исходных файлов в получившемся файлеПоложить его в buildИтогом (return) нашей функции как раз и будет результат всей последовательности действий, которые мы определили. Это и запишем:src('src/scss/**/*.scss') - определяем источник исходного кода (source).pipe(map.init()) - инициализируем маппинг, чтобы он отслеживал включаемые файлы.pipe(bulk()) - проводим код через плагин, который ползволяет использовать директиву @include в scss для директорий, а не только для отдельных файлов.pipe(sass()) - проводим код через сам компиллятор sass.pipe(prefixer()) - проводим код через префиксер, который расставит вендорные префиксы.pipe(clean()) - проводим код через \"очиститель\" от лишнего css.pipe(concat('style.min.css')) - склеиваем все исходные файлы в один.pipe(map.write('../sourcemaps/')) - записываем \"карту\" источников полученного файла.pipe(dest('build/css/')) - кладём итоговый файл в директориюЕдинственное, чего нам здесь не хватает - настроек и методов для некоторых плагинов. Настройки для плагинов задаются в виде объектов, которые передаются аргументом в функцию плагина. Звучит страшно, а на деле выглядит примерно так: .pipe(sass({outputStyle: 'compressed'}). Для sass я определяю степень сжатия выходного css как compressed, а так же добавляю на событие error логирование ошибки, чтобы было понятно, что не так (если вдруг). И того получаем такой пайп: Для автопрефиксера возьму рекомендованые в документации параметры. Для того, чтобы задать свои значения настроек - переходите к документации каждого плагина и читайте, за что отвечает та или иная опция.С клинером вообще всё просто: выставляю уровень очистки (level) в значение 2 и готово.Что такое bs и для чего он нужен я опишу ниже, в соответствующем разделе.Приблизитекльно аналогичным образом поступаем со стилями библиотек и плагинов, которые будем подключать к будущим проектам. Создаём константу plugins, в которой у нас будет массив файлов-источников из node_modules const plugins = []; . Путь к файлам стилей будем писать в кавычках через запятую - получится массив строк с путями к файлам плагинов. Подключаем в файл gulp.src и gulp.dest, плагины gulp-concat и gulp-sourcemaps аналогично предыдущей задаче и прописываем наш \"конвейер\":Взять файлы из источников (в данном случае - из константы)Инициализировать маппингПрогнать всё через sassПодчистить неиспользуемый css (в библиотеках это особенно важно)Сконкатенировать файлы в одинЗаписать маппингСложить в директорию build/cssНо тут есть одна особенность - добавим условие, если длина массива plugins будет равна нулю - эта функция  и вернёт коллбэк done(), который просто выдаст сообщение в терминал, что плагинов нет без выполнения других действий. Без этого, наша функция будет ругаться на отсутствие плагинов. А они нужны далеко не всегда.А так же нам понадобится плагин chalk для раскрашивания сообщения в консоли, чтобы мы обратили на неё внимание. Принципиально этот плагин не будет влиять на работу задачи, только разукрашивать консоль, примерно так:Задачи для JavaScriptC JavaScript всё будет немного сложнее. Для разработки нам понадобится чистый, не редактированный и не минимизированный код. При этом, в готовом проекте мы будем прогонять код через babel, который не только приводит код к стандарту ES5, но и скоращает его, путём замены имён переменных и функций на более короткие (одно-двух символьные). Поэтому, нам потребуется три разные задачи: для нашего JS-кода, для плагинов/библиотек и для билда.Для обработки JS нам понадобится gulp-uglify-es - для минификации JS-кода и gulp-babel для оптимизации. С остальными плагинами, которыми мы будем обрабатывать наш код вы уже знакомы.Для начала, опишем процесс работы с кодом:Определить источники (sources)Инициализировать маппингСклеить в один файлМинифицировать полученны файлЗаписать источники в файлПоложить итоговый файл в build/js/Для итоговой (билдовой) версии после 4 пункта мы ещё прогоним его через babel для оптимизации. И для этого нам понадобится установить @babel/core , а так же @babel/preset-env. После установки, в корне проекта нужно будет создать файл .babelrc , который указывает на пресет настроек Babel со следующим содержимым:Теперь можем приступать к написанию файлов задач. Они будут максимально похожи друг на друга, поэтому нет смысла описывать каждый отдельно. Разница будет лишь в задаче build, какк я уже писал выше.Как видим, тут есть указанный напрямую файл src/js/01_main.js который должен присутствовать для выполнения задач, поэтому создадим его в директории src/js. Так же стоит отметить ещё пару мелких особенностей. Во-первых, как видите, подключение плагина gulp-uglify-es я сделал сразу с параметром (свойством) default: const uglify = require('gulp-uglify-es').default - указание какого-либо параметра обязательно для успешной работы плагина. Я использую стандартную настройку. Вы-же можете порыться в документации к плагину и использовать другие настройки, если хотите. Во-вторых, в build-задаче я не использовал sourcemaps, поскольку они там и не нужны. Эта карта необходима при разработке, чтобы видеть источники кода в итоговом файле.Задачи для HTML/PHPСледующим этапом будет обработка HTML или PHP, в зависимости от того, на чём вы пишете. Мы не будем рассматривать препроцессоры, такие как Pug или Nunjucks по той простой причине, что с появлением Emmet они перестали значительно ускорять процесс разработки на HTML, а шаблоны мы вполне можем строить другим плагином: gulp-file-include, который умеет, как мне кажется, нечто большее - включать текстовое представление любых файлов в любые файлы. Далее, вы поймёте, почему я считаю это важным. Для разработки на PHP это вообще не имеет никакого значения. Там можно использовать require и другие возможности PHP из коробки. Если же вы привыкли пользоваться препроцессорами - вы легко сможете настроить Gulp для их обработки, я считаю.Для минификации HTML можно использовать gulp-htmlmin, добавив его в виде .pipe(htmlmin({ collapseWhitespace: true })) в свою задачу html. Однако, как показывает практика, вёрстка -  не конечный этап разработки в 90% случаев, поэтому добавлять его в сборку я не буду. При необходимости, сможете установить и добавить в задачу по аналогией с другими плагинами.Устанавливаем gulp-file-include и пишем задачу для html:Здесь вы увидели немного новую конструкцию. В src аргумент стал массивом, в котором один из элементов обозначени восклицательным знаком(!) в начале. Это на языке JavaScript буквально означает \"не\". То есть мы берём все файлы html 'src/**/*.html', но только не те, которые '!src/components/**/*.html' находятся в директории src/components. В дальнейшем это позволит нам создавать файлы модулей, которые не должны попасть в build директорию, а служат, так сказать, служебными шаблонами. Об этих шаблонах мы поговорим ниже.Создадим аналогичную задачу для php. Абсолютно такую же, один в один., кроме исключений. Они нам в этой задаче не потребуются.Задачи для изображенийЗдесь всё будет несколько сложнее. Нам потребуется как минимум две задачи для svg, две для растровых изображений. Что нам нужно:Сжимать растровые изображения.Конвертировать растровые изображения в webp.Объединять svg в спрайт.Включать svg в виде класа с фоном в CSS b cоздавать для svg класс с псевдоэлементами ::after и ::before Это всё мы будем делать разными задачами и тут нам понадобится просто тонна разных плагинов! Их так много, что я решил оформить их названия в отдельный список и убрать под спойлер.gulp-changed - понадобится нам для отслеживания изменения в файле. Если файл не изменился, дальнейшие действия с ним не производятся.gulp-multi-dest - понадобится нам для складывания результатов обработки в несколько директорий.gulp-imagemin - сжимает изображенияimagemin-jpeg-recompress - тоже сжимает изображенияimagemin-pngquant - и этот тоже сжимает изображенияgulp-webp - конвертирует растровые форматы (png, jpeg) в webpgulp-svgmin - сжимает svggulp-svg-css-pseudo - добавляет svg фоном в css и сразу же создаёт псевдоэлементыgulp-svg-sprite - склеивает все svg в один спрайт. Лично я им пользуюсь крайне редко, но это ввиду особенностей проектов. Вообще весьма полезен для снижения запросов к серверу.Теперь создадим под всё это файлы задач: tasks/rastr.js, tasks/webp.js, tasks/svg_css.js и tasks/svg_sprite.js. Самая сложная задача будет для растровых изображений, ввиду того, что там много настроек, для объяснения значаний которых нужна отдельная статья. Здесь я детали всех настроек описывать не буду. Just belive me, что я долго сидел подбирал эти настройки с дизайнером так, чтобы качество графики сильно снижало трафик и не сильно резало глаз. В итоге у нас получился вот такой монстр:В этой задаче мы применили фильтр по расширениям файлов таким образом, чтобы обрабатывались только конкретные расширения: src('src/img/**/*.+(png|jpg|jpeg|gif|svg|ico)'). В данном случае прямой слеш (знак |) означает буквально \"или\". Таким образом, при обработке эта функция выберет файлы с данными расширениями, а все остальные просто проигнорирует. Так же с помощью gulp-changed мы запретим обработку старых изображений - это ускорит выполнение задачи. Для того же, чтобы выполнение задачи не вызывало ошибку, если входящих файлов для конвертации нет - используем gulp-plumber.Теперь создадим webp-дубликаты этих изображений. Эти дубликаты мы будем делать одновременно и в директорию src, и в build, банально для того, чтобы path-intellisense подсказывал нам пути к ним.Следующий этап - обработка SVG. Здесь у нас будет две задачи: добавление svg в качестве отдельного класса фоном прямо в css и создание svg-спрайта. У этих задач, хоть и похожее, но всё-же разное назначение. Я сейчас не буду вдаваться в подробности, поскольку они не предмет данной статьи. Если вам интересно, зачем нужны svg-спрайты и как этим пользоваться, то об этом писали тут и тут. Давайте перейдём к установке нужных плагинов и написанию задач.Прежде всего, нам нужно очистить наш svg от всего лишнего. Для этого я буду использовать gulp-svgmin.Для добавления svg в качестве background-image я буду использовать плагин gulp-svg-css-pseudo. Точнее это форк плагина gulp-svg-css, который я сделал после того, как авторы оригинального плагина не добавили мой пропоуз в свой плагин. Разница между ними заключается в том, что он создаёт для каждого класса псевдоэлементы ::before и ::after. Вы можете точно так же использовать оригинальный плагин, но он не будет работать с псевдоэлементами. На входе мы в определённую директорию кладём файл, например myicon.svg, а на выходе получаем классы --svg__myicon, --svg__myicon-before и --svg__myicon-after, у которых background-image уже задан в виде нашей картинки. Это очень просто и удобно, если картинку не нужно менять (анимировать или изменять цвет):И так, мы будем брать файлы из директории src/svg/css и обрабатывать нашими плагинами, получая на выходе файл svg.scss и положим его в директорию src/scss/base. Полный файл этой задачи будет выглядеть так:Теперь напишем задачу для svg-спрайта. Смысл спрайтов в том, что он объединяет svg в один файл, который содержит набор векторных картинок. К этим картинкам можно обращаться по ID и вставлять их в нужное место с возможностью изменять их (например цвет) средствами css. Установим плагин gulp-svg-sprite и создадим под него вот такую задачу:На выходе мы получим файл src/img/sprite.svg внутри которого и будут все наши svg. Обратиться к ним в html можно будет так: <img src=\"sprite.svg#myIconFileName\"> или так:Если же иконка находилась во вложенной директории (например, как в нашем случае, в директории css), то перед именем файла нужно поставить имя этой директории и два дефиса. Вот так: <img src=\"sprite.svg#css--myIconFileName\">Чуть позже покажу ещё и третий способ вставлять svg в html с помощью сборки. Вы можете использовать любой из этих способов или их комбинировать, в зависимости от задач, которые нужно решить.Задачи для шрифтовЗдесь у нас будет две задачи. Первая направлена на конвертацию шрифтов из формата ttf в форматы woff и woff2. Во всех остальных форматах в 2021 году не вижу никакого смысла, поскольку поддержка формата woff простирается аж до Internet Explorer 9. Давно ли вы видели компьютеры с IE9 на борту? Конвертиролвать будем с помощью двух плагинов: gulp-ttftowoff2 и gulp-ttftowoff, соответственно. Файл задачи для конвертации шрифтов будет выглядеть так:После того, как шрифты сконвертированы, нам нужно их подключить. Я так и не смог добиться полной автоматизации подключения шрифтов, объединения их по жирности и стилю начертания, в зависимости от имени файла и присвоения нескольких вариантов локального имени. Тем не менее, процесс подключения тоже можно немного автоматизировать. Для этого, во-первых, создадим в директороии src/scss/base файл _mixins.scss. В дальнейшем, он нам ещё понадобится и для других миксинов. Напишем в этом файле следующий миксин:В этот миксин нам нужно будет передать такие параметры: $name - имя шрифтового семейства;$file - имя файла;$weight - жирность шрифта (по-умолчанию установлено значение 400, но если мы передадим параметр, то значение по-умолчанию будет проигнорировано)$style - стиль начертания (тоже установлен по-умолчанию normal)На выходе мы получим уже подключенный файл шрифта, но с ним потребуются некоторые манипуляции вручную, которые я опишу чуть ниже. Далее нам нужно написать задачу, которая будет подключать наши шрифты. По сути эта задача будет циклом проходиться по файлам, брать имя каждого файла, отсекать расширение и на основе имени генерировать код для его подключения через миксин. Для этого нам потребуется модуль nodeJS для работы с файлами, который называется fs. Он уже установлен вместе с nodejs, поэтому устанавливать его нет необходимости - нужно только подключить: const fs = require('fs'); Далее создадим две переменные. В первую запишем, путь к файлу, который получим на выходе, а во вторую - путь к директории шрифтов, которые нам создала предыдущая задача.Дальнейший код этой функции я честно скопировал у Максима Васяновича (  ), с его урока про Gulp и немного переписал. В итоге, у нас получится вот такая функция:Эта функция на выходе создаст нам файл src/scss/_local-fonts.scss, в котором под каждый файл шрифтов будет содержаться вызов миксина для его подключения. Так же, при выполнении функции в консоль будет выдаваться следующее сообщение:Как видите, в сообщении написано следующее: \"Добавлен новый шрифт: названиешрифта. Пожалуйста, переместите вызов миксина из src/scss/_local-fonts.scss в src/scss/_fonts.scss после чего измените его\". Давайте разберёмся, что куда нужно переместить и как изменить. Но прежде создадим тот самый файл src/scss/_fonts.scss - он будет содержать уже реальные вызовы миксина для подключения шрифтов, которыми мы и будем пользоваться.Когда мы добавляем шрифты, чаще всего, у нас есть отдельные файлы для разной жирности шрифта и для разных стилей начертания (наклонные и прямые, тонкие и жирные и т.п.). Каждый такой файл шрифта создаст отдельный вызов миксина и на выходе мы получим файл src/scss/_local-fonts.scss примерно такого содержания:Как видим, мы подключаем шрифты отдельными названиями. Это неправильно с точки зрения читабельности и удобства использования шрифта, поскольку вместо того, чтобы прописывать font-weight: 700, нам каждый раз придётся указывать font-family: \"ArialBold\". Это плохая практика, поэтому нам нужно переписать эти вызовы. Как помним из миксина, который мы написали, первым параметром он принимает имя шрифтового семейства. В данном случае это \"Arial\". Второй параметр мы не меняем - это имя файла без расширения (расширения подставит миксин). Третий параметр отвечает за жирность. Изменим во второй строке 400 на 700. Четвёртый параметр, который здесь не указан, отвечает за стиль начертания. В третей строке миксин вызывается для наклонного шрифта, поэтому четвёртым параметром нужно это указать. В итоге получим:Теперь это всё нужно переместить в файл src/scss/_fonts.scss, который, естественно, необходимо предварительно создать. Перемещать нужно в новый файл по той причине, что при следующем запуске эта функция перезапишет файл src/scss/_local-fonts.scss и все наши изменения затрутся.Автоматическое обновление и синхронизация браузеровНам нужно настроить Gulp таким образом, чтобы он при запуске открывал наш проект в браузере и автоматически обновлял его при каких-либо изменениях. Я для этого использую browser-sync. Этот плагин создаёт сервер средствами nodejs и позволяет подключать к нему различные браузеры. Для него у нас будет две задачи - для html-разработки и для php соответственно. Установим этот плагин и создадим два соответствующих файла задач. В первом файле мы укажем настройки для разработки html. Параметр host отвечает за IP-адрес компьютера, с которого сайт будет раздаваться на другие устройства в сети. Важно, чтобы там был указан именно IP-адрес вашего компьютера в локальной сети, если хотите иметь доступ к разрабатываемому сайту со всех устройств. Коллбэк-функция отвечает за открытие страницы 404, если она есть и если не найдена запрашиваемая (по умолчанию это страница index.html). Все остальные параметры вы вольны настраивать как вашей душе угодно, согласно документации.Для php мы напишем гораздо более простую задачу. Она будет только обновлять браузер в случае изменений, а локальный сервер Вы будете запускать с помощью сторонней программы: openserver, wamp или любой другой.Теперь нам нужно подключить в ранее написанные задачи browser-sync и pipe для обновления браузера в конце выполнения задачи. Как подключить  - вы уже знаете: так же, как и др угие плагины. А добавлять pipe мы будем следуюший: .pipe(bs.stream()).Перезагружать страницу нам придётся при изменении html, scss и js, php, а так же растровых картинок. Соответственно, в эти задачи я уже добавил нужный pipe.Лично мне нравится, когда в консоли показывается исходный размер изображений до сжатия и итоговый - после сжатия, поэтому в сборку я добавил плагин gulp-size, но поскольку я почти не нашёл единомшленников в данном вопросе \"засорения терминала лишней инфой\", я не описывал его здесь. При желании вы можете добавить соответствующий pipe к нужным задачам. В публично доступной версии сборки его так же нет.Далее нам следует заняться функциями вотчинга. Вотчинг - это состояние, когда вся наша программа запущена, следит за файлами и их изменением и выполняет те или иные функции, если эти файлы изменились. И так, за чем будем следить: html, php, scss, js, json (ниже объясню, для чего), изображения в src, изображения в build (помните, что у нас webp конвертируются из уже сжатых изображений?), svg, шрифты. Давайте напишем соответствующую задачу:Здесь мы использовали два варианта запуска и выполнения задач - parallel и series. Разница между ними в том, что в первом случае задачи запускаются одновременно и выполняются параллельно друг другу, а во втором - последовательно, одна за другой в том порядке, в котором мы указали.Обратите внимание на имя нашей функции. Поскольку переменная watch уже занята методом галпа, мы назвали свою функцию несколько иначе.Вот и всё. Мы научили Gulp следить за файлами и выполнять те или иные задачи в тот момент, когда эти файлы изменились.Деплой на хостинг по FTPДля этого нам потребуется отдельная задача и плагин. Я использую vinyl-ftp, хотя есть аналоги, без проблем делающие то же самое. Установим его и напишем задачу. На хостинг будем грузить только директорию build/, в которой находятся готовые, скомпилированные файлы проекта. Для вывода результата в консоль я буду использовать тот же chulk.Константа connect - это функция, в которую аргументом передаётся объект с настройками хостинга - адрес сервера, логин, пароль. Будьте аккуратны, выкладывая подобные данные на Github или другое хранилище кода. Я создал отдельный файл tasks/ftp_settings.json с настройками и рекомендую вам добавить его в gitignore, чтобы случайно не забыть и не вывалить свои логин и пароль к хостингу на весь мир:Не забудьте так же указать правильную директорию на ftp-сервере вместо public_html/, которая указана в моих настройках newer и dest.Написание GULP- и NPM-сценариевТеперь нам нужно составить несколько gulp-сценариев, то есть поочерёдного запуска задач для того, чтобы собирать воедино наш проект. Для этого у нас будет две gulp-задачи: default и php, с той лишь разницей, что мы будем запускать тот или иной сервер, а так же несколько сценариев npm для запуска разработки, запуска сборки проекта и для деплоя на хостинг.Для начала нам необходимо задать все написанные ранее aeyrwbb в gulpfile.js, чтобы они были доступны в gulp. Делать мы это будем так же, как мы делали с функцией hello:После этого создадим сценарии, которые будем выполнять при запуске Gulp с теми или иными параметрами:Итоговый gulpfile.js будет выглядеть так:Теперь перейдём в файл package.json и напишем несколько npm-сценариев, которые будут последовательно выполнять задачи и запускать сборку. В объекте \"scripts\" мы можем задавать в формате ключ-значение имя и наборы задач для запуска. Я сделаю пять сценариев:html будет запускать Gulp для разработки в html-версии;php будет запускать Gulp для разработки в php-версии;build будет поочерёдно запускать задачи для сборки проекта в build без запуска вотчинга и сервера;ftp отправит содержимое пдиректории build кроме файловых карт (файлы с расширением .map) на ftp-сервер;build-ftp поочерёдно выполнит build и ftp сценарии.Создание базовых шаблоновДля разработки нам потребуются стартовые шаблоны html, кое-какие стили и несколько миксинов, которыми мы будем пользоваться в разработке. Начнём с html. Создадим индексный файл (index.html) со стандартной базовой разметкой:Теперь уберём в компонент то, что будет повторяться на всех страницах: ...и подключим этот компонент вместо обычного head страницы:Как можете видеть, ничего сложного нет. Функция @@include принимает два параметра. Первый параметр - путь к файлу, который мы импортируем, а второй - json-объект (тут может быть путь к файлу json, содержащему объект или массив), в котором в формате ключ-значение указаны те переменные, которые нам нужно подставить в этом инклюде. Создадим в директории компонентов так же шаблоны хедера, футера и подключения скриптов:_header.html_footer.html_scripts.htmlИ теперь подключим их все в индексный файл:Теперь при запуске Gulp на выходе мы получим готовую страницу, с прописанным head, header, footer и подключенными скриптами. Если после запуска gulp посмотреть на индексный файл в директории build, то мы увидим вполне обычный html-файл:Останется только наполнить её нужным контентом!Теперь перейдём к созданию базовых стилей. Для начала, я подключу все необходимые директории с файлами в style.scss. Здесь важен порядок импорта стилей, поскольку стили, которые будут ниже в итоговом файле имеют приоритет:Далее создам в директории src/scss/base файл _01_normalize.scss Именно так: с подчёркиванием и номером файла. Это нужно для того, чтобы стили из этого файла оказались в самом верху и их можно было перебить другими стилями, если это понадобится. Далее в этот файл я скопирую стили из normalize.css. Безусловно, можно подключить normalize в качестве плагина, но я выбрал именно этот  способ, в том числе, для демонстрации принципов подключения файлов со стилями.Теперь перейдём к файлу src/scss/base/_mixins.scss. Добавим сюда несколько миксинов, чтобы было удобно задавать быстрые стили:Этот миксин поможет нам с фоновыми картинками. Достаточно нужному классу написать @include bg и на выходе мы получим вот это:Следующий миксин, который я использую - это анимация кнопок (при наведении, фокусе и нажатии):Далее идёт миксин для сброса стилей кнопки. Очень часто такой необходим.Следующий миксин достаточно спорный, но я исплоьзую. Он делает transition:И ещё один миксин для контейнеров:Теперь перейдём в файл src/scss/global/_global.scss и создадим несколько \"служебных\" классов и общих стилей. Я и не припомню проекта, где они не были бы мне нужны.Во-первых, установим box-sizing: border-box для всех элементов страницы:Во-вторых, распишем стили для флексов:В-третьих, для html и body заранее установим некоторые стили:И далее момент спорный, но я использую. Это сброс отступов у некоторых блочных элементов:И того, у нас должны получиться файлы:Вот, собственно и всё. Поздравляю! Наша сборка готова к работе.Краткое howtoПервое что следует сказать, что с помощью @@include-функции вы можете вставлять не только html файлы, но и любые другие, в которых есть текстовая информация. Например, вы можете вставлять инлайновые svg в html, не загромождая код.Второе. В функции @@include есть особый режим @@loop, который принимает вторым аргументом массив объектов и повторяет элемент столько раз, сколько объектов есть в массиве. То есть можно создать, например, слайдер с разными картинками, скормив функции @@loop массив путей к картинкам. ВАЖНОЕ ОГРАНИЧЕНИЕ! loop не работает внутри includ'а - только в корневых файлах.Третье. Старайтесь дробить свой код на как можно большее количество компонентов. Так вам будет удобнее разрабатывать свои проекты. В директории components можно создавать вложенные директории, в которых хранить шаблоны html, scss и js отдельного компонента (например, слайдера). Scss и js из этой директории подтянутся в выходные файлы, можете об этом не переживать.Вместо послесловияЕсли вы дочитали аж до сюда, значит статья была для вас интересной и познавательной. Поэтому, пожалуйста, пройдите по этой ссылке и поставьте звезду моей сборке. Вам это 10 секунд времени, а мне будет приятно и я буду понимать, что есть запрос на дальнейшее развитие сборки.Если же Вы знаете, как можно улучшить сборку, отрефакторить какую-то задачу, то напишите об этом в комментариях, а лучше, оставьте свой pull-request в репозитории. Я всегда открыт к улучшениям и готов обсуждению."
 		},
 		"title": "Как я сделал свою сборку Gulp для быстрой, лёгкой и приятной вёрстки."
 	},
@@ -4024,5 +5105,5 @@
 		"polls": [],
 		"isTutorial": true
 	},
-	"date": "2021-05-22T23:13:06.194Z"
+	"date": "2021-05-30T18:51:42.243Z"
 }

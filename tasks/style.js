@@ -9,7 +9,6 @@ const clean = require('gulp-clean-css');
 const concat = require('gulp-concat');
 const map = require('gulp-sourcemaps');
 const bs = require('browser-sync');
-const size = require('gulp-size');
 
 module.exports = function style() {
 	return src('src/scss/**/*.scss')
@@ -35,12 +34,6 @@ module.exports = function style() {
 		}))
 		.pipe(concat('style.min.css'))
 		.pipe(map.write('../sourcemaps/'))
-		.pipe(size({
-			'gzip': true,
-			'pretty': true,
-			'showFiles': true,
-			'showTotal': true
-		}))
 		.pipe(dest('build/css/'))
 		.pipe(bs.stream())
 }

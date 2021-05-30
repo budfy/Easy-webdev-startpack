@@ -7,9 +7,9 @@ const {
 const sass = require('gulp-sass');
 const concat = require('gulp-concat');
 const map = require('gulp-sourcemaps');
-const size = require('gulp-size');
+const chalk = require('chalk');
 
-module.exports = function libs_style() {
+module.exports = function libs_style(done) {
 	if (plugins.length > 0) {
 		return src(plugins)
 			.pipe(map.init())
@@ -18,14 +18,8 @@ module.exports = function libs_style() {
 			}).on('error', sass.logError))
 			.pipe(concat('libs.min.css'))
 			.pipe(map.write('../sourcemaps/'))
-			.pipe(size({
-				'gzip': true,
-				'pretty': true,
-				'showFiles': true,
-				'showTotal': true
-			}))
 			.pipe(dest('build/css/'))
 	} else {
-		return true;
+		return done(console.log(chalk.redBright('No added CSS/SCSS plugins')));
 	}
 }
