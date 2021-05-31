@@ -1,0 +1,60 @@
+@mixin font-face($name, $file, $weight: 400, $style: normal) {
+	@font-face {
+		font-family: "#{$name}";
+		src: local("#{$file}"),
+		url('../fonts/#{$file}.woff2') format('woff2'),
+		url('../fonts/#{$file}.woff') format('woff');
+		font-weight: $weight;
+		font-style: $style;
+		font-display: swap;
+	}
+}
+
+@mixin bg ($size:"contain", $position: "center") {
+	background-size: #{$size};
+	background-position: #{$position};
+	background-repeat: no-repeat;
+}
+
+@mixin btn_anim($scaleMax:1.05, $scaleMin:0.95) {
+	transform-origin: center center;
+	transition: all ease-out 240ms;
+
+	&:hover {
+		transform: scale(#{$scaleMax});
+	}
+
+	&:focus {
+		outline: transparent;
+	}
+
+	&:focus-visible {
+		transform: scale(#{$scaleMax}) translateY(-5%);
+	}
+
+	&:active {
+		transform: scale(#{$scaleMin});
+	}
+}
+
+@mixin no-btn ($display:"inline-block") {
+	padding: 0;
+	margin: 0;
+	border: 0;
+	background-color: transparent;
+	border-radius: 0;
+	cursor: pointer;
+	appearance: none;
+	display: #{$display};
+}
+
+@mixin transit ($tr:0.24) {
+	transition: all #{$tr}s;
+}
+
+@mixin container($max-width:"120rem", $padding:"2rem") {
+	width: 100%;
+	max-width: #{$max-width};
+	padding: 0 #{$padding};
+	margin: 0 auto;
+}
