@@ -13,7 +13,7 @@ module.exports = function libs_js(done) {
 		return src(plugins)
 			.pipe(map.init())
 			.pipe(uglify())
-			.pipe(concat('main.min.js'))
+			.pipe(concat('libs.min.js'))
 			.pipe(map.write('../sourcemaps'))
 			.pipe(dest('build/js/'))
 	else {
