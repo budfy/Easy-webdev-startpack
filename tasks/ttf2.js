@@ -6,13 +6,13 @@ const changed = require('gulp-changed');
 const ttf2woff2 = require('gulp-ttftowoff2');
 const ttf2woff = require('gulp-ttf2woff');
 
-module.exports = function ttf(done) {
+module.exports = function ttf2(done) {
   return src('src/fonts/**/*.ttf')
     .pipe(changed('build/fonts', {
-      extension: '.woff2',
+      extension: 'woff',
       hasChanged: changed.compareLastModifiedTime
     }))
-    .pipe(ttf2woff2())
+    .pipe(ttf2woff())
     .pipe(dest('build/fonts'))
-  done();
+  done()
 }
