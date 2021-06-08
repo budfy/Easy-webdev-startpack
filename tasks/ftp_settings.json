@@ -1,6 +1,13 @@
 {
+<<<<<<< HEAD
 	"host": "files.000webhost.com",
 	"user": "budfy",
 	"pass": "5498010qaz",
 	"parallel": 10
+=======
+  "host": "hosting.com",
+  "user": "login",
+  "pass": "********",
+  "parallel": 10
+>>>>>>> ad19a93b6c550eb52aa5a15c1753379c3eadc6bd
 }

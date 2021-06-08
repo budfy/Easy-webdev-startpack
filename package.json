@@ -1,6 +1,10 @@
 {
   "name": "Easy-webdev-startpack",
+<<<<<<< HEAD
   "version": "3.0.0",
+=======
+  "version": "3.1.0",
+>>>>>>> ad19a93b6c550eb52aa5a15c1753379c3eadc6bd
   "description": "HTML5+CSS3 template for easy start website project'",
   "main": "gulpfile.js",
   "scripts": {
