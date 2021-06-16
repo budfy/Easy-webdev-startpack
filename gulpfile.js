@@ -15,46 +15,13 @@ exports.rastr = tasks.rastr;
 exports.webp = tasks.webp;
 exports.svg_sprite = tasks.svg_sprite;
 exports.ttf = tasks.ttf;
-<<<<<<< HEAD
-=======
 exports.ttf2 = tasks.ttf2;
->>>>>>> ad19a93b6c550eb52aa5a15c1753379c3eadc6bd
 exports.bs_html = tasks.bs_html;
 exports.bs_php = tasks.bs_php;
 exports.watch = tasks.watch;
 exports.deploy = tasks.deploy;
 
 exports.default = gulp.parallel(
-<<<<<<< HEAD
-	exports.libs_style,
-	exports.svg_css,
-	exports.ttf,
-	exports.fonts,
-	exports.style,
-	exports.libs_js,
-	exports.dev_js,
-	exports.rastr,
-	exports.webp,
-	exports.svg_sprite,
-	exports.html,
-	exports.bs_html,
-	exports.watch
-)
-exports.dev_php = gulp.parallel(
-	exports.libs_style,
-	exports.svg_css,
-	exports.fonts,
-	exports.style,
-	exports.libs_js,
-	exports.dev_js,
-	exports.rastr,
-	exports.webp,
-	exports.svg_sprite,
-	exports.ttf,
-	exports.php,
-	exports.bs_php,
-	exports.watch
-=======
   exports.libs_style,
   exports.svg_css,
   exports.ttf,
@@ -85,5 +52,4 @@ exports.dev_php = gulp.parallel(
   exports.php,
   exports.bs_php,
   exports.watch
->>>>>>> ad19a93b6c550eb52aa5a15c1753379c3eadc6bd
 )
