@@ -20,6 +20,6 @@ module.exports = function libs_style(done) {
       .pipe(map.write('../sourcemaps/'))
       .pipe(dest('build/css/'))
   } else {
-    return done(console.log(chalk.redBright('No added CSS/SCSS plugins')));
+    return done(console.log(chalk.bgYellow(`${chalk.bold('WARNING!')} You did not add any CSS/SCSS plugins.`)));
   }
 }

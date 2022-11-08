@@ -17,6 +17,6 @@ module.exports = function libs_js(done) {
 			.pipe(map.write('../sourcemaps'))
 			.pipe(dest('build/js/'))
 	else {
-		return done(console.log(chalk.redBright('No added JS plugins')));
+		return done(console.log(chalk.bgYellow(`${chalk.bold('WARNING!')} You did not add any JavaScript plugins.`)));
 	}
 }

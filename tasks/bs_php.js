@@ -2,7 +2,7 @@ const bs = require('browser-sync');
 
 module.exports = function bs_php() {
 	bs.init({
-		browser: ['chrome'],
+		browser: ['default'],
 		watch: true,
 		proxy: '',
 		logLevel: 'info',
