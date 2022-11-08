@@ -5,6 +5,7 @@
   "main": "gulpfile.js",
   "scripts": {
     "html": "gulp",
+    "start": "gulp",
     "php": "gulp dev_php",
     "build": "gulp libs_style && gulp svg_css && gulp ttf && gulp fonts && gulp style && gulp libs_js && gulp build_js && gulp rastr && gulp webp && gulp svg_sprite && gulp html && gulp php",
     "ftp": "gulp deploy",
@@ -27,7 +28,7 @@
     "gulp-imagemin": "^7.1.0",
     "gulp-multi-dest": "^1.3.7",
     "gulp-plumber": "^1.2.1",
-    "gulp-sass": "^4.1.0",
+    "gulp-sass": "^5.1.0",
     "gulp-sass-bulk-importer": "^3.0.1",
     "gulp-sourcemaps": "^3.0.0",
     "gulp-svg-css-pseudo": "^1.0.4",
@@ -42,5 +43,7 @@
     "require-dir": "^1.2.0",
     "vinyl-ftp": "^0.6.1"
   },
-  "dependencies": {}
+  "dependencies": {
+    "sass": "^1.56.0"
+  }
 }
