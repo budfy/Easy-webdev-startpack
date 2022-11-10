@@ -7,8 +7,8 @@ const chalk = require('chalk');
 const connect = ftp.create(ftpSettings);
 
 module.exports = function deploy() {
-	return src(['build/**/*.*', '!build/**/*.map'])
+	return src(['docs/**/*.*', '!docs/**/*.map'])
 		.pipe(connect.newer('public_html/'))
 		.pipe(connect.dest('public_html/'))
-		.on('end', () => console.log(`Finished deploing ./build to https://${chalk.blueBright(ftpSettings.host)}`))
+		.on('end', () => console.log(`Finished deploing ./docs to https://${chalk.blueBright(ftpSettings.host)}`))
 }

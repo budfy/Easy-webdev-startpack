@@ -1,0 +1,25 @@
+name: Build Gulp
+
+on:
+  push:
+    branches: ["master", "main", "beta"]
+    
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 19
+      - run: npm i
+      - run: build
+      - name: Commit files
+        run: |
+          git config --local user.name  ${{ github.actor }}
+          git add -A
+          git commit -m "Update gulp output files"
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.REPO_GITHUB_TOKEN }}
