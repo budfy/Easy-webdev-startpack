@@ -18,7 +18,7 @@ module.exports = function libs_style(done) {
       }).on('error', sass.logError))
       .pipe(concat('libs.min.css'))
       .pipe(map.write('../sourcemaps/'))
-      .pipe(dest('build/css/'))
+      .pipe(dest('docs/css/'))
   } else {
     return done(console.log(chalk.bgYellow(`${chalk.bold('WARNING!')} You did not add any CSS/SCSS plugins.`)));
   }

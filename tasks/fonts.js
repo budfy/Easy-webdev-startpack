@@ -2,7 +2,7 @@ const fs = require('fs');
 const chalk = require('chalk');
 
 let srcFonts = 'src/scss/_local-fonts.scss';
-let appFonts = 'build/fonts/';
+let appFonts = 'docs/fonts/';
 module.exports = function fonts(done) {
   fs.writeFile(srcFonts, '', () => {});
   fs.readdir(appFonts, (err, items) => {

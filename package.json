@@ -44,6 +44,8 @@
     "vinyl-ftp": "^0.6.1"
   },
   "dependencies": {
-    "sass": "^1.56.0"
+    "sass": "^1.56.0",
+    "ttf2woff": "^3.0.0",
+    "ttf2woff2": "^4.0.5"
   }
 }

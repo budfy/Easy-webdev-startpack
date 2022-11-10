@@ -8,11 +8,11 @@ const ttf2woff = require('gulp-ttf2woff');
 
 module.exports = function ttf(done) {
   return src('src/fonts/**/*.ttf')
-    .pipe(changed('build/fonts', {
+    .pipe(changed('docs/fonts', {
       extension: '.woff2',
       hasChanged: changed.compareLastModifiedTime
     }))
     .pipe(ttf2woff2())
-    .pipe(dest('build/fonts'))
+    .pipe(dest('docs/fonts'))
   done();
 }
