@@ -16,7 +16,7 @@ module.exports = function bs_html() {
 				});
 			}
 		},
-		browser: 'default',
+		browser: 'firefox',
 		logPrefix: 'BS-HTML:',
 		logLevel: 'info',
 		logConnections: true,

@@ -1,0 +1,55 @@
+@import "vars"
+@import "mixins"
+@import "fonts"
+@import "libs"
+
+*
+	margin: 0
+	padding: 0
+	outline: 1px solid $color-main--transparent-30
+*, ::before, ::after
+	box-sizing: border-box
+html
+	overflow-x: hidden
+body
+	// font-family: $font, sans-serif
+	font-size: 16px
+	line-height: 1.5em
+	overflow-x: hidden
+div, a, img
+	display: flex
+img
+	width: 100%
+* >	svg
+	width: inherit
+	height: inherit
+
+.s__container
+	width: 100%
+	min-width: 320px
+	max-width: 1024px
+	margin: 0 auto
+	padding: 0 $gutter-container-320
+.s__row
+	flex-direction: column
+	width: 100%
+	padding-top: 3em
+	padding-bottom: 3em
+
+.header
+	width: 100%
+	background-color: #aaa
+
+.svg-wrap
+	justify-content: center
+
+.hero__content
+	flex-direction: column
+	align-items: center
+	h1
+		text-align: center
+
+.hero__descr
+	text-align: center
+
+@import "media"
